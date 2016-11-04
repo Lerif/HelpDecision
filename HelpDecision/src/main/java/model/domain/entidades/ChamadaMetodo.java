@@ -23,7 +23,7 @@ public class ChamadaMetodo {
 
 	public static ChamadaMetodo nova(String nomeMetodo, Date dataInicio, Date dataFim, String idElemento,
 			String tipoElemento, long duracao) {
-		return new ChamadaMetodo(tipoElemento, dataFim, dataFim, tipoElemento, tipoElemento, duracao);
+		return new ChamadaMetodo(nomeMetodo, dataInicio, dataFim, idElemento, tipoElemento, duracao);
 	}
 
 	public String getNomeMetodo() {
