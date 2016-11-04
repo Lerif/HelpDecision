@@ -7,7 +7,6 @@ public class ChamadaMetodoArquivoLog {
 
 	private ChamadaMetodo chamadaMetodo;
 	private ArquivoLog arquivoLog;
-	String testGit;
 	
 	private ChamadaMetodoArquivoLog(ChamadaMetodo chamadaMetodo, ArquivoLog arquivoLog) {
 		this.chamadaMetodo = chamadaMetodo;
