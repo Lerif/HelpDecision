@@ -7,7 +7,7 @@ public class ChamadaMetodoArquivoLog {
 
 	private ChamadaMetodo chamadaMetodo;
 	private ArquivoLog arquivoLog;
-
+	
 	private ChamadaMetodoArquivoLog(ChamadaMetodo chamadaMetodo, ArquivoLog arquivoLog) {
 		this.chamadaMetodo = chamadaMetodo;
 		this.arquivoLog = arquivoLog;
