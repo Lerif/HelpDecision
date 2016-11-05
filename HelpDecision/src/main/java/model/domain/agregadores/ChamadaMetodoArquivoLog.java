@@ -23,6 +23,9 @@ public class ChamadaMetodoArquivoLog {
 	@Column(name = "id_arquivo")
 	private ArquivoLog arquivoLog;
 
+	public ChamadaMetodoArquivoLog() {
+	}
+
 	private ChamadaMetodoArquivoLog(ChamadaMetodo chamadaMetodo, ArquivoLog arquivoLog) {
 		this.chamadaMetodo = chamadaMetodo;
 		this.arquivoLog = arquivoLog;

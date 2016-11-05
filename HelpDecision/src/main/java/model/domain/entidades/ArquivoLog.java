@@ -26,13 +26,19 @@ public class ArquivoLog {
 	@Column(name = "id_servidor")
 	private int idServidor;
 
-	private ArquivoLog(String nomeArquivo, Date dataUpload) {
+	public ArquivoLog(){
+		
+	}
+	
+	private ArquivoLog(String nomeArquivo, Date dataUpload, String descricao, int idServidor) {
 		this.nomeArquivo = nomeArquivo;
 		this.dataUpload = dataUpload;
+		this.descricao = descricao;
+		this.idServidor = idServidor;
 	}
 
-	public static ArquivoLog novo(String nomeArquivo, Date dataUpload) {
-		return new ArquivoLog(nomeArquivo, dataUpload);
+	public static ArquivoLog novo(String nomeArquivo, Date dataUpload, String descricao, int idServidor) {
+		return new ArquivoLog(nomeArquivo, dataUpload, descricao, idServidor);
 	}
 
 	public String getNomeArquivo() {

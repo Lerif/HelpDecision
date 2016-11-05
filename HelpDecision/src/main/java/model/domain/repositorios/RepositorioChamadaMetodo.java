@@ -1,5 +1,6 @@
 package model.domain.repositorios;
 
+import java.sql.Connection;
 import java.util.Date;
 import java.util.List;
 
@@ -7,8 +8,10 @@ import model.domain.entidades.ChamadaMetodo;
 
 public class RepositorioChamadaMetodo {
 
+	Connection conexao;
+	
 	public RepositorioChamadaMetodo() {
-		// TODO Auto-generated constructor stub
+		this.conexao = new ConexaoDB().conectarDB();
 	}
 
 	public List<ChamadaMetodo> findByDateAndDuration(Date dataInicio, Date dateFim, long duracao) {

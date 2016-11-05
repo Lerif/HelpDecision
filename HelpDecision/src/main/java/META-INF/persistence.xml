@@ -2,34 +2,37 @@
 <persistence version="2.1"
 	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="HelpDecision">
+	<persistence-unit name="HelpDecision" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:postgresql://localhost/helpdecisionDB"></property>
+			<property name="javax.persistence.jdbc.user" value="postgres" />
+			<property name="javax.persistence.jdbc.password" value="postgres" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="hibernate.connection.shutdown" value="true" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
+		</properties>
 	</persistence-unit>
-
-	<hibernate-configuration>
-		<session-factory>
-			<!-- hibernate.connection.driver_class: nome da classe do driver JDBC 
-				do banco de dados que está sendo utilizado -->
-			<property name="connection.driver_class">
-				org.postgresql.Driver
-			</property>
-			<!-- hibernate.connection.url: é a URL de conexão específica do banco 
-				que está sendo utilizado -->
-			<property name="connection.url">
-				jdbc:postgresql://localhost/helpdecisionDB
-			</property>
-			<!-- hibernate.dialect: implementação do dialeto SQL específico do banco 
-				de dados a ser utilizado. Usado para identificar as particularidades do banco 
-				de dados -->
-			<property name="dialect">
-				org.hibernate.dialect.PostgreSQLDialect
-			</property>
-			<!-- hibernate.show_sql: utilizado para definir se os SQL’s gerados pelo 
-				Hibernate devem ou não ser exibidos (true | false). -->
-			<property name="show_sql">true</property>
-			<property name="connection.username">postgres</property>
-			<property name="connection.password">postgres</property>
-			<!-- hibernate.connection.pool_size: tamanho do pool de conexões -->
-			<property name="connection.pool_size">10</property>
-		</session-factory>
-	</hibernate-configuration>
 </persistence>
+<!-- hibernate.connection.driver_class: nome da classe do driver JDBC do 
+	banco de dados que está sendo utilizado -->
+<!-- hibernate.connection.url: é a URL de conexão específica do banco que 
+	está sendo utilizado -->
+<!-- hibernate.dialect: implementação do dialeto SQL específico do banco 
+	de dados a ser utilizado. Usado para identificar as particularidades do banco 
+	de dados -->
+<!-- hibernate.show_sql: utilizado para definir se os SQL’s gerados pelo 
+	Hibernate devem ou não ser exibidos (true | false). -->
+<!-- hibernate.connection.pool_size: tamanho do pool de conexões -->
+
+
+<!-- <hibernate-configuration> <session-factory> <property name="connection.driver_class"> 
+	org.postgresql.Driver </property> <property name="connection.url"> jdbc:postgresql://localhost/helpdecisionDB 
+	</property> <property name="dialect"> org.hibernate.dialect.PostgreSQLDialect 
+	</property> <property name="show_sql">true</property> <property name="connection.username">postgres</property> 
+	<property name="connection.password">postgres</property> <property name="connection.pool_size">10</property> 
+	</session-factory> </hibernate-configuration> -->
+

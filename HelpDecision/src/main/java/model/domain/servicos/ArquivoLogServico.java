@@ -9,5 +9,5 @@ public class ArquivoLogServico {
 	public static ArquivoLogServico novo(){
 		return new ArquivoLogServico();
 	}
-
+	
 }

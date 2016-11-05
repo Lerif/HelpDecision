@@ -1,9 +1,13 @@
 package model.domain.repositorios;
 
+import java.sql.Connection;
+
 public class RepositorioChamadaMetodoArquivoLog {
 
+	Connection conexao; 
+	
 	public RepositorioChamadaMetodoArquivoLog() {
-		// TODO Auto-generated constructor stub
+		this.conexao = new ConexaoDB().conectarDB();
 	}
 
 }

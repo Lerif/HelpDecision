@@ -30,6 +30,10 @@ public class ChamadaMetodo {
 	@Column(name = "tipo_elementro")
 	private String tipoElemento;
 
+	public ChamadaMetodo(){
+		
+	}
+	
 	private ChamadaMetodo(String nomeMetodo, Date dataInicio, Date dataFim, String idElemento, String tipoElemento,
 			long duracao) {
 		setNomeMetodo(nomeMetodo);
