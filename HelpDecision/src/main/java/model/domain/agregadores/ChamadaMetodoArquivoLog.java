@@ -1,13 +1,28 @@
 package model.domain.agregadores;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 
+@Entity
+@Table(name = "tb_chamada_metodo_arquivo", schema = "public")
 public class ChamadaMetodoArquivoLog {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	private int id;
+	@Column(name = "id_chamada_metodo")
 	private ChamadaMetodo chamadaMetodo;
+	@Column(name = "id_arquivo")
 	private ArquivoLog arquivoLog;
-	
+
 	private ChamadaMetodoArquivoLog(ChamadaMetodo chamadaMetodo, ArquivoLog arquivoLog) {
 		this.chamadaMetodo = chamadaMetodo;
 		this.arquivoLog = arquivoLog;
@@ -32,4 +47,13 @@ public class ChamadaMetodoArquivoLog {
 	public void setArquivoLog(ArquivoLog arquivoLog) {
 		this.arquivoLog = arquivoLog;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 }

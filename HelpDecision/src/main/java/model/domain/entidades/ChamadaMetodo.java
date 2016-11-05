@@ -2,14 +2,33 @@ package model.domain.entidades;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "tb_chamada_metodo", schema = "public")
 public class ChamadaMetodo {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id_chamada_metodo")
+	private int idChamadaMetodo;
+	@Column(name = "nome_metodo")
 	private String nomeMetodo;
+	@Column(name = "data_inicio")
 	private Date dataInicio;
+	@Column(name = "data_fim")
 	private Date dataFim;
-	private String idElemento;
-	private String tipoElemento;
+	@Column(name = "duracao")
 	private long duracao;
+	@Column(name = "id_elementro")
+	private String idElemento;
+	@Column(name = "tipo_elementro")
+	private String tipoElemento;
 
 	private ChamadaMetodo(String nomeMetodo, Date dataInicio, Date dataFim, String idElemento, String tipoElemento,
 			long duracao) {
@@ -72,6 +91,14 @@ public class ChamadaMetodo {
 
 	public void setDuracao(long duracao) {
 		this.duracao = duracao;
+	}
+
+	public int getIdChamadaMetodo() {
+		return idChamadaMetodo;
+	}
+
+	public void setIdChamadaMetodo(int idChamadaMetodo) {
+		this.idChamadaMetodo = idChamadaMetodo;
 	}
 
 }
