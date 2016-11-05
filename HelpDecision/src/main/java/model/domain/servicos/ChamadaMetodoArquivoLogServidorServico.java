@@ -7,11 +7,14 @@ import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
 import model.domain.fabricas.FabricaChamadaMetodoArquivoLogServidor;
+import model.domain.repositorios.RepositorioChamadaMetodoArquivoLogServidor;
 
 public class ChamadaMetodoArquivoLogServidorServico {
 
+	RepositorioChamadaMetodoArquivoLogServidor repositorioAgregador;
+	
 	private ChamadaMetodoArquivoLogServidorServico() {
-
+		repositorioAgregador = new RepositorioChamadaMetodoArquivoLogServidor();
 	}
 
 	public static ChamadaMetodoArquivoLogServidorServico novo() {
@@ -22,5 +25,9 @@ public class ChamadaMetodoArquivoLogServidorServico {
 			Servidor servidor) {
 		return FabricaChamadaMetodoArquivoLogServidor.nova().novaChamadaMetodoArquivoLogServidor(listaChamadaMetodo,
 				arquivoLog, servidor);
+	}
+	
+	public Boolean inserirAgregador(ChamadaMetodoArquivoLogServidor agregador){
+		return repositorioAgregador.insert(agregador);
 	}
 }

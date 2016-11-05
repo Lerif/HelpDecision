@@ -28,9 +28,9 @@ public class ServicoFachada {
 		// Faz insert na tb_arquivo
 		// Recuperar o id_servidor a partir do seu nome
 		// Agrega listChamadaMetodo, ArquivoLog e Servidor
-		servicoAgregador.agregar(servicoChamadaMetodo.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo),
-				servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog), servicoServidor.recuperarIdServidor(servidor));
-		return null;
+		return servicoAgregador.inserirAgregador(servicoAgregador.agregar(
+				servicoChamadaMetodo.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo),
+				servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog), servicoServidor.recuperarIdServidor(servidor)));
 	}
 
 	// MÉTODOS REFERENTE AO SERVICO CHAMADA METODO
