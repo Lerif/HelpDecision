@@ -20,25 +20,23 @@ public class ArquivoLog {
 	@Column(name = "nome_arquivo")
 	private String nomeArquivo;
 	@Column(name = "data_upload")
-	private Date dataUpload;
+	private java.sql.Date dataUpload;
 	@Column(name = "descricao")
 	private String descricao;
-	@Column(name = "id_servidor")
-	private int idServidor;
 
-	public ArquivoLog(){
-		
+	public ArquivoLog() {
+
 	}
-	
-	private ArquivoLog(String nomeArquivo, Date dataUpload, String descricao, int idServidor) {
+
+	private ArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload, String descricao) {
+		this.idArquivo = idArquivo;
 		this.nomeArquivo = nomeArquivo;
 		this.dataUpload = dataUpload;
 		this.descricao = descricao;
-		this.idServidor = idServidor;
 	}
 
-	public static ArquivoLog novo(String nomeArquivo, Date dataUpload, String descricao, int idServidor) {
-		return new ArquivoLog(nomeArquivo, dataUpload, descricao, idServidor);
+	public static ArquivoLog novo(int idArquivo, String nomeArquivo, java.sql.Date dataUpload, String descricao) {
+		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
 	}
 
 	public String getNomeArquivo() {
@@ -49,11 +47,11 @@ public class ArquivoLog {
 		this.nomeArquivo = nomeArquivo;
 	}
 
-	public Date getDataUpload() {
+	public java.sql.Date getDataUpload() {
 		return dataUpload;
 	}
 
-	public void setDataUpload(Date dataUpload) {
+	public void setDataUpload(java.sql.Date dataUpload) {
 		this.dataUpload = dataUpload;
 	}
 

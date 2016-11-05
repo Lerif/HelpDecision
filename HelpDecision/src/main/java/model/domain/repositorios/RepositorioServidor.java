@@ -50,4 +50,18 @@ public class RepositorioServidor {
 		}
 		return servidores;
 	}
+	
+	public Servidor findByName(Servidor servidor) throws SQLException{
+		String sql = "SELECT * FROM tb_servidor WHERE nome_servidor = '" + servidor.getNomeServidor() + "'";
+		Statement stm = (Statement) conexao.createStatement();
+		try {
+			ResultSet retornoSelect = stm.executeQuery(sql);
+			while (retornoSelect.next()) {
+				servidor.setIdServidor(retornoSelect.getInt("id_servidor"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return servidor;
+	}
 }

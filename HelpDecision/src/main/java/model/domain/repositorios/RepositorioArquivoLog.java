@@ -1,6 +1,7 @@
 package model.domain.repositorios;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.domain.entidades.ArquivoLog;
+import model.domain.entidades.ChamadaMetodo;
 import model.domain.servicos.ServicoFachada;
 
 public class RepositorioArquivoLog {
@@ -19,6 +21,25 @@ public class RepositorioArquivoLog {
 		this.conexao = new ConexaoDB().conectarDB();
 	}
 
+	public ArquivoLog insert(ArquivoLog arquivoLog) {
+		String sql = "INSERT INTO tb_arquivo " + "(nome_arquivo, data_upload, descricao) " + "VALUES (?, ?, ?)";
+		try {
+			PreparedStatement pst = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			pst.setString(1, arquivoLog.getNomeArquivo());
+			pst.setDate(2, arquivoLog.getDataUpload());
+			pst.setString(3, arquivoLog.getDescricao());
+			pst.execute();
+			final ResultSet resultSet = pst.getGeneratedKeys();
+			if (resultSet.next()) {
+				arquivoLog.setIdArquivo(resultSet.getInt("id_arquivo"));
+			}
+			pst.close();
+			return arquivoLog;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 	public List<ArquivoLog> findAll() throws SQLException {
 		List<ArquivoLog> arquivosLog = new ArrayList<ArquivoLog>();
 		String sql = "SELECT * FROM tb_arquivo";
@@ -26,9 +47,9 @@ public class RepositorioArquivoLog {
 		try {
 			ResultSet retornoSelect = stm.executeQuery(sql);
 			while (retornoSelect.next()) {
-				ArquivoLog arquivoLog = servicoFachada.solicitarCriacaoArquivoLog(
+				ArquivoLog arquivoLog = servicoFachada.solicitarCriacaoArquivoLog(retornoSelect.getInt("id_arquivo"),
 						retornoSelect.getString("nome_arquivo"), retornoSelect.getDate("data_upload"),
-						retornoSelect.getString("descricao"), retornoSelect.getInt("id_servidor"));
+						retornoSelect.getString("descricao"));
 				arquivosLog.add(arquivoLog);
 			}
 		} catch (Exception e) {

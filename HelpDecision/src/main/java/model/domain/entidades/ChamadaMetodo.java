@@ -20,9 +20,9 @@ public class ChamadaMetodo {
 	@Column(name = "nome_metodo")
 	private String nomeMetodo;
 	@Column(name = "data_inicio")
-	private Date dataInicio;
+	private java.sql.Date dataInicio;
 	@Column(name = "data_fim")
-	private Date dataFim;
+	private java.sql.Date dataFim;
 	@Column(name = "duracao")
 	private long duracao;
 	@Column(name = "id_elementro")
@@ -30,12 +30,13 @@ public class ChamadaMetodo {
 	@Column(name = "tipo_elementro")
 	private String tipoElemento;
 
-	public ChamadaMetodo(){
-		
+	public ChamadaMetodo() {
+
 	}
-	
-	private ChamadaMetodo(String nomeMetodo, Date dataInicio, Date dataFim, String idElemento, String tipoElemento,
-			long duracao) {
+
+	private ChamadaMetodo(int idChamadaMetodo, String nomeMetodo, Date dataInicio, Date dataFim, String idElemento,
+			String tipoElemento, long duracao) {
+		setIdChamadaMetodo(idChamadaMetodo);
 		setNomeMetodo(nomeMetodo);
 		setDataInicio(dataInicio);
 		setDataFim(dataFim);
@@ -44,9 +45,9 @@ public class ChamadaMetodo {
 		setDuracao(duracao);
 	}
 
-	public static ChamadaMetodo nova(String nomeMetodo, Date dataInicio, Date dataFim, String idElemento,
-			String tipoElemento, long duracao) {
-		return new ChamadaMetodo(nomeMetodo, dataInicio, dataFim, idElemento, tipoElemento, duracao);
+	public static ChamadaMetodo nova(int idChamadaMetodo, String nomeMetodo, Date dataInicio, Date dataFim,
+			String idElemento, String tipoElemento, long duracao) {
+		return new ChamadaMetodo(idChamadaMetodo, nomeMetodo, dataInicio, dataFim, idElemento, tipoElemento, duracao);
 	}
 
 	public String getNomeMetodo() {
@@ -57,20 +58,20 @@ public class ChamadaMetodo {
 		this.nomeMetodo = nomeMetodo;
 	}
 
-	public Date getDataInicio() {
+	public java.sql.Date getDataInicio() {
 		return dataInicio;
 	}
 
 	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
+		this.dataInicio = (java.sql.Date) dataInicio;
 	}
 
-	public Date getDataFim() {
+	public java.sql.Date getDataFim() {
 		return dataFim;
 	}
 
 	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
+		this.dataFim = (java.sql.Date) dataFim;
 	}
 
 	public String getIdElemento() {

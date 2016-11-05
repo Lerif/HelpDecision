@@ -11,21 +11,25 @@ import model.domain.repositorios.RepositorioArquivoLog;
 public class ArquivoLogServico {
 
 	private RepositorioArquivoLog repositorioArquivoLog;
-	
+
 	private ArquivoLogServico() {
 		repositorioArquivoLog = new RepositorioArquivoLog();
 	}
-	
-	public static ArquivoLogServico novo(){
+
+	public static ArquivoLogServico novo() {
 		return new ArquivoLogServico();
 	}
-	
-	public ArquivoLog criarArquivoLog(String nomeArquivo, Date dataUpload, String descricao, int idServidor){
-		return FabricaArquivoLog.nova().novoArquivoLog(nomeArquivo, dataUpload, descricao, idServidor);
+
+	public ArquivoLog inserirDadosNaTbArquivo(ArquivoLog arquivoLog) {
+		return repositorioArquivoLog.insert(arquivoLog);
 	}
-	
-	public List<ArquivoLog> solicitarListaDeArquivoLogCadastradoDB() throws SQLException{
+
+	public ArquivoLog criarArquivoLog(int idArquivo, String nomeArquivo, Date dataUpload, String descricao) {
+		return FabricaArquivoLog.nova().novoArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
+	}
+
+	public List<ArquivoLog> solicitarListaDeArquivoLogCadastradoDB() throws SQLException {
 		return repositorioArquivoLog.findAll();
 	}
-	
+
 }

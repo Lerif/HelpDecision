@@ -30,5 +30,9 @@ public class ServidorServico {
 	public List<Servidor> solicitarListaDeServidoresCadastradosDB() throws SQLException{
 		return servidorRepositorio.findAll();
 	}
+	
+	public Servidor recuperarIdServidor(Servidor servidor) throws SQLException{
+		return servidorRepositorio.findByName(servidor);
+	}
 
 }

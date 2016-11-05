@@ -13,7 +13,7 @@ public class FabricaArquivoLog {
 		return new FabricaArquivoLog();
 	}
 
-	public ArquivoLog novoArquivoLog(String nomeArquivo, Date dataUpload, String descricao, int idServidor) {
-		return ArquivoLog.novo(nomeArquivo, dataUpload, descricao, idServidor);
+	public ArquivoLog novoArquivoLog(int idArquivo, String nomeArquivo, Date dataUpload, String descricao) {
+		return ArquivoLog.novo(idArquivo, nomeArquivo, dataUpload, descricao);
 	}
 }

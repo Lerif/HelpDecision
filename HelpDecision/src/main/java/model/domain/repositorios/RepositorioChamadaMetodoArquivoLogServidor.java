@@ -2,11 +2,11 @@ package model.domain.repositorios;
 
 import java.sql.Connection;
 
-public class RepositorioChamadaMetodoArquivoLog {
+public class RepositorioChamadaMetodoArquivoLogServidor {
 
 	Connection conexao; 
 	
-	public RepositorioChamadaMetodoArquivoLog() {
+	public RepositorioChamadaMetodoArquivoLogServidor() {
 		this.conexao = new ConexaoDB().conectarDB();
 	}
 
