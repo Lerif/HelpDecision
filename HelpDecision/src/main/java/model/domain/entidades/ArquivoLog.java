@@ -1,6 +1,5 @@
 package model.domain.entidades;
 
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -70,13 +69,4 @@ public class ArquivoLog {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	public int getIdServidor() {
-		return idServidor;
-	}
-
-	public void setIdServidor(int idServidor) {
-		this.idServidor = idServidor;
-	}
-
 }

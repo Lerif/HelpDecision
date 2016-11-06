@@ -24,7 +24,7 @@ public class ArquivoLogServico {
 		return repositorioArquivoLog.insert(arquivoLog);
 	}
 
-	public ArquivoLog criarArquivoLog(int idArquivo, String nomeArquivo, Date dataUpload, String descricao) {
+	public ArquivoLog criarArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload, String descricao) {
 		return FabricaArquivoLog.nova().novoArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
 	}
 

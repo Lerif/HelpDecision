@@ -33,10 +33,10 @@ public class ServicoFachada {
 				servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog), servicoServidor.recuperarIdServidor(servidor)));
 	}
 
-	// MÉTODOS REFERENTE AO SERVICO CHAMADA METODO
+	// Mï¿½TODOS REFERENTE AO SERVICO CHAMADA METODO
 
-	// MÉTODOS REFERENTE AO SERVICO ARQUIVO LOG
-	public ArquivoLog solicitarCriacaoArquivoLog(int idArquivo, String nomeArquivo, Date dataUpload, String descricao) {
+	// Mï¿½TODOS REFERENTE AO SERVICO ARQUIVO LOG
+	public ArquivoLog solicitarCriacaoArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload, String descricao) {
 		return servicoArquivoLog.criarArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
 	}
 
@@ -44,7 +44,7 @@ public class ServicoFachada {
 		return servicoArquivoLog.solicitarListaDeArquivoLogCadastradoDB();
 	}
 
-	// MÉTODOS REFERENTE AO SERVICO SERVIDOR
+	// Mï¿½TODOS REFERENTE AO SERVICO SERVIDOR
 	public Boolean cadastrarServidor(int idServidor, String nomeServidor) {
 		return servicoServidor.cadastrarServidorDB(solicitarNovoServidor(idServidor, nomeServidor));
 	}
