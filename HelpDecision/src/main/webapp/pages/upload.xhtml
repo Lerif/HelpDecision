@@ -24,7 +24,7 @@
 <h:body>
 	<nav class="navbar navbar-default">
 	<div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
+		<!-- Brand e toggle agrupados para melhor visualização em mobiles -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"
 				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
@@ -35,7 +35,7 @@
 			</button>
 		</div>
 
-		<!-- Collect the nav links, forms, and other content for toggling -->
+
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<p class="navbar-text">Bem-vindo(a) ao Help Decision</p>
@@ -44,21 +44,27 @@
 
 			</ul>
 		</div>
-		<!-- /.navbar-collapse -->
+
 	</div>
-	<!-- /.container-fluid --> </nav>
+	</nav>
 
 	<h3 class="text-primary">Upload</h3>
 	<br></br>
 
 	<div class="container">
 		<div class="login-box well">
-			<h:form id="formLogin">
+			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
+					<button class="btn btn-primary dropdown-toggle" type="button"
 					<!-- <button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="true">
 						Selecione um Servidor <span class="caret"></span>
+					</button>
+						ou
+					<button type="button" class="btn btn-md btn-primary"
+						data-toggle="modal" data-target="#cadastra_servidor">
+						Cadastre um Novo</button>
 					</button> -->
 					<h:selectOneMenu value="#{uploadBean.servidores}" var="servidor"
 						class="btn btn-default dropdown-toggle">
@@ -74,6 +80,7 @@
 
 
 
+
 					<!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						<li><a href="#">Servidor Saturno</a></li>
 						<li><a href="#">Servidor Netuno</a></li>
@@ -82,19 +89,15 @@
 				</div>
 
 				<div class="form-group">
-					<label class="control-label"><br></br> <br></br>Arquivo de
-						log .tar.gz:</label><br></br> <label class="btn btn-primary">
-						Escolher Arquivo&hellip; <input
-						value="#{servicoDescompactador.extrairTarGz}" id="input"
-						name="uploadButton" type="file" style="display: none;"
-						class="file-loading"></input>
-					</label>
+					<label class="control-label"><br></br> <br></br>
+						Arquivo de log .tar.gz:</label><br></br> 
+					<h:inputFile value="#{uploadBean.arquivo}"/>
 				</div>
 
 				<div class="form-group">
 					<label for="portas"><h:outputText class="cadastroProduto"
 							value="Comentários:" /></label>
-					<h:inputText value="#{servidorBean.comentario}" id="comentario"
+					<h:inputText  id="comentario"
 						placeholder="text" type="text" class="form-control" />
 				</div>
 
@@ -102,9 +105,9 @@
 				<h:messages id="msg" style="color:blue" layout="table" />
 				<br></br>
 				<div class="form-group">
-					<h:commandButton type="reset"
-						class="btn btn-default btn-login-submit btn-block m-t-md"
-						value="Enviar" action="#{servidorBean.getCadastroServidor}" />
+					<h:commandButton type="submit"
+						class="btn btn-success btn-login-submit btn-md m-t-md"
+						value="Upload" action="#{uploadBean.upload()}" />
 				</div>
 			</h:form>
 		</div>
@@ -160,6 +163,7 @@
 		</div>
 	</div>
 
+	<!--  Modal excluir arquivo anterior  -->
 	<div class="modal fade" id="delete" tabindex="-1" role="dialog"
 		aria-labelledby="edit" aria-hidden="true">
 		<div class="modal-dialog">
@@ -198,7 +202,7 @@
 		<div class="form-group">
 
 			<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
-				<h:commandButton class="btn btn-default btn-block m-t-md"
+				<h:commandButton class="btn btn-warning btn-md m-t-md"
 					value="Voltar" action="#{uploadBean.voltar}" />
 			</div>
 		</div>
@@ -208,7 +212,7 @@
 </h:body>
 
 <!--  Modal Cadastrar novo servidor  -->
-<div id="cadastraServidor" class="modal fade" role="dialog">
+<div id="cadastra_servidor" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 		<h:form id="formCadastraServidor">
 			<div class="modal-content">
@@ -229,12 +233,11 @@
 					</div>
 					<div class="form-group">
 						<h:commandButton
-							class="btn btn-default btn-login-submit btn-block m-t-md"
-							id="botao" value="Entrar" action="#{uploadBean.getServidor}" />
+							class="btn btn-success btn-login-submit btn-md m-t-md"
+							id="botao" value="Confirmar" action="#{uploadBean.getServidor}" />
 
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default"
-								data-dismiss="modal">Voltar</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 						</div>
 					</div>
 				</div>
