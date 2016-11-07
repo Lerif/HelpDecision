@@ -23,6 +23,13 @@ public class UploadBean {
 	}
 
 	public void upload() throws IOException {
+		
+		File dirUpload = new File(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT);
+		
+		if(!dirUpload.exists()){
+			dirUpload.mkdirs();
+		}
+		
 		arquivo.write(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT + File.separator + buscarNomeDoArquivo(arquivo));
 	}
 
