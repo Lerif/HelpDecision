@@ -9,15 +9,13 @@ import model.domain.repositorios.RepositorioServidor;
 
 public class ServidorServico {
 
-	private RepositorioServidor servidorRepositorio;
+	private RepositorioServidor servidorRepositorio = new RepositorioServidor();
 
-	private ServidorServico() {
-		servidorRepositorio = new RepositorioServidor();
+	public ServidorServico() {
+		
 	}
 
-	public static ServidorServico novo() {
-		return new ServidorServico();
-	}
+
 
 	public Servidor criarServidor(int idServidor, String nomeServidor) {
 		return FabricaServidor.novo().novoServidor(idServidor, nomeServidor);
@@ -26,12 +24,12 @@ public class ServidorServico {
 	public Boolean cadastrarServidorDB(Servidor servidor) {
 		return servidorRepositorio.insert(servidor);
 	}
-	
-	public List<Servidor> solicitarListaDeServidoresCadastradosDB() throws SQLException{
+
+	public List<Servidor> solicitarListaDeServidoresCadastradosDB() throws SQLException {
 		return servidorRepositorio.findAll();
 	}
-	
-	public Servidor recuperarIdServidor(Servidor servidor) throws SQLException{
+
+	public Servidor recuperarIdServidor(Servidor servidor) throws SQLException {
 		return servidorRepositorio.findByName(servidor);
 	}
 

@@ -9,16 +9,13 @@ import model.domain.entidades.Servidor;
 
 public class ServicoFachada {
 
-	private ArquivoLogServico servicoArquivoLog;
-	private ChamadaMetodoServico servicoChamadaMetodo;
-	private ServidorServico servicoServidor;
-	private ChamadaMetodoArquivoLogServidorServico servicoAgregador;
+	private ArquivoLogServico servicoArquivoLog = new ArquivoLogServico();
+	private ChamadaMetodoServico servicoChamadaMetodo = new ChamadaMetodoServico();
+	private ServidorServico servicoServidor = new ServidorServico();
+	private ChamadaMetodoArquivoLogServidorServico servicoAgregador = new ChamadaMetodoArquivoLogServidorServico();
 
 	public ServicoFachada() {
-		setServicoArquivoLog(ArquivoLogServico.novo());
-		setServicoChamadaMetodo(ChamadaMetodoServico.novo());
-		setServicoServidor(ServidorServico.novo());
-		setServicoAgregador(ChamadaMetodoArquivoLogServidorServico.novo());
+
 	}
 
 	public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo, ArquivoLog arquivoLog, Servidor servidor)
@@ -35,7 +32,8 @@ public class ServicoFachada {
 	// M�TODOS REFERENTE AO SERVICO CHAMADA METODO
 
 	// M�TODOS REFERENTE AO SERVICO ARQUIVO LOG
-	public ArquivoLog solicitarCriacaoArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload, String descricao) {
+	public ArquivoLog solicitarCriacaoArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload,
+			String descricao) {
 		return servicoArquivoLog.criarArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
 	}
 
