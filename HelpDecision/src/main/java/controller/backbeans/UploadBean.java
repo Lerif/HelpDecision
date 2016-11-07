@@ -2,18 +2,21 @@ package controller.backbeans;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
 
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.Part;
 
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
 
-@ManagedBean
 @SessionScoped
+@ManagedBean
 public class UploadBean {
 
 	private Part arquivo;
@@ -25,9 +28,30 @@ public class UploadBean {
 	private ServicoFachada servicoFachada = new ServicoFachada();
 
 	private List<Servidor> servidores = new ArrayList<Servidor>();
+	private ArrayList<SelectItem> listItems = null;
 
-	public UploadBean() {
-		carregarDropDownServidores();
+
+	public UploadBean(){
+		
+	}
+	
+	public void carregarDropDownServidores() {
+		try {
+			this.servidores = servicoFachada.solicitarTodosServidoresDB();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//		listItems = new ArrayList<SelectItem>();
+//		try {
+//			this.servidores = servicoFachada.solicitarTodosServidoresDB();
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		for (Servidor servidor : servidores) {
+//			listItems.add(new SelectItem("teste", servidor.getNomeServidor()));
+//		}
 	}
 
 	public void upload() throws IOException {
@@ -60,16 +84,22 @@ public class UploadBean {
 		this.arquivo = arquivo;
 	}
 
-	public void carregarDropDownServidores() {
-
-	}
-
 	public List<Servidor> getServidores() {
 		return servidores;
 	}
 
 	public void setServidores(List<Servidor> servidores) {
 		this.servidores = servidores;
+	}
+
+
+	public ArrayList<SelectItem> getListItems() {
+		return listItems;
+	}
+
+
+	public void setListItems(ArrayList<SelectItem> listItems) {
+		this.listItems = listItems;
 	}
 
 }
