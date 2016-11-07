@@ -55,9 +55,6 @@
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
-					<<<<<<< HEAD =======
-					<button class="btn btn-primary dropdown-toggle" type="button"></button>
-					>>>>>>> branch 'master' of https://github.com/Lerif/HelpDecision
 					<!-- <button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="true">
@@ -72,6 +69,9 @@
 						<f:selectItems value="#{uploadBean.listItems}" />
 					</h:selectOneMenu>
 					ou
+					<button type="button" class="detalhes btn btn-md btn-primary"
+						data-toggle="modal" data-target="#cadastra_servidor">Cadastre
+						um Novo</button>
 
 
 
@@ -91,6 +91,11 @@
 					</ul>-->
 				</div>
 
+				<div class="form-group">
+					<label class="control-label"><br></br> <br></br> Arquivo de
+						log .tar.gz:</label><br></br>
+					<h:inputFile value="#{uploadBean.arquivo}" />
+				</div>
 				<!-- div class="form-group">
 					<label class="control-label"><br></br> <br></br> Arquivo de
 						log .tar.gz:</label><br></br>
@@ -124,42 +129,16 @@
 			<div class="col-md-12">
 				<h3 class="text-center">Histórico de Arquivos</h3>
 				<div class="table-responsive">
+					<h:dataTable value="#{uploadBean.listaArquivoLog}" var="o">
 
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Nome" />
+							</f:facet>
+							<h:outputText value="#{o.nomeArquivo}" />
+						</h:column>
 
-					<table id="historico" class="table table-bordred table-striped">
-
-						<tbody>
-
-							<tr>
-
-								<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-
-								<td><p data-placement="top" data-toggle="tooltip"
-										title="Excluir">
-										<button class="btn btn-danger btn-xs trash-btn"
-											data-title="Excluir" data-toggle="modal"
-											data-target="#delete">
-											<span class="glyphicon glyphicon-trash"></span>
-										</button>
-									</p></td>
-							</tr>
-							<tr>
-								<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-								<td><p data-placement="top" data-toggle="tooltip"
-										title="Excluir">
-										<button class="btn btn-danger btn-xs trash-btn"
-											data-title="Excluir" data-toggle="modal"
-											data-target="#delete">
-											<span class="glyphicon glyphicon-trash"></span>
-										</button>
-									</p></td>
-							</tr>
-
-
-						</tbody>
-
-					</table>
-
+					</h:dataTable>
 				</div>
 
 			</div>
@@ -275,64 +254,59 @@
 </div>
 
 <script>
+	$(document).ready(function() {
+		$("#mytable #checkall").click(function() {
+			if ($("#mytable #checkall").is(':checked')) {
+				$("#mytable input[type=checkbox]").each(function() {
+					$(this).prop("checked", true);
+				});
 
+			} else {
+				$("#mytable input[type=checkbox]").each(function() {
+					$(this).prop("checked", false);
+				});
+			}
+		});
 
-$(document).ready(function(){
-	$("#mytable #checkall").click(function () {
-	        if ($("#mytable #checkall").is(':checked')) {
-	            $("#mytable input[type=checkbox]").each(function () {
-	                $(this).prop("checked", true);
-	            });
-
-	        } else {
-	            $("#mytable input[type=checkbox]").each(function () {
-	                $(this).prop("checked", false);
-	            });
-	        }
-	    });
-	    
-	    $("[data-toggle=tooltip]").tooltip();
+		$("[data-toggle=tooltip]").tooltip();
 	});
 
+	$(function() {
+		$('#orderModal').modal({
+			keyboard : true,
+			backdrop : "static",
+			show : false,
 
+		}).on('show', function() {
 
-$(function () {
-	    $('#orderModal').modal({
-	        keyboard: true,
-	        backdrop: "static",
-	        show: false,
+		});
 
-	    }).on('show', function () {
+		$(".table-striped").find('tr[data-id]').on(
+				'click',
+				function() {
+					debugger;
 
-	    });
+					//do all your operation populate the modal and open the modal now. Dont need to use show event of modal again
 
-	    $(".table-striped").find('tr[data-id]').on('click', function () {
-	        debugger;
+					$('#orderDetails').html(
+							$('<b> Order Id selected: ' + $(this).data('id')
+									+ '</b>'));
+					$('#orderModal').modal('show');
 
-	        //do all your operation populate the modal and open the modal now. Dont need to use show event of modal again
-
-	        $('#orderDetails').html($('<b> Order Id selected: ' + $(this).data('id') + '</b>'));
-	        $('#orderModal').modal('show');
-	        
-	    });
+				});
 
 	});
 
-
-
-$('.detalhes').on('click', function(){
-    var nome = $(this).data('nome'); // buscar o valor do atributo data-name que temos no botão que foi clicado
-    var modelo = $(this).data('modelo'); // buscar o valor do atributo data-id
-    var fabrica = $(this).data('fabrica');
-    var cor = $(this).data('cor');
-    var litros = $(this).data('litros');
-    var foto = $(this).data('foto');
-    var porta = $(this).data('porta');
-    $('span.nome').text(nome+ ' (modelo = ' +modelo+ ')'); 
-    $('#myModal').modal('show'); // modal aparece
-});
-
-
-
+	$('.detalhes').on('click', function() {
+		var nome = $(this).data('nome'); // buscar o valor do atributo data-name que temos no botão que foi clicado
+		var modelo = $(this).data('modelo'); // buscar o valor do atributo data-id
+		var fabrica = $(this).data('fabrica');
+		var cor = $(this).data('cor');
+		var litros = $(this).data('litros');
+		var foto = $(this).data('foto');
+		var porta = $(this).data('porta');
+		$('span.nome').text(nome + ' (modelo = ' + modelo + ')');
+		$('#myModal').modal('show'); // modal aparece
+	});
 </script>
 </html>

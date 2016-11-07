@@ -6,17 +6,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.model.SelectItem;
+import javax.faces.bean.RequestScoped;
 import javax.servlet.http.Part;
 
+import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
 
-@SessionScoped
-@ManagedBean
+@ManagedBean(eager = true)
+@RequestScoped
 public class UploadBean {
 
 	private Part arquivo;
@@ -28,30 +27,9 @@ public class UploadBean {
 	private ServicoFachada servicoFachada = new ServicoFachada();
 
 	private List<Servidor> servidores = new ArrayList<Servidor>();
-	private ArrayList<SelectItem> listItems = null;
 
-
-	public UploadBean(){
-		
-	}
-	
-	public void carregarDropDownServidores() {
-		try {
-			this.servidores = servicoFachada.solicitarTodosServidoresDB();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//		listItems = new ArrayList<SelectItem>();
-//		try {
-//			this.servidores = servicoFachada.solicitarTodosServidoresDB();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		for (Servidor servidor : servidores) {
-//			listItems.add(new SelectItem("teste", servidor.getNomeServidor()));
-//		}
+	public UploadBean() {
+		carregarDropDownServidores();
 	}
 
 	public void upload() throws IOException {
@@ -63,6 +41,17 @@ public class UploadBean {
 		}
 
 		arquivo.write(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT + File.separator + buscarNomeDoArquivo(arquivo));
+	}
+
+	public List<ArquivoLog> getListaArquivoLog() {
+
+		try {
+			return servicoFachada.solicitarTodosArquivoLogDB();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 	public String buscarNomeDoArquivo(Part part) {
@@ -84,22 +73,16 @@ public class UploadBean {
 		this.arquivo = arquivo;
 	}
 
+	public void carregarDropDownServidores() {
+
+	}
+
 	public List<Servidor> getServidores() {
 		return servidores;
 	}
 
 	public void setServidores(List<Servidor> servidores) {
 		this.servidores = servidores;
-	}
-
-
-	public ArrayList<SelectItem> getListItems() {
-		return listItems;
-	}
-
-
-	public void setListItems(ArrayList<SelectItem> listItems) {
-		this.listItems = listItems;
 	}
 
 }
