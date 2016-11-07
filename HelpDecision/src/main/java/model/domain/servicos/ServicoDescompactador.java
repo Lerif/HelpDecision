@@ -61,7 +61,7 @@ public class ServicoDescompactador {
 			untaredFiles.add(outputFile);
 		}
 		tarArchiveInputStream.close();
-		
+
 		return untaredFiles;
 	}
 
