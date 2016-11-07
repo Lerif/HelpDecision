@@ -2,18 +2,20 @@ package controller.backbeans;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
 
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.servlet.http.Part;
 
+import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
 
-@ManagedBean
-@SessionScoped
+@ManagedBean(eager = true)
+@RequestScoped
 public class UploadBean {
 
 	private Part arquivo;
@@ -39,6 +41,17 @@ public class UploadBean {
 		}
 
 		arquivo.write(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT + File.separator + buscarNomeDoArquivo(arquivo));
+	}
+
+	public List<ArquivoLog> getListaArquivoLog() {
+
+		try {
+			return servicoFachada.solicitarTodosArquivoLogDB();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 
 	public String buscarNomeDoArquivo(Part part) {
