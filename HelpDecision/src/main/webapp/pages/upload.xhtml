@@ -56,6 +56,7 @@
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
 					<button class="btn btn-primary dropdown-toggle" type="button"
+					<!-- <button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="true">
 						Selecione um Servidor <span class="caret"></span>
@@ -64,12 +65,27 @@
 					<button type="button" class="btn btn-md btn-primary"
 						data-toggle="modal" data-target="#cadastra_servidor">
 						Cadastre um Novo</button>
+					</button> -->
+					<h:selectOneMenu value="#{uploadBean.servidores}" var="servidor"
+						class="btn btn-default dropdown-toggle">
+						<f:selectItem itemValue="servidor_"
+							itemLabel="Selecione um Servidor" />
+						<f:selectItems value="#{servidor.nomeServidor}" />
+					</h:selectOneMenu>
+					ou
+					<button data-nome="nome1" data-id="1"
+						class="detalhes btn btn-md btn-primary" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="true">Cadastre um
+						Novo</button>
 
-					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+
+
+
+					<!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						<li><a href="#">Servidor Saturno</a></li>
 						<li><a href="#">Servidor Netuno</a></li>
 						<li><a href="#">Servidor Plutão</a></li>
-					</ul>
+					</ul>-->
 				</div>
 
 				<div class="form-group">
