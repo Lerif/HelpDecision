@@ -8,15 +8,19 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.Part;
 
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
 
-@SessionScoped
-@ManagedBean
+//@SessionScoped
+
+@ManagedBean(eager = true)
+@RequestScoped
 public class UploadBean {
 
 	private Part arquivo;
@@ -25,33 +29,30 @@ public class UploadBean {
 	protected static final String DIR_DO_TAR_GZ = "arquivo_log";
 	protected static final String CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT = System.getProperty("user.dir")
 			+ File.separator + NOME_DO_PROJETO + File.separator + CAMINHO_INTERNO + File.separator + DIR_DO_TAR_GZ;
-	private ServicoFachada servicoFachada = new ServicoFachada();
+	private ServicoFachada servicoFachada;
 
-	private List<Servidor> servidores = new ArrayList<Servidor>();
-	private ArrayList<SelectItem> listItems = null;
+	private Servidor servidorSelecionado;
+	private List<SelectItem> comboServidores;
 
-
-	public UploadBean(){
-		
+	public UploadBean() {
+		servicoFachada = new ServicoFachada();
 	}
-	
-	public void carregarDropDownServidores() {
+
+	public List<SelectItem> getComboServidores() throws SQLException {
+		this.comboServidores = new ArrayList<SelectItem>();
+		List<Servidor> servidores = null;
 		try {
-			this.servidores = servicoFachada.solicitarTodosServidoresDB();
+			servidores = servicoFachada.solicitarTodosServidoresDB();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//		listItems = new ArrayList<SelectItem>();
-//		try {
-//			this.servidores = servicoFachada.solicitarTodosServidoresDB();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		for (Servidor servidor : servidores) {
-//			listItems.add(new SelectItem("teste", servidor.getNomeServidor()));
-//		}
+
+		for (Servidor servidor : servidores) {
+			SelectItem item = new SelectItem(servidor.getIdServidor(), servidor.getNomeServidor());
+			this.comboServidores.add(item);
+		}
+		return comboServidores;
 	}
 
 	public void upload() throws IOException {
@@ -84,22 +85,12 @@ public class UploadBean {
 		this.arquivo = arquivo;
 	}
 
-	public List<Servidor> getServidores() {
-		return servidores;
+	public Servidor getServidorSelecionado() {
+		return servidorSelecionado;
 	}
 
-	public void setServidores(List<Servidor> servidores) {
-		this.servidores = servidores;
-	}
-
-
-	public ArrayList<SelectItem> getListItems() {
-		return listItems;
-	}
-
-
-	public void setListItems(ArrayList<SelectItem> listItems) {
-		this.listItems = listItems;
+	public void setServidorSelecionado(Servidor servidorSelecionado) {
+		this.servidorSelecionado = servidorSelecionado;
 	}
 
 }

@@ -66,8 +66,10 @@
 						data-toggle="modal" data-target="#cadastra_servidor">
 						Cadastre um Novo</button>
 					</button> -->
-					<h:selectOneMenu class="btn btn-default dropdown-toggle">
-						<f:selectItems value="#{uploadBean.listItems}" />
+					<h:selectOneMenu value="#{comboBox.servidorSelecionado.idServidor}"
+						class="btn btn-default dropdown-toggle">
+						<f:selectItem itemLabel="Selecione um Servidor" />
+						<f:selectItems value="#{comboBox.comboServidores}" />
 					</h:selectOneMenu>
 					ou
 					<button data-nome="nome1" data-id="1"
