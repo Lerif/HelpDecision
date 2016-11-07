@@ -10,10 +10,10 @@ import model.domain.repositorios.RepositorioArquivoLog;
 
 public class ArquivoLogServico {
 
-	private RepositorioArquivoLog repositorioArquivoLog;
+	private RepositorioArquivoLog repositorioArquivoLog =  new RepositorioArquivoLog();
 
-	private ArquivoLogServico() {
-		repositorioArquivoLog = new RepositorioArquivoLog();
+	public ArquivoLogServico() {
+		
 	}
 
 	public static ArquivoLogServico novo() {

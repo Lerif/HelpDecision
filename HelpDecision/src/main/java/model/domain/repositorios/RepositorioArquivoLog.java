@@ -10,12 +10,12 @@ import java.util.List;
 
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
+import model.domain.fabricas.FabricaArquivoLog;
 import model.domain.servicos.ServicoFachada;
 
 public class RepositorioArquivoLog {
 
 	Connection conexao;
-	private ServicoFachada servicoFachada = new ServicoFachada();
 
 	public RepositorioArquivoLog() {
 		this.conexao = new ConexaoDB().conectarDB();
@@ -47,10 +47,9 @@ public class RepositorioArquivoLog {
 		try {
 			ResultSet retornoSelect = stm.executeQuery(sql);
 			while (retornoSelect.next()) {
-				ArquivoLog arquivoLog = servicoFachada.solicitarCriacaoArquivoLog(retornoSelect.getInt("id_arquivo"),
+				arquivosLog.add(FabricaArquivoLog.nova().novoArquivoLog(retornoSelect.getInt("id_arquivo"),
 						retornoSelect.getString("nome_arquivo"), retornoSelect.getDate("data_upload"),
-						retornoSelect.getString("descricao"));
-				arquivosLog.add(arquivoLog);
+						retornoSelect.getString("descricao")));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

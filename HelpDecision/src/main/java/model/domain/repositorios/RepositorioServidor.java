@@ -8,14 +8,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.Servidor;
-import model.domain.servicos.ServicoFachada;
+import model.domain.fabricas.FabricaServidor;
 
 public class RepositorioServidor {
 
 	Connection conexao;
-	private ServicoFachada servicoFachada = new ServicoFachada();
 
 	public RepositorioServidor() {
 		this.conexao = new ConexaoDB().conectarDB();
@@ -41,17 +39,16 @@ public class RepositorioServidor {
 		try {
 			ResultSet retornoSelect = stm.executeQuery(sql);
 			while (retornoSelect.next()) {
-				Servidor servidor = servicoFachada.solicitarNovoServidor(retornoSelect.getInt("id_servidor"),
-						retornoSelect.getString("nome_servidor"));
-				servidores.add(servidor);
+				servidores.add(FabricaServidor.novo().novoServidor(retornoSelect.getInt("id_servidor"),
+						retornoSelect.getString("nome_servidor")));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return servidores;
 	}
-	
-	public Servidor findByName(Servidor servidor) throws SQLException{
+
+	public Servidor findByName(Servidor servidor) throws SQLException {
 		String sql = "SELECT * FROM tb_servidor WHERE nome_servidor = '" + servidor.getNomeServidor() + "'";
 		Statement stm = (Statement) conexao.createStatement();
 		try {
