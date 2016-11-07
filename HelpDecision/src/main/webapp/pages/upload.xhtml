@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
@@ -56,7 +57,6 @@
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
 
-					<button class="btn btn-primary dropdown-toggle" type="button"></button>
 					<!-- <button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="true">
@@ -67,13 +67,14 @@
 						data-toggle="modal" data-target="#cadastra_servidor">
 						Cadastre um Novo</button>
 					</button> -->
-					<h:selectOneMenu value="#{comboBox.servidorSelecionado.idServidor}"
+					<h:selectOneMenu
+						value="#{uploadBean.servidorSelecionado.idServidor}"
 						class="btn btn-default dropdown-toggle">
 						<f:selectItem itemLabel="Selecione um Servidor" />
-						<f:selectItems value="#{comboBox.comboServidores}" />
+						<f:selectItems value="#{uploadBean.comboServidores}" />
 					</h:selectOneMenu>
 					ou
-<					<button data-nome="nome1" data-id="1"
+					<button data-nome="nome1" data-id="1"
 						class="detalhes btn btn-md btn-primary" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="true">Cadastre um
 						Novo</button>
