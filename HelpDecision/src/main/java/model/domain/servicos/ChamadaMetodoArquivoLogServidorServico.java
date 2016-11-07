@@ -11,10 +11,9 @@ import model.domain.repositorios.RepositorioChamadaMetodoArquivoLogServidor;
 
 public class ChamadaMetodoArquivoLogServidorServico {
 
-	RepositorioChamadaMetodoArquivoLogServidor repositorioAgregador;
+	RepositorioChamadaMetodoArquivoLogServidor repositorioAgregador = new RepositorioChamadaMetodoArquivoLogServidor();
 	
-	private ChamadaMetodoArquivoLogServidorServico() {
-		repositorioAgregador = new RepositorioChamadaMetodoArquivoLogServidor();
+	public ChamadaMetodoArquivoLogServidorServico() {
 	}
 
 	public static ChamadaMetodoArquivoLogServidorServico novo() {
