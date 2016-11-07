@@ -55,6 +55,8 @@
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
+
+					<button class="btn btn-primary dropdown-toggle" type="button"></button>
 					<!-- <button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="true">
@@ -65,25 +67,16 @@
 						data-toggle="modal" data-target="#cadastra_servidor">
 						Cadastre um Novo</button>
 					</button> -->
-					<h:selectOneMenu class="btn btn-default dropdown-toggle">
-						<f:selectItems value="#{uploadBean.listItems}" />
+					<h:selectOneMenu value="#{comboBox.servidorSelecionado.idServidor}"
+						class="btn btn-default dropdown-toggle">
+						<f:selectItem itemLabel="Selecione um Servidor" />
+						<f:selectItems value="#{comboBox.comboServidores}" />
 					</h:selectOneMenu>
 					ou
-					<button type="button" class="detalhes btn btn-md btn-primary"
-						data-toggle="modal" data-target="#cadastra_servidor">Cadastre
-						um Novo</button>
-
-
-
-					<button data-nome="nome1" data-id="1"
+<					<button data-nome="nome1" data-id="1"
 						class="detalhes btn btn-md btn-primary" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="true">Cadastre um
-
 						Novo</button>
-
-
-
-
 					<!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						<li><a href="#">Servidor Saturno</a></li>
 						<li><a href="#">Servidor Netuno</a></li>
