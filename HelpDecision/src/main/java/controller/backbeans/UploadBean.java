@@ -45,8 +45,6 @@ public class UploadBean {
 		}
 
 		arquivo.write(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT + File.separator + buscarNomeDoArquivo(arquivo));
-		
-		
 	}
 
 	public void cadastrarServidor() {
