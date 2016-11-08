@@ -1,8 +1,12 @@
 package model.domain.servicos;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.commons.compress.archivers.ArchiveException;
 
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
@@ -14,6 +18,7 @@ public class ServicoFachada {
 	private ChamadaMetodoServico servicoChamadaMetodo = new ChamadaMetodoServico();
 	private ServidorServico servicoServidor = new ServidorServico();
 	private ChamadaMetodoArquivoLogServidorServico servicoAgregador = new ChamadaMetodoArquivoLogServidorServico();
+	private ServicoDescompactador servicoDescompactador = ServicoDescompactador.novo();
 
 	public ServicoFachada() {
 
@@ -66,6 +71,17 @@ public class ServicoFachada {
 	public List<Servidor> solicitarTodosServidoresDB() throws SQLException {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
 	} 
+	
+	// METODOS REFERENTE AO SERVICO DESCOMPACTADOR
+	public void extrairTarGz (File arquivoTarGz, File localDestino){
+		
+		try {
+			servicoDescompactador.extrairTarGz(arquivoTarGz, localDestino);
+		} catch (IOException | ArchiveException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	// Getters e setters
 	public void setServicoArquivoLog(ArquivoLogServico servicoArquivoLog) {

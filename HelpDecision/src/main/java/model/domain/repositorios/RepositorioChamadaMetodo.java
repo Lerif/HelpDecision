@@ -138,9 +138,7 @@ public class RepositorioChamadaMetodo {
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
-		}
-		
+		}	
 		return chamadasMetodo;
 	}
-
 }

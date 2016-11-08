@@ -20,7 +20,7 @@ public class UploadBean {
 	protected static final String NOME_DO_PROJETO = "HelpDecision";
 	protected static final String CAMINHO_INTERNO = "src" + File.separator + "main" + File.separator + "webapp";
 	protected static final String DIR_DO_TAR_GZ = "arquivo_log";
-	protected static final String CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT = System.getProperty("user.dir")
+	protected static final String CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ = System.getProperty("user.dir")
 			+ File.separator + NOME_DO_PROJETO + File.separator + CAMINHO_INTERNO + File.separator + DIR_DO_TAR_GZ;
 	private ServicoFachada servicoFachada = new ServicoFachada();
 
@@ -32,13 +32,18 @@ public class UploadBean {
 
 	public void upload() throws IOException {
 
-		File dirUpload = new File(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT);
+		File dirUpload = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ);
+		File fileTarGz;
 
 		if (!dirUpload.exists()) {
 			dirUpload.mkdirs();
 		}
 
-		arquivo.write(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT + File.separator + buscarNomeDoArquivo(arquivo));
+		arquivo.write(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ + File.separator + buscarNomeDoArquivo(arquivo));
+		
+		fileTarGz = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ + File.separator + buscarNomeDoArquivo(arquivo));
+		
+		servicoFachada.extrairTarGz(fileTarGz, dirUpload);
 	}
 
 	public String buscarNomeDoArquivo(Part part) {
