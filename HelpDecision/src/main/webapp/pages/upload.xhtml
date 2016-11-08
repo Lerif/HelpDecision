@@ -154,9 +154,18 @@
                     </tbody>
 
                 </table>
-					
-					
-					
+
+					<h:form>
+						<div class="form-group">
+
+							<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
+								<h:commandButton class="btn btn-warning pull-left btn-md m-t-md"
+									value="Voltar" action="#{uploadBean.voltar}" />
+							</div>
+						</div>
+
+					</h:form>
+
 				</div>
 
 			</div>
@@ -197,17 +206,7 @@
 		<!-- /.modal-dialog -->
 	</div>
 
-	<!-- TODO - Centralizar o botão-->
-	<h:form>
-		<div class="form-group">
-
-			<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
-				<h:commandButton class="btn btn-warning btn-md m-t-md"
-					value="Voltar" action="#{uploadBean.voltar}" />
-			</div>
-		</div>
-
-	</h:form>
+	
 
 </h:body>
 
@@ -232,13 +231,12 @@
 						<h:messages id="msgErro" style="color: red" layout="table" />
 					</div>
 					<div class="form-group">
-						<h:commandButton
-							class="btn btn-success btn-login-submit btn-md m-t-md" id="botao"
-							value="Confirmar" action="#{uploadBean.cadastrarServidor()}" />
 
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-						</div>
+							<div class="modal-footer">
+								<h:commandButton
+								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
+								id="botao" value="Confirmar" action="#{uploadBean.cadastrarServidor()}" />
+							</div>
 					</div>
 				</div>
 			</div>
