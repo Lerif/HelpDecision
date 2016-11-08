@@ -1,5 +1,6 @@
 package model.domain.servicos;
 
+import java.util.Date;
 import java.util.List;
 
 import model.domain.entidades.ChamadaMetodo;
@@ -20,5 +21,17 @@ public class ChamadaMetodoServico {
 	public List<ChamadaMetodo> inserirDadosNaTbChamadaMetodo(List<ChamadaMetodo> listaChamadaMetodo) {
 		return chamadaMetodoRepositorio.insert(listaChamadaMetodo);
 	}
+	
+	public List<ChamadaMetodo> buscarPorDuracao(long inicio, long fim){
+		return chamadaMetodoRepositorio.buscarPorDuracao(inicio, fim);
+	}
 
+	public List<ChamadaMetodo> buscarPorData(Date inicio, Date fim){
+		return chamadaMetodoRepositorio.buscarPorData(inicio, fim);
+	}
+	
+	public List<ChamadaMetodo> buscarPorServido(String nomeDoServidor){
+		return chamadaMetodoRepositorio.buscaPorServidor(nomeDoServidor);
+	}
+	
 }

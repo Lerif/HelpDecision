@@ -69,21 +69,17 @@
 						data-toggle="modal" data-target="#cadastra_servidor">
 						Cadastre um Novo</button>
 				</div>
-
 				<div class="form-group">
 					<label class="control-label"><br></br> <br></br> Arquivo de
 						log .tar.gz:</label><br></br>
 					<h:inputFile value="#{uploadBean.arquivo}" />
 				</div>
-
-
 				<div class="form-group">
 					<label for="portas"><h:outputText class="cadastroProduto"
 							value="Comentários:" /></label>
 					<h:inputText id="comentario" placeholder="text" type="text"
 						class="form-control" />
 				</div>
-
 				<br></br>
 				<h:messages id="msg" style="color:blue" layout="table" />
 				<br></br>
@@ -117,11 +113,8 @@
 
 
 					<table id="historico" class="table table-bordred table-striped">
-
 						<tbody>
-
 							<tr>
-
 								<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
 
 								<td><p data-placement="top" data-toggle="tooltip"
@@ -149,7 +142,6 @@
 						</tbody>
 
 					</table>
-
 					<h:form>
 						<div class="form-group">
 
@@ -189,10 +181,10 @@
 				</div>
 				<div class="modal-footer ">
 					<button type="button" class="btn btn-success">
-						<span class="glyphicon glyphicon-ok-sign"></span> Sim
+						<span class="glyphicon glyphicon-ok-sign"></span> Sim
 					</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">
-						<span class="glyphicon glyphicon-remove"></span> Não
+						<span class="glyphicon glyphicon-remove"></span> Não
 					</button>
 				</div>
 			</div>
@@ -226,7 +218,6 @@
 						<h:messages id="msgErro" style="color: red" layout="table" />
 					</div>
 					<div class="form-group">
-
 						<div class="modal-footer">
 							<h:commandButton
 								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
@@ -268,31 +259,23 @@
 </div>
 
 <script>
-
 	$(function() {
 		$('#orderModal').modal({
 			keyboard : true,
 			backdrop : "static",
 			show : false,
-
 		}).on('show', function() {
-
 		});
-
 		$(".table-striped").find('tr[data-id]').on(
 				'click',
 				function() {
 					debugger;
-
 					//do all your operation populate the modal and open the modal now. Dont need to use show event of modal again
-
 					$('#orderDetails').html(
 							$('<b> Order Id selected: ' + $(this).data('id')
 									+ '</b>'));
 					$('#orderModal').modal('show');
-
 				});
-
 	});
 </script>
 </html>
