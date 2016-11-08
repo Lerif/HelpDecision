@@ -73,7 +73,7 @@
 						<f:selectItems value="#{comboBox.comboServidores}" />
 					</h:selectOneMenu>
 					ou
-<					<button data-nome="nome1" data-id="1"
+					<button data-nome="nome1" data-id="1"
 						class="detalhes btn btn-md btn-primary" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="true">Cadastre um
 						Novo</button>
@@ -117,12 +117,12 @@
 
 	<div class="container">
 		<div class="row">
-
-
 			<div class="col-md-12">
 				<h3 class="text-center">Histórico de Arquivos</h3>
 				<div class="table-responsive">
-					<h:dataTable value="#{uploadBean.listaArquivoLog}" var="o">
+					<h:dataTable id="historico"
+						class="table table-bordred table-striped"
+						value="#{uploadBean.listaArquivoLog}" var="o">
 
 						<h:column>
 							<f:facet name="header">
@@ -131,45 +131,20 @@
 							<h:outputText value="#{o.nomeArquivo}" />
 						</h:column>
 
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Data Upload" />
+							</f:facet>
+							<h:outputText value="#{o.dataUpload}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Descrição" />
+							</f:facet>
+							<h:outputText value="#{o.descricao}" />
+						</h:column>
 					</h:dataTable>
-					
-					
-					<table id="historico" class="table table-bordred table-striped">
-
-                    <tbody>
-
-                        <tr>
-
-                            <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-
-                            <td><p data-placement="top" data-toggle="tooltip"
-                                    title="Excluir">
-                                    <button class="btn btn-danger btn-xs trash-btn"
-                                        data-title="Excluir" data-toggle="modal"
-                                        data-target="#delete">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </button>
-                                </p></td>
-                        </tr>
-                        <tr>
-                            <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-                            <td><p data-placement="top" data-toggle="tooltip"
-                                    title="Excluir">
-                                    <button class="btn btn-danger btn-xs trash-btn"
-                                        data-title="Excluir" data-toggle="modal"
-                                        data-target="#delete">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </button>
-                                </p></td>
-                        </tr>
-
-
-                    </tbody>
-
-                </table>
-					
-					
-					
 				</div>
 
 			</div>
