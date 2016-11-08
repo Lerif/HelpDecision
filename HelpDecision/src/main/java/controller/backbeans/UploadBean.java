@@ -26,10 +26,10 @@ public class UploadBean {
 	protected static final String CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT = System.getProperty("user.dir")
 			+ File.separator + NOME_DO_PROJETO + File.separator + CAMINHO_INTERNO + File.separator + DIR_DO_TAR_GZ;
 	private ServicoFachada servicoFachada;
-
 	private Servidor servidorSelecionado;
 	private List<SelectItem> comboServidores;
-
+	private String nomeServidor;
+	
 	public UploadBean() {
 		servicoFachada = new ServicoFachada();
 	}
@@ -45,6 +45,9 @@ public class UploadBean {
 		arquivo.write(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT + File.separator + buscarNomeDoArquivo(arquivo));
 	}
 
+	public void cadastrarServidor(){
+		servicoFachada.cadastrarServidor(0, getNomeServidor());
+	}
 	public List<ArquivoLog> getListaArquivoLog() {
 
 		try {
@@ -98,6 +101,14 @@ public class UploadBean {
 
 	public void setServidorSelecionado(Servidor servidorSelecionado) {
 		this.servidorSelecionado = servidorSelecionado;
+	}
+
+	public String getNomeServidor() {
+		return nomeServidor;
+	}
+
+	public void setNomeServidor(String nomeServidor) {
+		this.nomeServidor = nomeServidor;
 	}
 	
 

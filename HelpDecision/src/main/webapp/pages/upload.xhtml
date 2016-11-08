@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
@@ -56,28 +55,15 @@
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
-
-					<!-- <button class="btn btn-default dropdown-toggle" type="button"
-						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
-						aria-expanded="true">
-						Selecione um Servidor <span class="caret"></span>
-					</button>
-						ou
-					<button type="button" class="btn btn-md btn-primary"
-						data-toggle="modal" data-target="#cadastra_servidor">
-						Cadastre um Novo</button>
-					</button> -->
-					<h:selectOneMenu
-						value="#{uploadBean.servidorSelecionado.idServidor}"
-						class="btn btn-default dropdown-toggle">
+					<h:selectOneMenu value="#{uploadBean.servidorSelecionado.idServidor}"
+						class="btn btn-default">
 						<f:selectItem itemLabel="Selecione um Servidor" />
 						<f:selectItems value="#{uploadBean.comboServidores}" />
 					</h:selectOneMenu>
 					ou
-					<button data-nome="nome1" data-id="1"
-						class="detalhes btn btn-md btn-primary" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="true">Cadastre um
-						Novo</button>
+					<button type="button" class="btn btn-md btn-primary"
+					data-toggle="modal" data-target="#cadastra_servidor">
+					Cadastre um Novo</button>
 					<!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						<li><a href="#">Servidor Saturno</a></li>
 						<li><a href="#">Servidor Netuno</a></li>
@@ -109,7 +95,7 @@
 				<div class="form-group">
 					<h:commandButton type="submit"
 						class="btn btn-success btn-login-submit btn-md m-t-md"
-						value="Upload" action="#{uploadBean.upload()}" />
+						value="Upload" action="#{uploadBean.upload}"/>
 				</div>
 			</h:form>
 		</div>
@@ -238,7 +224,7 @@
 					<label for="variavelDeServidor"><h:outputText
 							id="servidorLabel" value="Nome do Servidor:" /></label>
 
-					<h:inputText id="nomeServidor" value="#{servidorBean.nomeServidor}"
+					<h:inputText id="nomeServidor" value="#{uploadBean.nomeServidor}"
 						type="text" class="form-control" required="true"
 						requiredMessage="Por gentiliza, preencha um nome para o novo Servidor" />
 
@@ -248,7 +234,7 @@
 					<div class="form-group">
 						<h:commandButton
 							class="btn btn-success btn-login-submit btn-md m-t-md" id="botao"
-							value="Confirmar" action="#{uploadBean.getServidor}" />
+							value="Confirmar" action="#{uploadBean.cadastrarServidor()}" />
 
 						<div class="modal-footer">
 							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -286,22 +272,6 @@
 </div>
 
 <script>
-	$(document).ready(function() {
-		$("#mytable #checkall").click(function() {
-			if ($("#mytable #checkall").is(':checked')) {
-				$("#mytable input[type=checkbox]").each(function() {
-					$(this).prop("checked", true);
-				});
-
-			} else {
-				$("#mytable input[type=checkbox]").each(function() {
-					$(this).prop("checked", false);
-				});
-			}
-		});
-
-		$("[data-toggle=tooltip]").tooltip();
-	});
 
 	$(function() {
 		$('#orderModal').modal({
@@ -327,18 +297,6 @@
 
 				});
 
-	});
-
-	$('.detalhes').on('click', function() {
-		var nome = $(this).data('nome'); // buscar o valor do atributo data-name que temos no botão que foi clicado
-		var modelo = $(this).data('modelo'); // buscar o valor do atributo data-id
-		var fabrica = $(this).data('fabrica');
-		var cor = $(this).data('cor');
-		var litros = $(this).data('litros');
-		var foto = $(this).data('foto');
-		var porta = $(this).data('porta');
-		$('span.nome').text(nome + ' (modelo = ' + modelo + ')');
-		$('#myModal').modal('show'); // modal aparece
 	});
 </script>
 </html>
