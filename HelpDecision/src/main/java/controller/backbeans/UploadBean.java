@@ -29,13 +29,15 @@ public class UploadBean {
 	private Servidor servidorSelecionado;
 	private List<SelectItem> comboServidores;
 	private String nomeServidor;
-	
+	private String itemSelecionado;
 	public UploadBean() {
 		servicoFachada = new ServicoFachada();
 	}
 
+	@SuppressWarnings("unused")
 	public void upload() throws IOException {
-
+		servicoFachada.
+		
 		File dirUpload = new File(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT);
 
 		if (!dirUpload.exists()) {
@@ -45,9 +47,10 @@ public class UploadBean {
 		arquivo.write(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT + File.separator + buscarNomeDoArquivo(arquivo));
 	}
 
-	public void cadastrarServidor(){
+	public void cadastrarServidor() {
 		servicoFachada.cadastrarServidor(0, getNomeServidor());
 	}
+
 	public List<ArquivoLog> getListaArquivoLog() {
 
 		try {
@@ -77,7 +80,7 @@ public class UploadBean {
 	public void setArquivo(Part arquivo) {
 		this.arquivo = arquivo;
 	}
-	
+
 	public List<SelectItem> getComboServidores() throws SQLException {
 		this.comboServidores = new ArrayList<SelectItem>();
 		List<Servidor> servidores = null;
@@ -91,6 +94,7 @@ public class UploadBean {
 		for (Servidor servidor : servidores) {
 			SelectItem item = new SelectItem(servidor.getIdServidor(), servidor.getNomeServidor());
 			this.comboServidores.add(item);
+			
 		}
 		return comboServidores;
 	}
@@ -110,6 +114,13 @@ public class UploadBean {
 	public void setNomeServidor(String nomeServidor) {
 		this.nomeServidor = nomeServidor;
 	}
-	
+
+	public String getItemSelecionado() {
+		return itemSelecionado;
+	}
+
+	public void setItemSelecionado(String itemSelecionado) {
+		this.itemSelecionado = itemSelecionado;
+	}
 
 }
