@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+      xmlns:a4j="http://richfaces.org/a4j">
 <h:head>
 
 	<script
@@ -55,13 +57,12 @@
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
-				<!-- converter="#{servidorConverter}" -->
-					<h:selectOneMenu 
-						value="#{uploadBean.itemSelecionado}"
+					<!-- converter="#{servidorConverter}" -->
+					<h:selectOneMenu value="#{uploadBean.itemSelecionado}"
 						class="btn btn-default">
 						<f:selectItem itemLabel="Selecione um Servidor" />
-						<f:selectItems value="#{uploadBean.comboServidores}"
-							 /> <!-- var="servidor" itemLabel="#{servidor.label}" -->
+						<f:selectItems value="#{uploadBean.comboServidores}" />
+						<!-- var="servidor" itemLabel="#{servidor.label}" -->
 					</h:selectOneMenu>
 					ou
 					<button type="button" class="btn btn-md btn-primary"
@@ -230,6 +231,8 @@
 							<h:commandButton
 								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
 								id="botao" value="Confirmar"
+								action="#{uploadBean.cadastrarServidor()}" />
+							<a4j:jsFunction id="js1" name="cadastrarSevidor"
 								action="#{uploadBean.cadastrarServidor()}" />
 						</div>
 					</div>

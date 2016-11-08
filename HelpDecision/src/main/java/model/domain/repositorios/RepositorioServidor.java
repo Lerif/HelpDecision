@@ -19,16 +19,36 @@ public class RepositorioServidor {
 		this.conexao = new ConexaoDB().conectarDB();
 	}
 
-	public Boolean insert(Servidor servidor) {
-		String sql = "INSERT INTO tb_servidor " + "(nome_servidor) " + "VALUES (?)";
-		try {
-			PreparedStatement pst = conexao.prepareStatement(sql);
-			pst.setString(1, servidor.getNomeServidor());
-			pst.execute();
-			pst.close();
-			return true;
-		} catch (Exception e) {
+	public Boolean insert(Servidor servidor) throws SQLException {
+		if (verificarServidorExiste(servidor) == false) {
+			String sql = "INSERT INTO tb_servidor " + "(nome_servidor) " + "VALUES (?)";
+			try {
+				PreparedStatement pst = conexao.prepareStatement(sql);
+				pst.setString(1, servidor.getNomeServidor());
+				pst.execute();
+				pst.close();
+				return true;
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		else{
 			return false;
+		}
+	}
+
+	public Boolean verificarServidorExiste(Servidor servidor) throws SQLException {
+		String sql = "SELECT * FROM tb_servidor WHERE nome_servidor = '" + servidor.getNomeServidor() + "'";
+		Statement stm = (Statement) conexao.createStatement();
+		try {
+			ResultSet retornoSelect = stm.executeQuery(sql);
+			if (retornoSelect.next()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (Exception e) {
+			return null;
 		}
 	}
 
@@ -77,4 +97,5 @@ public class RepositorioServidor {
 		}
 		return servidor;
 	}
+
 }

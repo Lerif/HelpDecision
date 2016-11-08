@@ -42,7 +42,7 @@ public class ServicoFachada {
 	}
 
 	// M�TODOS REFERENTE AO SERVICO SERVIDOR
-	public Boolean cadastrarServidor(int idServidor, String nomeServidor) {
+	public Boolean cadastrarServidor(int idServidor, String nomeServidor) throws SQLException {
 		return servicoServidor.cadastrarServidorDB(solicitarNovoServidor(idServidor, nomeServidor));
 	}
 

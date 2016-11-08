@@ -21,7 +21,7 @@ public class ServidorServico {
 		return FabricaServidor.novo().novoServidor(idServidor, nomeServidor);
 	}
 
-	public Boolean cadastrarServidorDB(Servidor servidor) {
+	public Boolean cadastrarServidorDB(Servidor servidor) throws SQLException {
 		return servidorRepositorio.insert(servidor);
 	}
 
