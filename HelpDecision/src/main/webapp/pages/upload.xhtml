@@ -2,8 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 
 	<script
@@ -56,7 +55,7 @@
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
-					<h:selectOneMenu value="#{uploadBean.servidorSelecionado.idServidor}"
+					<h:selectOneMenu  value="1"
 						class="btn btn-default">
 						<f:selectItem itemLabel="Selecione um Servidor" />
 						<f:selectItems value="#{uploadBean.comboServidores}" />
@@ -65,31 +64,18 @@
 					<button type="button" class="btn btn-md btn-primary"
 					data-toggle="modal" data-target="#cadastra_servidor">
 					Cadastre um Novo</button>
-					<!--  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						<li><a href="#">Servidor Saturno</a></li>
-						<li><a href="#">Servidor Netuno</a></li>
-						<li><a href="#">Servidor Plutão</a></li>
-					</ul>-->
 				</div>
-
 				<div class="form-group">
 					<label class="control-label"><br></br> <br></br> Arquivo de
 						log .tar.gz:</label><br></br>
 					<h:inputFile value="#{uploadBean.arquivo}" />
 				</div>
-				<!-- div class="form-group">
-					<label class="control-label"><br></br> <br></br> Arquivo de
-						log .tar.gz:</label><br></br>
-					<h:inputFile value="#{uploadBean.arquivo}" />
-				</div> -->
-
 				<div class="form-group">
 					<label for="portas"><h:outputText class="cadastroProduto"
 							value="Comentários:" /></label>
 					<h:inputText id="comentario" placeholder="text" type="text"
 						class="form-control" />
 				</div>
-
 				<br></br>
 				<h:messages id="msg" style="color:blue" layout="table" />
 				<br></br>
@@ -120,8 +106,8 @@
 						</h:column>
 
 					</h:dataTable>
-					
-					
+
+
 					<table id="historico" class="table table-bordred table-striped">
 
                     <tbody>
@@ -155,9 +141,18 @@
                     </tbody>
 
                 </table>
-					
-					
-					
+
+					<h:form>
+						<div class="form-group">
+
+							<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
+								<h:commandButton class="btn btn-warning pull-left btn-md m-t-md"
+									value="Voltar" action="#{uploadBean.voltar}" />
+							</div>
+						</div>
+
+					</h:form>
+
 				</div>
 
 			</div>
@@ -186,10 +181,10 @@
 				</div>
 				<div class="modal-footer ">
 					<button type="button" class="btn btn-success">
-						<span class="glyphicon glyphicon-ok-sign"></span> Sim
+						<span class="glyphicon glyphicon-ok-sign"></span> Sim
 					</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">
-						<span class="glyphicon glyphicon-remove"></span> Não
+						<span class="glyphicon glyphicon-remove"></span> Não
 					</button>
 				</div>
 			</div>
@@ -198,17 +193,7 @@
 		<!-- /.modal-dialog -->
 	</div>
 
-	<!-- TODO - Centralizar o botão-->
-	<h:form>
-		<div class="form-group">
 
-			<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
-				<h:commandButton class="btn btn-warning btn-md m-t-md"
-					value="Voltar" action="#{uploadBean.voltar}" />
-			</div>
-		</div>
-
-	</h:form>
 
 </h:body>
 
@@ -233,13 +218,12 @@
 						<h:messages id="msgErro" style="color: red" layout="table" />
 					</div>
 					<div class="form-group">
-						<h:commandButton
-							class="btn btn-success btn-login-submit btn-md m-t-md" id="botao"
-							value="Confirmar" action="#{uploadBean.cadastrarServidor()}" />
 
-						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-						</div>
+							<div class="modal-footer">
+								<h:commandButton
+								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
+								id="botao" value="Confirmar" action="#{uploadBean.cadastrarServidor()}" />
+							</div>
 					</div>
 				</div>
 			</div>
@@ -273,31 +257,23 @@
 </div>
 
 <script>
-
 	$(function() {
 		$('#orderModal').modal({
 			keyboard : true,
 			backdrop : "static",
 			show : false,
-
 		}).on('show', function() {
-
 		});
-
 		$(".table-striped").find('tr[data-id]').on(
 				'click',
 				function() {
 					debugger;
-
 					//do all your operation populate the modal and open the modal now. Dont need to use show event of modal again
-
 					$('#orderDetails').html(
 							$('<b> Order Id selected: ' + $(this).data('id')
 									+ '</b>'));
 					$('#orderModal').modal('show');
-
 				});
-
 	});
 </script>
 </html>

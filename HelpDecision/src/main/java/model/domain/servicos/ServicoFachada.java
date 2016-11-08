@@ -13,6 +13,7 @@ public class ServicoFachada {
 	private ChamadaMetodoServico servicoChamadaMetodo = new ChamadaMetodoServico();
 	private ServidorServico servicoServidor = new ServidorServico();
 	private ChamadaMetodoArquivoLogServidorServico servicoAgregador = new ChamadaMetodoArquivoLogServidorServico();
+	private ServicoDescompactador servicoDescompactador =  ServicoDescompactador.novo();
 
 	public ServicoFachada() {
 
