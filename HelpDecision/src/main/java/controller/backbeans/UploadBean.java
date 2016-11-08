@@ -36,7 +36,7 @@ public class UploadBean {
 
 	@SuppressWarnings("unused")
 	public void upload() throws IOException {
-		servicoFachada.
+		
 		
 		File dirUpload = new File(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT);
 
