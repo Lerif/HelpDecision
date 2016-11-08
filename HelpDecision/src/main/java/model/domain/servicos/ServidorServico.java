@@ -32,5 +32,9 @@ public class ServidorServico {
 	public Servidor recuperarIdServidor(Servidor servidor) throws SQLException {
 		return servidorRepositorio.findByName(servidor);
 	}
+	
+	public Servidor buscarPorId(Integer id) throws SQLException{
+		return servidorRepositorio.findById(id);
+	}
 
 }
