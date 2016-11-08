@@ -1,6 +1,7 @@
 package model.domain.servicos;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import model.domain.entidades.ArquivoLog;
@@ -30,6 +31,18 @@ public class ServicoFachada {
 	}
 
 	// M�TODOS REFERENTE AO SERVICO CHAMADA METODO
+	
+	public List<ChamadaMetodo> buscarPorDuracao(long inicio, long fim){
+		return servicoChamadaMetodo.buscarPorDuracao(inicio, fim);
+	}
+	
+	public List<ChamadaMetodo> buscarPorData(Date inicio, Date fim){
+		return servicoChamadaMetodo.buscarPorData(inicio, fim);
+	}
+	
+	public List<ChamadaMetodo> buscarPorServidor(String nomeDoServidor){
+		return servicoChamadaMetodo.buscarPorServido(nomeDoServidor);
+	}
 
 	// M�TODOS REFERENTE AO SERVICO ARQUIVO LOG
 	public ArquivoLog solicitarCriacaoArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload,
@@ -52,7 +65,7 @@ public class ServicoFachada {
 
 	public List<Servidor> solicitarTodosServidoresDB() throws SQLException {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
-	}
+	} 
 
 	// Getters e setters
 	public void setServicoArquivoLog(ArquivoLogServico servicoArquivoLog) {

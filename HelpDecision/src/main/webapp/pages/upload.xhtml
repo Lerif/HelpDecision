@@ -55,7 +55,6 @@
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
-					<button class="btn btn-primary dropdown-toggle" type="button"
 					<!-- <button class="btn btn-default dropdown-toggle" type="button"
 						id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
 						aria-expanded="true">
@@ -185,10 +184,10 @@
 				</div>
 				<div class="modal-footer ">
 					<button type="button" class="btn btn-success">
-						<span class="glyphicon glyphicon-ok-sign"></span> Sim
+						<span class="glyphicon glyphicon-ok-sign"></span> Sim
 					</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">
-						<span class="glyphicon glyphicon-remove"></span> Não
+						<span class="glyphicon glyphicon-remove"></span> Não
 					</button>
 				</div>
 			</div>
@@ -272,15 +271,12 @@
 </div>
 
 <script>
-
-
 $(document).ready(function(){
 	$("#mytable #checkall").click(function () {
 	        if ($("#mytable #checkall").is(':checked')) {
 	            $("#mytable input[type=checkbox]").each(function () {
 	                $(this).prop("checked", true);
 	            });
-
 	        } else {
 	            $("#mytable input[type=checkbox]").each(function () {
 	                $(this).prop("checked", false);
@@ -290,33 +286,21 @@ $(document).ready(function(){
 	    
 	    $("[data-toggle=tooltip]").tooltip();
 	});
-
-
-
 $(function () {
 	    $('#orderModal').modal({
 	        keyboard: true,
 	        backdrop: "static",
 	        show: false,
-
 	    }).on('show', function () {
-
 	    });
-
 	    $(".table-striped").find('tr[data-id]').on('click', function () {
 	        debugger;
-
 	        //do all your operation populate the modal and open the modal now. Dont need to use show event of modal again
-
 	        $('#orderDetails').html($('<b> Order Id selected: ' + $(this).data('id') + '</b>'));
 	        $('#orderModal').modal('show');
 	        
 	    });
-
 	});
-
-
-
 $('.detalhes').on('click', function(){
     var nome = $(this).data('nome'); // buscar o valor do atributo data-name que temos no botão que foi clicado
     var modelo = $(this).data('modelo'); // buscar o valor do atributo data-id
@@ -328,8 +312,5 @@ $('.detalhes').on('click', function(){
     $('span.nome').text(nome+ ' (modelo = ' +modelo+ ')'); 
     $('#myModal').modal('show'); // modal aparece
 });
-
-
-
 </script>
 </html>
