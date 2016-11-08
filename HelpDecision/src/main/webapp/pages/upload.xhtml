@@ -2,24 +2,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-      xmlns:a4j="http://richfaces.org/a4j">
+	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-
-	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css"
-		type="text/css" media="all" />
-	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css"
-		type="text/css" media="all" />
-	<link rel="script" href="../css/bootstrap/bootstrap-theme.css"
-		type="text/css" media="all" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
+	<link rel="script" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
+	<script src="../dist/js/alertify.min.js"></script>
+	<link rel="stylesheet" href="../css/alertify.min.css" />
+	<link rel="stylesheet" href="../css/themes/default.min.css" />
+	
+	
 	<title>Upload | Help Decision</title>
 </h:head>
 
@@ -31,7 +28,7 @@
 			<button type="button" class="navbar-toggle collapsed"
 				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
 				aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span> <span
+				<span class="sr-only">Barra de Navegação</span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
@@ -57,17 +54,18 @@
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
-					<!-- converter="#{servidorConverter}" -->
-					<h:selectOneMenu value="#{uploadBean.itemSelecionado}"
+				<!-- converter="#{servidorConverter}" -->
+					<h:selectOneMenu 
+						value="#{uploadBean.itemSelecionado}"
 						class="btn btn-default">
 						<f:selectItem itemLabel="Selecione um Servidor" />
-						<f:selectItems value="#{uploadBean.comboServidores}" />
-						<!-- var="servidor" itemLabel="#{servidor.label}" -->
+						<f:selectItems value="#{uploadBean.comboServidores}"
+							 /> <!-- var="servidor" itemLabel="#{servidor.label}" -->
 					</h:selectOneMenu>
 					ou
 					<button type="button" class="btn btn-md btn-primary"
-						data-toggle="modal" data-target="#cadastra_servidor">
-						Cadastre um Novo</button>
+					data-toggle="modal" data-target="#test">
+					Cadastre um Novo</button>
 				</div>
 				<div class="form-group">
 					<label class="control-label"><br></br> <br></br> Arquivo de
@@ -80,13 +78,16 @@
 					<h:inputText id="comentario" placeholder="text" type="text"
 						class="form-control" />
 				</div>
+				
+				<p id="mostrarMensagemServidor"></p>
+				
 				<br></br>
 				<h:messages id="msg" style="color:blue" layout="table" />
 				<br></br>
 				<div class="form-group">
 					<h:commandButton type="submit"
 						class="btn btn-success btn-login-submit btn-md m-t-md"
-						value="Upload" action="#{uploadBean.upload}" />
+						value="Upload" action="#{uploadBean.upload}"/>
 				</div>
 			</h:form>
 		</div>
@@ -113,35 +114,41 @@
 
 
 					<table id="historico" class="table table-bordred table-striped">
-						<tbody>
-							<tr>
-								<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-
-								<td><p data-placement="top" data-toggle="tooltip"
-										title="Excluir">
-										<button class="btn btn-danger btn-xs trash-btn"
-											data-title="Excluir" data-toggle="modal"
-											data-target="#delete">
-											<span class="glyphicon glyphicon-trash"></span>
-										</button>
-									</p></td>
-							</tr>
-							<tr>
-								<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-								<td><p data-placement="top" data-toggle="tooltip"
-										title="Excluir">
-										<button class="btn btn-danger btn-xs trash-btn"
-											data-title="Excluir" data-toggle="modal"
-											data-target="#delete">
-											<span class="glyphicon glyphicon-trash"></span>
-										</button>
-									</p></td>
-							</tr>
 
 
-						</tbody>
+                    <tbody>
 
-					</table>
+                        <tr>
+                            <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
+                            <td><p data-placement="top" data-toggle="tooltip"
+                                    title="Excluir">
+                                    <button class="btn btn-danger btn-xs trash-btn"
+                                        data-title="Excluir" data-toggle="modal"
+                                        data-target="#delete">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                               </p></td>
+                        </tr>
+                        <tr>
+
+                            <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
+
+                            <td><p data-placement="top" data-toggle="tooltip"
+                                    title="Excluir">
+                                    <button class="btn btn-danger btn-xs trash-btn"
+                                        data-title="Excluir" data-toggle="modal"
+                                        data-target="#delete">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </p></td>
+                        </tr>
+
+
+
+                    </tbody>
+
+                </table>
+
 					<h:form>
 						<div class="form-group">
 
@@ -158,7 +165,7 @@
 			</div>
 		</div>
 	</div>
-
+	
 	<!--  Modal excluir arquivo anterior  -->
 	<div class="modal fade" id="delete" tabindex="-1" role="dialog"
 		aria-labelledby="edit" aria-hidden="true">
@@ -181,10 +188,10 @@
 				</div>
 				<div class="modal-footer ">
 					<button type="button" class="btn btn-success">
-						<span class="glyphicon glyphicon-ok-sign"></span> Sim
+						<span class="glyphicon glyphicon-ok-sign"></span> Sim
 					</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">
-						<span class="glyphicon glyphicon-remove"></span> Não
+						<span class="glyphicon glyphicon-remove"></span> Não
 					</button>
 				</div>
 			</div>
@@ -196,6 +203,28 @@
 
 
 </h:body>
+
+
+
+<!--  Modal Teste -->
+<div class="modal fade" id="test" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Arquivo</h4>
+            </div>
+            <div class="modal-body">
+                <a href="javascript:confirmarCadastroServidor();" class="button">Cadastrar</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 
 <!--  Modal Cadastrar novo servidor  -->
 <div id="cadastra_servidor" class="modal fade" role="dialog">
@@ -212,20 +241,38 @@
 
 					<h:inputText id="nomeServidor" value="#{uploadBean.nomeServidor}"
 						type="text" class="form-control" required="true"
-						requiredMessage="Por gentiliza, preencha um nome para o novo Servidor" />
+						requiredMessage="Por gentiliza, preencha um nome para o novo Servidor" />	
 
 					<div class="form-group">
 						<h:messages id="msgErro" style="color: red" layout="table" />
 					</div>
 					<div class="form-group">
-						<div class="modal-footer">
-							<h:commandButton
+
+							<script>
+							function my_prompt()
+							{
+
+							    	var notification = alertify.notify('Servidor não cadastrado!', 'error', 5, function(){  console.log('dismissed'); });
+
+							}
+							
+							function confirmarCadastroServidor() {
+									var imprimirTextoConfirmacao = false;
+
+									if (imprimirTextoConfirmacao == true) {
+										var notification = alertify.notify('Servidor cadastrado com sucesso!', 'success', 5, function(){  console.log('dismissed'); });
+								    } else {
+								    	var notification = alertify.notify('Servidor não cadastrado!', 'error', 5, function(){  console.log('dismissed'); });
+								    }
+								}
+
+							</script>
+							<div class="modal-footer">
+								<h:commandLink onclick="confirmarCadastroServidor()" 
+								id="botaoConfirmar"
 								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
-								id="botao" value="Confirmar"
-								action="#{uploadBean.cadastrarServidor()}" />
-							<a4j:jsFunction id="js1" name="cadastrarSevidor"
-								action="#{uploadBean.cadastrarServidor()}" />
-						</div>
+								 value="Confirmar" action="#{uploadBean.cadastrarServidor()}"> </h:commandLink>
+							</div>
 					</div>
 				</div>
 			</div>
@@ -247,9 +294,12 @@
 			</div>
 			<div class="modal-body">
 				<b>Desenvolvido por:</b><br></br> Jovens Profissionais "Doberman"<br></br>
-				<br></br> <b>Equipe:</b><br></br> Gabriel Rado<br></br> Guilherme
-				Bury<br></br> Gustavo Daneluti<br></br> Thales Rocha<br></br> Thiago
-				Osiro
+				<br></br> <b>Equipe:</b><br></br> 
+				Gabriel Rado<br></br> 
+				Guilherme Bury<br></br>
+				Gustavo Daneluti<br></br>
+				Thales Rocha<br></br> 
+				Thiago Osiro
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -257,25 +307,4 @@
 		</div>
 	</div>
 </div>
-
-<script>
-	$(function() {
-		$('#orderModal').modal({
-			keyboard : true,
-			backdrop : "static",
-			show : false,
-		}).on('show', function() {
-		});
-		$(".table-striped").find('tr[data-id]').on(
-				'click',
-				function() {
-					debugger;
-					//do all your operation populate the modal and open the modal now. Dont need to use show event of modal again
-					$('#orderDetails').html(
-							$('<b> Order Id selected: ' + $(this).data('id')
-									+ '</b>'));
-					$('#orderModal').modal('show');
-				});
-	});
-</script>
 </html>
