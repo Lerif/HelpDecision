@@ -97,9 +97,6 @@ public class RepositorioServidor {
 		}
 		return servidor;
 	}
-<<<<<<< HEAD
+}
 
-}
-=======
-}
->>>>>>> branch 'master' of https://github.com/Lerif/HelpDecision
+
