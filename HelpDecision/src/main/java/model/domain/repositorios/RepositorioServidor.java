@@ -61,4 +61,20 @@ public class RepositorioServidor {
 		}
 		return servidor;
 	}
+
+	public Servidor findById(Integer id) throws SQLException {
+		String sql = "SELECT id_servidor, nome_servidor FROM tb_servidor WHERE id_servidor = '" + id + "'";
+		Servidor servidor = null;
+		Statement stm = (Statement) conexao.createStatement();
+		try {
+			ResultSet retornoSelect = stm.executeQuery(sql);
+			while (retornoSelect.next()) {
+				servidor = FabricaServidor.novo().novoServidor(retornoSelect.getInt("id_servidor"),
+						retornoSelect.getString("nome_servidor"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return servidor;
+	}
 }

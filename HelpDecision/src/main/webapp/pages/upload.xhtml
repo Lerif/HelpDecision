@@ -55,15 +55,18 @@
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
-					<h:selectOneMenu  value="1"
+				<!-- converter="#{servidorConverter}" -->
+					<h:selectOneMenu 
+						value="#{uploadBean.itemSelecionado}"
 						class="btn btn-default">
 						<f:selectItem itemLabel="Selecione um Servidor" />
-						<f:selectItems value="#{uploadBean.comboServidores}" />
+						<f:selectItems value="#{uploadBean.comboServidores}"
+							 /> <!-- var="servidor" itemLabel="#{servidor.label}" -->
 					</h:selectOneMenu>
 					ou
 					<button type="button" class="btn btn-md btn-primary"
-					data-toggle="modal" data-target="#cadastra_servidor">
-					Cadastre um Novo</button>
+						data-toggle="modal" data-target="#cadastra_servidor">
+						Cadastre um Novo</button>
 				</div>
 				<div class="form-group">
 					<label class="control-label"><br></br> <br></br> Arquivo de
@@ -82,7 +85,7 @@
 				<div class="form-group">
 					<h:commandButton type="submit"
 						class="btn btn-success btn-login-submit btn-md m-t-md"
-						value="Upload" action="#{uploadBean.upload}"/>
+						value="Upload" action="#{uploadBean.upload}" />
 				</div>
 			</h:form>
 		</div>
@@ -109,39 +112,35 @@
 
 
 					<table id="historico" class="table table-bordred table-striped">
+						<tbody>
+							<tr>
+								<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
 
-                    <tbody>
-
-                        <tr>
-
-                            <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-
-                            <td><p data-placement="top" data-toggle="tooltip"
-                                    title="Excluir">
-                                    <button class="btn btn-danger btn-xs trash-btn"
-                                        data-title="Excluir" data-toggle="modal"
-                                        data-target="#delete">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </button>
-                                </p></td>
-                        </tr>
-                        <tr>
-                            <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-                            <td><p data-placement="top" data-toggle="tooltip"
-                                    title="Excluir">
-                                    <button class="btn btn-danger btn-xs trash-btn"
-                                        data-title="Excluir" data-toggle="modal"
-                                        data-target="#delete">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </button>
-                                </p></td>
-                        </tr>
+								<td><p data-placement="top" data-toggle="tooltip"
+										title="Excluir">
+										<button class="btn btn-danger btn-xs trash-btn"
+											data-title="Excluir" data-toggle="modal"
+											data-target="#delete">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
+									</p></td>
+							</tr>
+							<tr>
+								<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
+								<td><p data-placement="top" data-toggle="tooltip"
+										title="Excluir">
+										<button class="btn btn-danger btn-xs trash-btn"
+											data-title="Excluir" data-toggle="modal"
+											data-target="#delete">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
+									</p></td>
+							</tr>
 
 
-                    </tbody>
+						</tbody>
 
-                </table>
-
+					</table>
 					<h:form>
 						<div class="form-group">
 
@@ -218,12 +217,12 @@
 						<h:messages id="msgErro" style="color: red" layout="table" />
 					</div>
 					<div class="form-group">
-
-							<div class="modal-footer">
-								<h:commandButton
+						<div class="modal-footer">
+							<h:commandButton
 								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
-								id="botao" value="Confirmar" action="#{uploadBean.cadastrarServidor()}" />
-							</div>
+								id="botao" value="Confirmar"
+								action="#{uploadBean.cadastrarServidor()}" />
+						</div>
 					</div>
 				</div>
 			</div>
