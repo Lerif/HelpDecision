@@ -48,7 +48,7 @@ public class RepositorioChamadaMetodo {
 			}
 
 		} catch (Exception e) {
-
+			System.err.println("[RepositorioChamadaMetodo] Erro: " + e);
 		}
 		return chamadaMetodoComChave;
 	}

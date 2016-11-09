@@ -3,15 +3,23 @@ package controller.backbeans;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.Part;
+import javax.xml.bind.ParseConversionEvent;
+
+import com.sun.jna.platform.unix.X11.XClientMessageEvent.Data;
 
 import model.domain.entidades.ArquivoLog;
+import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
 
@@ -36,20 +44,39 @@ public class UploadBean {
 
 	public void upload() throws IOException {
 		
+		long time = System.currentTimeMillis();
+		java.sql.Date date = new java.sql.Date(time) ;
+		//date.setTime(time);
 		
+		List<ChamadaMetodo> metodos = null; 
+				
 		File dirUpload = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ);
 		File fileTarGz;
+		
+		ArquivoLog arquivoLog = servicoFachada.solicitarCriacaoArquivoLog(0, buscarNomeDoArquivo(arquivo), date, "");
 
 		if (!dirUpload.exists()) {
 			dirUpload.mkdirs();
 		}
 		
+		// Escreve arquivo que foi dado upload em diretorio arquivo_log
 		arquivo.write(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ + File.separator + buscarNomeDoArquivo(arquivo));
 		
+		// Pega nome do arquivo .tar.gz
 		fileTarGz = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ + File.separator + buscarNomeDoArquivo(arquivo));
 		
-		servicoFachada.extrairTarGz(fileTarGz, dirUpload);
+		// Pega nome(s) do(s) arquivo(s) descompactado(s)
+		List<File> arquivoExtraido = servicoFachada.extrairTarGz(fileTarGz, dirUpload);
+		
+		for(File arq : arquivoExtraido){
+			metodos = servicoFachada.lerArquivoLog(arq.getAbsolutePath());
+		}
 
+		try {
+			servicoFachada.inserirNovoArquivo(metodos, arquivoLog, Integer.parseInt(itemSelecionado));
+		} catch (NumberFormatException | SQLException e) {
+			System.err.println("[UploadBean]Erro ao recuperar servidor:" + e);
+		}
 	}
 
 	public void cadastrarServidor() {
