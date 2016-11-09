@@ -12,6 +12,7 @@ import javax.faces.model.SelectItem;
 import javax.servlet.http.Part;
 
 import model.domain.entidades.ArquivoLog;
+import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
 
@@ -36,9 +37,13 @@ public class UploadBean {
 
 	public void upload() throws IOException {
 		
+		List<File> arquivosExtraidos;
+		List<ChamadaMetodo> chamadaMetodos;
+		ArquivoLog arquivoLog;
 		
 		File dirUpload = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ);
 		File fileTarGz;
+		
 
 		if (!dirUpload.exists()) {
 			dirUpload.mkdirs();
@@ -48,8 +53,18 @@ public class UploadBean {
 		
 		fileTarGz = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ + File.separator + buscarNomeDoArquivo(arquivo));
 		
-		servicoFachada.extrairTarGz(fileTarGz, dirUpload);
-
+		arquivosExtraidos = servicoFachada.extrairTarGz(fileTarGz, dirUpload);
+		
+		for (File arq : arquivosExtraidos){
+			arquivoLog = ArquivoLog.novo(1, arq.getName(), null, "");
+			chamadaMetodos = servicoFachada.lerArquivoLog(arq.getAbsolutePath());
+			try {
+				servicoFachada.inserirNovoArquivo(chamadaMetodos, arquivoLog, Integer.parseInt(itemSelecionado));
+			} catch (NumberFormatException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void cadastrarServidor() {

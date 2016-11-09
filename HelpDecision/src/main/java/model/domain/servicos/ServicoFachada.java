@@ -3,6 +3,8 @@ package model.domain.servicos;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class ServicoFachada {
 	private ServidorServico servicoServidor = new ServidorServico();
 	private ChamadaMetodoArquivoLogServidorServico servicoAgregador = new ChamadaMetodoArquivoLogServidorServico();
 	private ServicoDescompactador servicoDescompactador = ServicoDescompactador.novo();
+	private Leitor leitor = new Leitor();
 
 
 	public ServicoFachada() {
@@ -34,6 +37,17 @@ public class ServicoFachada {
 		return servicoAgregador.inserirAgregador(servicoAgregador.agregar(
 				servicoChamadaMetodo.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo),
 				servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog), servicoServidor.recuperarIdServidor(servidor)));
+	}
+	
+	public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo, ArquivoLog arquivoLog, int idSservidor)
+			throws SQLException {
+		// Faz insert na tb_chamada_metodo
+		// Faz insert na tb_arquivo
+		// Recuperar o id_servidor a partir do seu nome
+		// Agrega listChamadaMetodo, ArquivoLog e Servidor
+		return servicoAgregador.inserirAgregador(servicoAgregador.agregar(
+				servicoChamadaMetodo.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo),
+				servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog), servicoServidor.buscarPorId(idSservidor)));
 	}
 
 	// M�TODOS REFERENTE AO SERVICO CHAMADA METODO
@@ -74,14 +88,26 @@ public class ServicoFachada {
 	} 
 	
 	// METODOS REFERENTE AO SERVICO DESCOMPACTADOR
-	public void extrairTarGz (File arquivoTarGz, File localDestino){
+	public List<File> extrairTarGz (File arquivoTarGz, File localDestino){
 		
 		try {
-			servicoDescompactador.extrairTarGz(arquivoTarGz, localDestino);
+			return servicoDescompactador.extrairTarGz(arquivoTarGz, localDestino);
 		} catch (IOException | ArchiveException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return new ArrayList<File>();
+	}
+	
+	// METODO REFERENTE AO LEITO
+	public List<ChamadaMetodo> lerArquivoLog(String arquivo){
+		try {
+			return leitor.ler(arquivo);
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<ChamadaMetodo>();
 	}
 
 	// Getters e setters
