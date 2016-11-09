@@ -11,6 +11,7 @@ import java.util.List;
 
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.fabricas.FabricaChamadaMetodo;
+import model.domain.util.CalendarioUtil;
 
 public class RepositorioChamadaMetodo {
 
@@ -33,8 +34,8 @@ public class RepositorioChamadaMetodo {
 						+ "VALUES (?, ?, ?, ?, ?, ?)";
 				PreparedStatement pst = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				pst.setString(1, chamadaMetodo.getNomeMetodo());
-				pst.setDate(2, chamadaMetodo.getDataInicio());
-				pst.setDate(3, chamadaMetodo.getDataFim());
+				pst.setTimestamp(2, CalendarioUtil.dateParaSqlTimestamp(chamadaMetodo.getDataInicio()));
+				pst.setTimestamp(3, CalendarioUtil.dateParaSqlTimestamp(chamadaMetodo.getDataFim()));
 				pst.setLong(4, chamadaMetodo.getDuracao());
 				pst.setString(5, chamadaMetodo.getIdElemento());
 				pst.setString(6, chamadaMetodo.getTipoElemento());

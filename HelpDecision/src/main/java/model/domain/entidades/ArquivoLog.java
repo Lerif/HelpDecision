@@ -1,6 +1,8 @@
 package model.domain.entidades;
 
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +21,7 @@ public class ArquivoLog {
 	@Column(name = "nome_arquivo")
 	private String nomeArquivo;
 	@Column(name = "data_upload")
-	private java.sql.Date dataUpload;
+	private Date dataUpload;
 	@Column(name = "descricao")
 	private String descricao;
 
@@ -27,14 +29,14 @@ public class ArquivoLog {
 
 	}
 
-	private ArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload, String descricao) {
+	private ArquivoLog(int idArquivo, String nomeArquivo, Date dataUpload, String descricao) {
 		this.idArquivo = idArquivo;
 		this.nomeArquivo = nomeArquivo;
 		this.dataUpload = dataUpload;
 		this.descricao = descricao;
 	}
 
-	public static ArquivoLog novo(int idArquivo, String nomeArquivo, java.sql.Date dataUpload, String descricao) {
+	public static ArquivoLog novo(int idArquivo, String nomeArquivo, Date dataUpload, String descricao) {
 		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
 	}
 
@@ -46,11 +48,12 @@ public class ArquivoLog {
 		this.nomeArquivo = nomeArquivo;
 	}
 
-	public java.sql.Date getDataUpload() {
+
+	public Date getDataUpload() {
 		return dataUpload;
 	}
 
-	public void setDataUpload(java.sql.Date dataUpload) {
+	public void setDataUpload(Date dataUpload) {
 		this.dataUpload = dataUpload;
 	}
 

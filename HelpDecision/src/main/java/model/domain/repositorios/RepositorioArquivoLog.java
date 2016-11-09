@@ -12,6 +12,7 @@ import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.fabricas.FabricaArquivoLog;
 import model.domain.servicos.ServicoFachada;
+import model.domain.util.CalendarioUtil;
 
 public class RepositorioArquivoLog {
 
@@ -26,7 +27,7 @@ public class RepositorioArquivoLog {
 		try {
 			PreparedStatement pst = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, arquivoLog.getNomeArquivo());
-			pst.setDate(2, arquivoLog.getDataUpload());
+			pst.setTimestamp(2, CalendarioUtil.dateParaSqlTimestamp(arquivoLog.getDataUpload()));
 			pst.setString(3, arquivoLog.getDescricao());
 			pst.execute();
 			final ResultSet resultSet = pst.getGeneratedKeys();

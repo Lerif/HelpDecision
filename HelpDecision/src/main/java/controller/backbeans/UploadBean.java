@@ -45,8 +45,8 @@ public class UploadBean {
 	public void upload() throws IOException {
 		
 		long time = System.currentTimeMillis();
-		java.sql.Date date = new java.sql.Date(time) ;
-		//date.setTime(time);
+		Date date = new Date(time);
+
 		List<File> arquivosExtraidos;
 		List<ChamadaMetodo> chamadaMetodos;
 		ArquivoLog arquivoLog;
@@ -70,7 +70,10 @@ public class UploadBean {
 		arquivosExtraidos = servicoFachada.extrairTarGz(fileTarGz, dirUpload);
 		
 		for (File arq : arquivosExtraidos){
-			arquivoLog = ArquivoLog.novo(1, arq.getName(), null, "");
+			arquivoLog = ArquivoLog.novo(1, arq.getName(), date, "");
+			
+			System.out.println("[UploadBean] date(sql): " + date);
+			
 			chamadaMetodos = servicoFachada.lerArquivoLog(arq.getAbsolutePath());
 			
 			try {
