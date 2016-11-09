@@ -83,9 +83,11 @@
 				<h:messages id="msg" style="color:blue" layout="table" />
 				<br></br>
 				<div class="form-group">
+					
 					<h:commandButton type="submit"
 						class="btn btn-success btn-login-submit btn-md m-t-md"
 						value="Upload" action="#{uploadBean.upload}" />
+					
 				</div>
 			</h:form>
 		</div>
@@ -201,7 +203,7 @@
 <!--  Modal Cadastrar novo servidor  -->
 <div id="cadastra_servidor" class="modal fade" role="dialog">
 	<div class="modal-dialog">
-		<h:form id="formCadastraServidor">
+	<h:form id="formCadastraServidor">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -223,7 +225,7 @@
 
 						<div class="modal-footer">
 							<h:commandButton
-								onclick="setTimeout(confirmarCadastroServidor, delay)"
+								onclick="setTimeout(confirmarCadastroServidor(), delay)"
 								id="botaoConfirmar"
 								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
 								value="Confirmar" action="#{uploadBean.cadastrarServidor()}">
@@ -263,20 +265,13 @@
 
 	<script>
 	
-	<!-- alertify -->
-	function confirmarCadastroServidor(boolean textoConfirmacaoServidor) {
-			var imprimirTextoConfirmacao
-			imprimirTextoConfirmacao = textoConfirmacaoServidor;
-			
-			if (imprimirTextoConfirmacao == true) {
-				var notification = alertify.notify('Servidor cadastrado!', 'success', 5, function(){  console.log('dismissed'); });
-		    } else {
-		    	var notification = alertify.notify('Servidor NÃO cadastrado!', 'error', 5, function(){  console.log('dismissed'); });
-		    }
-			setTimeout(confirmarCadastroServidor, delay)
+		function confirmarCadastroServidor() {
+			var notification = alertify.notify('Servidor cadastrado!', 'success', 5, function(){  console.log('dismissed'); });
+
 		}
 		var delay = 200;
 		setTimeout(confirmarCadastroServidor, delay)
-
+		
+		
 	</script>
 </html>
