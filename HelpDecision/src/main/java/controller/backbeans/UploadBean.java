@@ -72,8 +72,6 @@ public class UploadBean {
 		for (File arq : arquivosExtraidos){
 			arquivoLog = ArquivoLog.novo(1, arq.getName(), date, "");
 			
-			System.out.println("[UploadBean] date(sql): " + date);
-			
 			chamadaMetodos = servicoFachada.lerArquivoLog(arq.getAbsolutePath());
 			
 			try {
