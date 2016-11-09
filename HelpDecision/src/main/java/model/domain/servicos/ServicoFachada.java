@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.compress.archivers.ArchiveException;
@@ -86,7 +85,13 @@ public class ServicoFachada {
 
 	public List<Servidor> solicitarTodosServidoresDB() throws SQLException {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
-	} 
+	}
+	
+	// METODOS REFERENTE AO AGREGADOR
+	public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long duracaoInicio, long duracaoFim, Date dataInicio,
+			Date dataFim){
+		return servicoAgregador.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
+	}
 	
 	// METODOS REFERENTE AO SERVICO DESCOMPACTADOR
 	public List<File> extrairTarGz (File arquivoTarGz, File localDestino){

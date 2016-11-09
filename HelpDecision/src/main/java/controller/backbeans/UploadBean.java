@@ -3,10 +3,7 @@ package controller.backbeans;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,9 +11,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.Part;
-import javax.xml.bind.ParseConversionEvent;
-
-import com.sun.jna.platform.unix.X11.XClientMessageEvent.Data;
 
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
@@ -38,6 +32,8 @@ public class UploadBean {
 	private List<SelectItem> comboServidores;
 	private String nomeServidor;
 	private String itemSelecionado;
+	private String comentarioArquivo;
+	
 	public UploadBean() {
 		servicoFachada = new ServicoFachada();
 	}
@@ -50,12 +46,9 @@ public class UploadBean {
 		List<File> arquivosExtraidos;
 		List<ChamadaMetodo> chamadaMetodos;
 		ArquivoLog arquivoLog;
-		
-		List<ChamadaMetodo> metodos = null; 
 				
 		File dirUpload = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ);
 		File fileTarGz;
-
 
 		if (!dirUpload.exists()) {
 			dirUpload.mkdirs();
@@ -70,7 +63,7 @@ public class UploadBean {
 		arquivosExtraidos = servicoFachada.extrairTarGz(fileTarGz, dirUpload);
 		
 		for (File arq : arquivosExtraidos){
-			arquivoLog = ArquivoLog.novo(1, arq.getName(), date, "");
+			arquivoLog = ArquivoLog.novo(1, arq.getName(), date, comentarioArquivo);
 			
 			chamadaMetodos = servicoFachada.lerArquivoLog(arq.getAbsolutePath());
 			
@@ -158,5 +151,15 @@ public class UploadBean {
 	public void setItemSelecionado(String itemSelecionado) {
 		this.itemSelecionado = itemSelecionado;
 	}
+
+	public String getComentarioArquivo() {
+		return comentarioArquivo;
+	}
+
+	public void setComentarioArquivo(String comentarioArquivo) {
+		this.comentarioArquivo = comentarioArquivo;
+	}
+	
+	
 
 }
