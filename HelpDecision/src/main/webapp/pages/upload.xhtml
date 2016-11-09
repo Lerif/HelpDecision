@@ -38,8 +38,14 @@
 			id="bs-example-navbar-collapse-1">
 			<p class="navbar-text">Help Decision</p>
 			<ul class="nav navbar-nav navbar-right">
+										
 				<li data-toggle="modal" data-target="#modal_sobre"><a href="#">Sobre</a></li>
-
+				<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
+					<a href="home.xhtml">
+						<h:commandButton class="btn btn-warning pull-left btn-md m-t-md"
+						value="Dashboard" />
+					</a>
+				</div>
 			</ul>
 		</div>
 
@@ -146,17 +152,6 @@
 						</tbody>
 
 					</table>
-
-					<h:form>
-						<div class="form-group">
-
-							<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
-								<h:commandButton class="btn btn-warning pull-left btn-md m-t-md"
-									value="Voltar" action="#{uploadBean.voltar}" />
-							</div>
-						</div>
-
-					</h:form>
 
 				</div>
 
