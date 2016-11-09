@@ -26,9 +26,9 @@ public class UploadBean {
 	protected static final String CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT = System.getProperty("user.dir")
 			+ File.separator + NOME_DO_PROJETO + File.separator + CAMINHO_INTERNO + File.separator + DIR_DO_TAR_GZ;
 	private ServicoFachada servicoFachada;
-
 	private Servidor servidorSelecionado;
 	private List<SelectItem> comboServidores;
+	private ArquivoLog arquivoLog;
 
 	public UploadBean() {
 		servicoFachada = new ServicoFachada();
@@ -43,6 +43,12 @@ public class UploadBean {
 		}
 
 		arquivo.write(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT + File.separator + buscarNomeDoArquivo(arquivo));
+	}
+
+	public String deleteAction(ArquivoLog arquivoLog) {
+
+		servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLog);
+		return null;
 	}
 
 	public List<ArquivoLog> getListaArquivoLog() {
@@ -74,7 +80,7 @@ public class UploadBean {
 	public void setArquivo(Part arquivo) {
 		this.arquivo = arquivo;
 	}
-	
+
 	public List<SelectItem> getComboServidores() throws SQLException {
 		this.comboServidores = new ArrayList<SelectItem>();
 		List<Servidor> servidores = null;
@@ -99,6 +105,9 @@ public class UploadBean {
 	public void setServidorSelecionado(Servidor servidorSelecionado) {
 		this.servidorSelecionado = servidorSelecionado;
 	}
-	
+
+	public ArquivoLog getArquivoLog() {
+		return arquivoLog;
+	}
 
 }

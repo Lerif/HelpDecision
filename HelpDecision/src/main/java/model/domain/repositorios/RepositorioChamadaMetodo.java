@@ -54,4 +54,8 @@ public class RepositorioChamadaMetodo {
 		return null;
 	}
 
+	public void removeByID(String idChamadaMetodo) {
+
+	}
+
 }

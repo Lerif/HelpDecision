@@ -20,18 +20,11 @@ public class ServicoFachada {
 
 	public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo, ArquivoLog arquivoLog, Servidor servidor)
 			throws SQLException {
-		// Faz insert na tb_chamada_metodo
-		// Faz insert na tb_arquivo
-		// Recuperar o id_servidor a partir do seu nome
-		// Agrega listChamadaMetodo, ArquivoLog e Servidor
 		return servicoAgregador.inserirAgregador(servicoAgregador.agregar(
 				servicoChamadaMetodo.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo),
 				servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog), servicoServidor.recuperarIdServidor(servidor)));
 	}
 
-	// M�TODOS REFERENTE AO SERVICO CHAMADA METODO
-
-	// M�TODOS REFERENTE AO SERVICO ARQUIVO LOG
 	public ArquivoLog solicitarCriacaoArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload,
 			String descricao) {
 		return servicoArquivoLog.criarArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
@@ -41,9 +34,12 @@ public class ServicoFachada {
 		return servicoArquivoLog.solicitarListaDeArquivoLogCadastradoDB();
 	}
 
-	// M�TODOS REFERENTE AO SERVICO SERVIDOR
 	public Boolean cadastrarServidor(int idServidor, String nomeServidor) {
 		return servicoServidor.cadastrarServidorDB(solicitarNovoServidor(idServidor, nomeServidor));
+	}
+
+	public void solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(ArquivoLog arquivoLog) {
+		this.servicoAgregador.removerAgregadorEmCascataByArquivoLogId(arquivoLog.getIdArquivo());
 	}
 
 	public Servidor solicitarNovoServidor(int idServidor, String nomeServidor) {
@@ -54,7 +50,6 @@ public class ServicoFachada {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
 	}
 
-	// Getters e setters
 	public void setServicoArquivoLog(ArquivoLogServico servicoArquivoLog) {
 		this.servicoArquivoLog = servicoArquivoLog;
 	}

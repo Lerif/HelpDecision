@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.domain.entidades.ArquivoLog;
-import model.domain.entidades.ChamadaMetodo;
 import model.domain.fabricas.FabricaArquivoLog;
-import model.domain.servicos.ServicoFachada;
 
 public class RepositorioArquivoLog {
 
@@ -55,5 +53,34 @@ public class RepositorioArquivoLog {
 			// TODO: handle exception
 		}
 		return arquivosLog;
+	}
+
+	public void removeByID(int i) {
+
+		Connection dbConnection = new ConexaoDB().conectarDB();
+		PreparedStatement preparedStatement = null;
+
+		try {
+			preparedStatement = dbConnection
+					.prepareStatement("DELETE FROM tb_arquivo arquivo where arquivo.id_arquivo = ?");
+			preparedStatement.setInt(1, i);
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (preparedStatement != null)
+					dbConnection.close();
+			} catch (SQLException se) {
+			} // do nothing
+			try {
+				if (dbConnection != null)
+					dbConnection.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+
 	}
 }

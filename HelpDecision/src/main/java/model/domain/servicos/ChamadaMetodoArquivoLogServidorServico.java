@@ -12,7 +12,7 @@ import model.domain.repositorios.RepositorioChamadaMetodoArquivoLogServidor;
 public class ChamadaMetodoArquivoLogServidorServico {
 
 	RepositorioChamadaMetodoArquivoLogServidor repositorioAgregador = new RepositorioChamadaMetodoArquivoLogServidor();
-	
+
 	public ChamadaMetodoArquivoLogServidorServico() {
 	}
 
@@ -25,8 +25,12 @@ public class ChamadaMetodoArquivoLogServidorServico {
 		return FabricaChamadaMetodoArquivoLogServidor.nova().novaChamadaMetodoArquivoLogServidor(listaChamadaMetodo,
 				arquivoLog, servidor);
 	}
-	
-	public Boolean inserirAgregador(ChamadaMetodoArquivoLogServidor agregador){
+
+	public Boolean inserirAgregador(ChamadaMetodoArquivoLogServidor agregador) {
 		return repositorioAgregador.insert(agregador);
+	}
+
+	public void removerAgregadorEmCascataByArquivoLogId(int idArquivoLog) {
+		repositorioAgregador.removeAgregadorThreeByIdArquivoLog(idArquivoLog);
 	}
 }

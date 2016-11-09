@@ -120,31 +120,43 @@
 			<div class="col-md-12">
 				<h3 class="text-center">Histórico de Arquivos</h3>
 				<div class="table-responsive">
-					<h:dataTable id="historico"
-						class="table table-bordred table-striped"
-						value="#{uploadBean.listaArquivoLog}" var="o">
+					<h:form>
+						<h:dataTable id="historico"
+							class="table table-bordred table-striped"
+							value="#{uploadBean.listaArquivoLog}" var="arquivoLog">
 
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Nome" />
-							</f:facet>
-							<h:outputText value="#{o.nomeArquivo}" />
-						</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Nome" />
+								</f:facet>
+								<h:outputText value="#{arquivoLog.nomeArquivo}" />
+							</h:column>
 
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Data Upload" />
-							</f:facet>
-							<h:outputText value="#{o.dataUpload}" />
-						</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Data Upload" />
+								</f:facet>
+								<h:outputText value="#{arquivoLog.dataUpload}" />
+							</h:column>
 
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Descrição" />
-							</f:facet>
-							<h:outputText value="#{o.descricao}" />
-						</h:column>
-					</h:dataTable>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Descrição" />
+								</f:facet>
+								<h:outputText value="#{arquivoLog.descricao}" />
+							</h:column>
+
+							<h:column>
+
+								<f:facet name="header">Delete</f:facet>
+
+								<h:commandLink value="Delete"
+									action="#{uploadBean.deleteAction(arquivoLog)}" />
+
+							</h:column>
+
+						</h:dataTable>
+					</h:form>
 				</div>
 
 			</div>
