@@ -1,7 +1,6 @@
 package model.domain.servicos;
 
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import model.domain.entidades.ArquivoLog;
@@ -10,10 +9,10 @@ import model.domain.repositorios.RepositorioArquivoLog;
 
 public class ArquivoLogServico {
 
-	private RepositorioArquivoLog repositorioArquivoLog =  new RepositorioArquivoLog();
+	private RepositorioArquivoLog repositorioArquivoLog = new RepositorioArquivoLog();
 
 	public ArquivoLogServico() {
-		
+
 	}
 
 	public static ArquivoLogServico novo() {

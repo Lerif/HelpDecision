@@ -15,7 +15,7 @@ import model.domain.repositorios.RepositorioChamadaMetodoArquivoLogServidor;
 public class ChamadaMetodoArquivoLogServidorServico {
 
 	RepositorioChamadaMetodoArquivoLogServidor repositorioAgregador = new RepositorioChamadaMetodoArquivoLogServidor();
-	
+
 	public ChamadaMetodoArquivoLogServidorServico() {
 	}
 
@@ -28,13 +28,13 @@ public class ChamadaMetodoArquivoLogServidorServico {
 		return FabricaChamadaMetodoArquivoLogServidor.nova().novaChamadaMetodoArquivoLogServidor(listaChamadaMetodo,
 				arquivoLog, servidor);
 	}
-	
-	public Boolean inserirAgregador(ChamadaMetodoArquivoLogServidor agregador){
+
+	public Boolean inserirAgregador(ChamadaMetodoArquivoLogServidor agregador) {
 		return repositorioAgregador.insert(agregador);
 	}
-	
+
 	public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long duracaoInicio, long duracaoFim, Date dataInicio,
-			Date dataFim){
+			Date dataFim) {
 		try {
 			return repositorioAgregador.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
 		} catch (SQLException e) {
@@ -42,5 +42,10 @@ public class ChamadaMetodoArquivoLogServidorServico {
 			e.printStackTrace();
 		}
 		return new ArrayList<ChamadaMetodo>();
+
+	}
+
+	public void removerAgregadorEmCascataByArquivoLogId(int idArquivoLog) throws SQLException {
+		repositorioAgregador.removeAgregadorThreeByIdArquivoLog(idArquivoLog);
 	}
 }

@@ -143,4 +143,33 @@ public class RepositorioChamadaMetodo {
 		return chamadasMetodo;
 	}
 	
+		public void removeByID(Integer idChamadaMetodo) {
+
+		PreparedStatement preparedStatement = null;
+
+		String sql = "DELETE FROM tb_chamada_metodo a WHERE a.id_chamada_metodo = ?";
+
+		try {
+			preparedStatement = conexao.prepareStatement(sql);
+			preparedStatement.setInt(1, idChamadaMetodo);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (preparedStatement != null)
+					conexao.close();
+			} catch (SQLException se) {
+			} // do nothing
+			try {
+				if (conexao != null)
+					conexao.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+
+	}
+	
 }

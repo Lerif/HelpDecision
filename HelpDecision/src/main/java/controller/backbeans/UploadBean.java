@@ -30,6 +30,7 @@ public class UploadBean {
 	private ServicoFachada servicoFachada;
 	private Servidor servidorSelecionado;
 	private List<SelectItem> comboServidores;
+	private ArquivoLog arquivoLog;
 	private String nomeServidor;
 	private String itemSelecionado;
 	private String comentarioArquivo;
@@ -79,6 +80,12 @@ public class UploadBean {
 
 	public void cadastrarServidor() throws SQLException {
 		servicoFachada.cadastrarServidor(0, getNomeServidor());
+	}
+
+	public String deleteAction(ArquivoLog arquivoLog) throws SQLException {
+
+		servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLog);
+		return null;
 	}
 
 	public List<ArquivoLog> getListaArquivoLog() {
@@ -160,6 +167,9 @@ public class UploadBean {
 		this.comentarioArquivo = comentarioArquivo;
 	}
 	
-	
+
+	public ArquivoLog getArquivoLog() {
+		return arquivoLog;
+	}
 
 }
