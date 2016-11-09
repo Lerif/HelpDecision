@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
-import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
-import model.domain.fabricas.FabricaArquivoLog;
 
 public class RepositorioChamadaMetodoArquivoLogServidor {
 
@@ -41,62 +39,53 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 
 	public void removeAgregadorThreeByIdArquivoLog(int i) throws SQLException {
 
-		RepositorioChamadaMetodo repositorioChamadaMetodo = new RepositorioChamadaMetodo();
-		RepositorioArquivoLog repositorioArquivoLog = new RepositorioArquivoLog();
-		
-		for (Integer chamadaMetodo : selectChamadasMetodosByIdArquivoLogFromAgregador(i)) {
-			repositorioChamadaMetodo.removeByID(chamadaMetodo);
-		}
+		List<Integer> idsChamadaMetodo = selectChamadasMetodosByIdArquivoLogFromAgregador(i);
 
-		deleteAgregadorByIdArquivo(i);
-		repositorioArquivoLog.removeByID(i);
+		if (deleteAgregadorByIdArquivo(i)) {
+
+			for (Integer chamadaMetodo : idsChamadaMetodo) {
+				RepositorioChamadaMetodo repositorioChamadaMetodo = new RepositorioChamadaMetodo();
+				repositorioChamadaMetodo.removeByID(chamadaMetodo);
+			}
+
+			RepositorioArquivoLog repositorioArquivoLog = new RepositorioArquivoLog();
+			repositorioArquivoLog.removeByID(i);
+
+		}
 
 	}
 
 	private List<Integer> selectChamadasMetodosByIdArquivoLogFromAgregador(int i) throws SQLException {
-		
+
 		List<Integer> idsChamadasMetodos = new ArrayList<Integer>();
-		String sql = "SELECT id_chamada_metodo FROM tb_chamada_metodo_arquivo WHERE id_arquivo = '1'";
+		String sql = "SELECT id_chamada_metodo FROM tb_chamada_metodo_arquivo WHERE id_arquivo = " + i;
 		Statement stm = (Statement) conexao.createStatement();
 		try {
 			ResultSet retornoSelect = stm.executeQuery(sql);
 			while (retornoSelect.next()) {
-				idsChamadasMetodos.add(retornoSelect.getInt("id_arquivo"));
+				idsChamadasMetodos.add(retornoSelect.getInt("id_chamada_metodo"));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return idsChamadasMetodos;
-		
-		
-
 	}
 
-	private void deleteAgregadorByIdArquivo(int i) {
+	private Boolean deleteAgregadorByIdArquivo(int i) throws SQLException {
 
-		Connection dbConnection = new ConexaoDB().conectarDB();
 		PreparedStatement preparedStatement = null;
 
-		String sql = "DELETE tb_chamada_metodo_arquivo a WHERE a.id_arquivo = ?";
+		String sql = "DELETE FROM tb_chamada_metodo_arquivo a WHERE a.id_arquivo = " + i;
 
 		try {
-			preparedStatement = dbConnection.prepareStatement(sql);
-			preparedStatement.setInt(1, i);
-			preparedStatement.executeUpdate(sql);
+			preparedStatement = conexao.prepareStatement(sql);
+			preparedStatement.execute();
+			preparedStatement.close();
+
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (preparedStatement != null)
-					dbConnection.close();
-			} catch (SQLException se) {
-			} // do nothing
-			try {
-				if (dbConnection != null)
-					dbConnection.close();
-			} catch (SQLException se) {
-				se.printStackTrace();
-			}
+			return false;
 		}
 
 	}

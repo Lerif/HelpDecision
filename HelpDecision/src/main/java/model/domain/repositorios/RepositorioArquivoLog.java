@@ -68,18 +68,6 @@ public class RepositorioArquivoLog {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (preparedStatement != null)
-					dbConnection.close();
-			} catch (SQLException se) {
-			} // do nothing
-			try {
-				if (dbConnection != null)
-					dbConnection.close();
-			} catch (SQLException se) {
-				se.printStackTrace();
-			}
 		}
 
 	}
