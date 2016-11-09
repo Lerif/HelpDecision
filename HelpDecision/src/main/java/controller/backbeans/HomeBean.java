@@ -24,8 +24,7 @@ public class HomeBean {
 	private ServicoFachada servicoFachada;
 	private List<SelectItem> comboServidores;
 	private Servidor servidorSelecionado;
-	private String intervaloDatas;
-	private String duracao;
+
 	
 	public HomeBean() {
 		servicoFachada = new ServicoFachada();
@@ -56,44 +55,9 @@ public class HomeBean {
 		this.servidorSelecionado = servidorSelecionado;
 	}
 	
+	public List<ChamadaMetodo> getIntervaloDatasDuracoes(String nomeServidor,
+			long duracaoInicio, long duracaoFim, Date dataInicio, Date dataFim) throws ParseException {
 
-	
-	//retorno?
-	public List<ChamadaMetodo> getIntervaloDeDatasDuracoes() throws ParseException {
-//		String [] datasInicioFim = getIntervaloDatas().split(" - ");
-//		String [] duracoes = getDuracao().split(" - ");
-//		
-//		DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-//		Date dataInicio = df.parse(datasInicioFim[0]);
-//		Date dataFim = df.parse(datasInicioFim[1]);
-//		servicoFachada.buscarPorData(dataInicio, dataFim);
-//		
-//		Long duracaoInicio = Long.parseLong(duracoes[0]);
-//		Long duracaoFim = Long.parseLong(duracoes[1]);
-//		servicoFachada.buscarPorDuracao(duracaoInicio, duracaoFim);
-		return null;
-		
-	}
-	
-	//TODO método retornará para função JSF ondenar tabela
-	public void filtar() {
-		
-	}
-	
-	public void setDuracao(String duracao) {
-		this.duracao = duracao;
-	}
-
-	public String getDuracao() {
-		return duracao;
-	}
-	
-	public String getIntervaloDatas() {
-		return intervaloDatas;
-	}
-
-	public void setIntervaloDatas(String intervaloDatas) {
-		this.intervaloDatas = intervaloDatas;
-	}
-	
+		return servicoFachada.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
+	}	
 }
