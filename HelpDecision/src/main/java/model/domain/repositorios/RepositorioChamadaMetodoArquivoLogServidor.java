@@ -19,7 +19,7 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 	public Boolean insert(ChamadaMetodoArquivoLogServidor agregador) {
 		try {
 			for (ChamadaMetodo chamadaMetodo : agregador.getChamadaMetodo()) {
-				String sql = "INSERT INTO tb_chamada_metodo_arquivo_servidor "
+				String sql = "INSERT INTO tb_chamada_metodo_arquivo "
 						+ "(id_chamada_metodo, id_arquivo, id_servidor) " + "VALUES (?, ?, ?)";
 				PreparedStatement pst = conexao.prepareStatement(sql);
 				pst.setInt(1, chamadaMetodo.getIdChamadaMetodo());
