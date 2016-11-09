@@ -13,14 +13,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.enumeradores.Regex;
 
 public class Leitor {
-	public List<ChamadaMetodo> ler(String arquivo, ArquivoLog al) throws IOException, ParseException {
-
-		al.setNomeArquivo(arquivo);
+	public List<ChamadaMetodo> ler(String arquivo) throws IOException, ParseException {
 
 		FileInputStream fstream = new FileInputStream(arquivo);
 		DataInputStream in = new DataInputStream(fstream);

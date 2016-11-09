@@ -24,16 +24,19 @@ public class ServicoDescompactador {
 		return new ServicoDescompactador();
 	}
 
-	public void extrairTarGz(File arquivoTarGz, File localDestino) throws IOException, ArchiveException {
+	public List<File> extrairTarGz(File arquivoTarGz, File localDestino) throws IOException, ArchiveException {
 
+		List<File> arquivosExtraidos;
+		
 		File arquivoTar = unGzip(arquivoTarGz, localDestino);
-		unTar(arquivoTar, localDestino);
+		arquivosExtraidos = unTar(arquivoTar, localDestino);
 		if (!arquivoTar.delete()) {
 			System.err.println("Could not delete file: " + arquivoTar);
 		}
 		if (!arquivoTarGz.delete()) {
 			System.err.println("Could not delete file: " + arquivoTarGz);
 		}
+		return arquivosExtraidos;
 	}
 
 	public List<File> unTar(File arquivoTar, File localDestino) throws IOException, ArchiveException {
