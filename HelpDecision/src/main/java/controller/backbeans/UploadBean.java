@@ -47,13 +47,15 @@ public class UploadBean {
 		long time = System.currentTimeMillis();
 		java.sql.Date date = new java.sql.Date(time) ;
 		//date.setTime(time);
+		List<File> arquivosExtraidos;
+		List<ChamadaMetodo> chamadaMetodos;
+		ArquivoLog arquivoLog;
 		
 		List<ChamadaMetodo> metodos = null; 
 				
 		File dirUpload = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ);
 		File fileTarGz;
-		
-		ArquivoLog arquivoLog = servicoFachada.solicitarCriacaoArquivoLog(0, buscarNomeDoArquivo(arquivo), date, "");
+
 
 		if (!dirUpload.exists()) {
 			dirUpload.mkdirs();
@@ -65,21 +67,23 @@ public class UploadBean {
 		// Pega nome do arquivo .tar.gz
 		fileTarGz = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ + File.separator + buscarNomeDoArquivo(arquivo));
 		
-		// Pega nome(s) do(s) arquivo(s) descompactado(s)
-		List<File> arquivoExtraido = servicoFachada.extrairTarGz(fileTarGz, dirUpload);
+		arquivosExtraidos = servicoFachada.extrairTarGz(fileTarGz, dirUpload);
 		
-		for(File arq : arquivoExtraido){
-			metodos = servicoFachada.lerArquivoLog(arq.getAbsolutePath());
-		}
-
-		try {
-			servicoFachada.inserirNovoArquivo(metodos, arquivoLog, Integer.parseInt(itemSelecionado));
-		} catch (NumberFormatException | SQLException e) {
-			System.err.println("[UploadBean]Erro ao recuperar servidor:" + e);
+		for (File arq : arquivosExtraidos){
+			arquivoLog = ArquivoLog.novo(1, arq.getName(), null, "");
+			chamadaMetodos = servicoFachada.lerArquivoLog(arq.getAbsolutePath());
+			
+			try {
+				servicoFachada.inserirNovoArquivo(chamadaMetodos, arquivoLog, Integer.parseInt(itemSelecionado));
+			} catch (NumberFormatException e) {
+				System.out.println("[UploadBean] Erro: " + e);
+			} catch (SQLException e) {
+				System.out.println("[UploadBean] Erro: " + e);
+			}
 		}
 	}
 
-	public void cadastrarServidor() {
+	public void cadastrarServidor() throws SQLException {
 		servicoFachada.cadastrarServidor(0, getNomeServidor());
 	}
 
@@ -91,7 +95,6 @@ public class UploadBean {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 
 	public String buscarNomeDoArquivo(Part part) {

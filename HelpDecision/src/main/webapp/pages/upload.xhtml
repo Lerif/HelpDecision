@@ -4,20 +4,19 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-
-	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css"
-		type="text/css" media="all" />
-	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css"
-		type="text/css" media="all" />
-	<link rel="script" href="../css/bootstrap/bootstrap-theme.css"
-		type="text/css" media="all" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
+	<link rel="script" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
+	<script src="../dist/js/alertify.min.js"></script>
+	<link rel="stylesheet" href="../css/alertify.min.css" />
+	<link rel="stylesheet" href="../css/themes/default.min.css" />
+
+
 	<title>Upload | Help Decision</title>
 </h:head>
 
@@ -29,12 +28,11 @@
 			<button type="button" class="navbar-toggle collapsed"
 				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
 				aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span> <span
+				<span class="sr-only">Barra de Navegação</span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
 		</div>
-
 
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
@@ -55,18 +53,17 @@
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
-				<!-- converter="#{servidorConverter}" -->
-					<h:selectOneMenu 
-						value="#{uploadBean.itemSelecionado}"
+					<!-- converter="#{servidorConverter}" -->
+					<h:selectOneMenu value="#{uploadBean.itemSelecionado}"
 						class="btn btn-default">
 						<f:selectItem itemLabel="Selecione um Servidor" />
-						<f:selectItems value="#{uploadBean.comboServidores}"
-							 /> <!-- var="servidor" itemLabel="#{servidor.label}" -->
+						<f:selectItems value="#{uploadBean.comboServidores}" />
+						<!-- var="servidor" itemLabel="#{servidor.label}" -->
 					</h:selectOneMenu>
 					ou
 					<button type="button" class="btn btn-md btn-primary"
-						data-toggle="modal" data-target="#cadastra_servidor">
-						Cadastre um Novo</button>
+						id="botaoCadastre" data-toggle="modal"
+						data-target="#cadastra_servidor">Cadastre um Novo</button>
 				</div>
 				<div class="form-group">
 					<label class="control-label"><br></br> <br></br> Arquivo de
@@ -79,6 +76,9 @@
 					<h:inputText id="comentario" placeholder="text" type="text"
 						class="form-control" />
 				</div>
+
+				<p id="mostrarMensagemServidor"></p>
+
 				<br></br>
 				<h:messages id="msg" style="color:blue" layout="table" />
 				<br></br>
@@ -97,7 +97,7 @@
 
 
 			<div class="col-md-12">
-				<h3 class="text-center">Histórico de Arquivos</h3>
+				<h3 class="text-center text-primary">Histórico de Arquivos</h3>
 				<div class="table-responsive">
 					<h:dataTable value="#{uploadBean.listaArquivoLog}" var="o">
 
@@ -112,19 +112,10 @@
 
 
 					<table id="historico" class="table table-bordred table-striped">
+
+
 						<tbody>
-							<tr>
-								<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
 
-								<td><p data-placement="top" data-toggle="tooltip"
-										title="Excluir">
-										<button class="btn btn-danger btn-xs trash-btn"
-											data-title="Excluir" data-toggle="modal"
-											data-target="#delete">
-											<span class="glyphicon glyphicon-trash"></span>
-										</button>
-									</p></td>
-							</tr>
 							<tr>
 								<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
 								<td><p data-placement="top" data-toggle="tooltip"
@@ -136,11 +127,24 @@
 										</button>
 									</p></td>
 							</tr>
+							<tr>
 
+								<td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
+
+								<td><p data-placement="top" data-toggle="tooltip"
+										title="Excluir">
+										<button class="btn btn-danger btn-xs trash-btn"
+											data-title="Excluir" data-toggle="modal"
+											data-target="#delete">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
+									</p></td>
+							</tr>
 
 						</tbody>
 
 					</table>
+
 					<h:form>
 						<div class="form-group">
 
@@ -180,10 +184,10 @@
 				</div>
 				<div class="modal-footer ">
 					<button type="button" class="btn btn-success">
-						<span class="glyphicon glyphicon-ok-sign"></span> Sim
+						<span class="glyphicon glyphicon-ok-sign"></span> Sim
 					</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">
-						<span class="glyphicon glyphicon-remove"></span> Não
+						<span class="glyphicon glyphicon-remove"></span> Não
 					</button>
 				</div>
 			</div>
@@ -191,8 +195,6 @@
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
-
-
 
 </h:body>
 
@@ -217,11 +219,15 @@
 						<h:messages id="msgErro" style="color: red" layout="table" />
 					</div>
 					<div class="form-group">
+
+
 						<div class="modal-footer">
 							<h:commandButton
+								onclick="setTimeout(confirmarCadastroServidor, delay)"
+								id="botaoConfirmar"
 								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
-								id="botao" value="Confirmar"
-								action="#{uploadBean.cadastrarServidor()}" />
+								value="Confirmar" action="#{uploadBean.cadastrarServidor()}">
+							</h:commandButton>
 						</div>
 					</div>
 				</div>
@@ -255,24 +261,22 @@
 	</div>
 </div>
 
-<script>
-	$(function() {
-		$('#orderModal').modal({
-			keyboard : true,
-			backdrop : "static",
-			show : false,
-		}).on('show', function() {
-		});
-		$(".table-striped").find('tr[data-id]').on(
-				'click',
-				function() {
-					debugger;
-					//do all your operation populate the modal and open the modal now. Dont need to use show event of modal again
-					$('#orderDetails').html(
-							$('<b> Order Id selected: ' + $(this).data('id')
-									+ '</b>'));
-					$('#orderModal').modal('show');
-				});
-	});
-</script>
+	<script>
+	
+	<!-- alertify -->
+	function confirmarCadastroServidor(boolean textoConfirmacaoServidor) {
+			var imprimirTextoConfirmacao
+			imprimirTextoConfirmacao = textoConfirmacaoServidor;
+			
+			if (imprimirTextoConfirmacao == true) {
+				var notification = alertify.notify('Servidor cadastrado!', 'success', 5, function(){  console.log('dismissed'); });
+		    } else {
+		    	var notification = alertify.notify('Servidor NÃO cadastrado!', 'error', 5, function(){  console.log('dismissed'); });
+		    }
+			setTimeout(confirmarCadastroServidor, delay)
+		}
+		var delay = 200;
+		setTimeout(confirmarCadastroServidor, delay)
+
+	</script>
 </html>

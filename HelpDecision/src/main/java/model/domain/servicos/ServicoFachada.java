@@ -40,7 +40,7 @@ public class ServicoFachada {
 				servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog), servicoServidor.recuperarIdServidor(servidor)));
 	}
 	
-	public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo, ArquivoLog arquivoLog, int servidor)
+	public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo, ArquivoLog arquivoLog, int idSservidor)
 			throws SQLException {
 		// Faz insert na tb_chamada_metodo
 		// Faz insert na tb_arquivo
@@ -48,7 +48,7 @@ public class ServicoFachada {
 		// Agrega listChamadaMetodo, ArquivoLog e Servidor
 		return servicoAgregador.inserirAgregador(servicoAgregador.agregar(
 				servicoChamadaMetodo.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo),
-				servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog), servicoServidor.buscarPorId(servidor)));
+				servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog), servicoServidor.buscarPorId(idSservidor)));
 	}
 
 	// M�TODOS REFERENTE AO SERVICO CHAMADA METODO
@@ -76,7 +76,7 @@ public class ServicoFachada {
 	}
 
 	// M�TODOS REFERENTE AO SERVICO SERVIDOR
-	public Boolean cadastrarServidor(int idServidor, String nomeServidor) {
+	public Boolean cadastrarServidor(int idServidor, String nomeServidor) throws SQLException {
 		return servicoServidor.cadastrarServidorDB(solicitarNovoServidor(idServidor, nomeServidor));
 	}
 
@@ -97,17 +97,14 @@ public class ServicoFachada {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return new LinkedList<File>();
+		return new ArrayList<File>();
 	}
 	
-	//METODO LEITOR
+	// METODO REFERENTE AO LEITO
 	public List<ChamadaMetodo> lerArquivoLog(String arquivo){
 		try {
 			return leitor.ler(arquivo);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
+		} catch (IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
