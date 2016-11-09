@@ -15,9 +15,19 @@
 	<script src="../dist/js/alertify.min.js"></script>
 	<link rel="stylesheet" href="../css/alertify.min.css" />
 	<link rel="stylesheet" href="../css/themes/default.min.css" />
+	
+	
+	<!-- Include Required Prerequisites -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+ 
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
 
-	<title>Upload | Help Decision</title>
+	<title>Home | Help Decision</title>
 </h:head>
 
 <h:body>
@@ -39,14 +49,20 @@
 			<p class="navbar-text">Help Decision</p>
 			<ul class="nav navbar-nav navbar-right">
 				<li data-toggle="modal" data-target="#modal_sobre"><a href="#">Sobre</a></li>
-
+							<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
+								<a href="upload.xhtml">
+								<h:commandButton class="btn btn-warning pull-left btn-md m-t-md"
+									value="Upload" /></a>
+							</div>
+				
 			</ul>
+
 		</div>
 
 	</div>
 	</nav>
 
-	<h3 class="text-primary">Upload</h3>
+	<h3 class="text-primary">Dashboard</h3>
 	<br></br>
 
 	<div class="container">
@@ -60,23 +76,26 @@
 						<f:selectItems value="#{uploadBean.comboServidores}" />
 						<!-- var="servidor" itemLabel="#{servidor.label}" -->
 					</h:selectOneMenu>
-					ou
+
+					<br></br>
 					<button type="button" class="btn btn-md btn-primary"
 						id="botaoCadastre" data-toggle="modal"
 						data-target="#cadastra_servidor">Cadastre um Novo</button>
 				</div>
-				<div class="form-group">
-					<label class="control-label"><br></br> <br></br> Arquivo de
-						log .tar.gz:</label><br></br>
-					<h:inputFile value="#{uploadBean.arquivo}" />
-				</div>
-				<div class="form-group">
-					<label for="portas"><h:outputText class="cadastroProduto"
-							value="Comentários:" /></label>
-					<h:inputText id="comentario" placeholder="text" type="text"
-						class="form-control" />
-				</div>
 
+				<div class="form-group">
+					
+					
+						
+						<label for="portas"><h:outputText class="cadastroProduto"
+							value="Data Início e Fim:" /></label>
+
+					
+					<input type="text" name="daterange" value="01/01/2016 - 01/31/2016" />
+
+
+					
+				</div>
 				<p id="mostrarMensagemServidor"></p>
 
 				<br></br>
@@ -147,16 +166,7 @@
 
 					</table>
 
-					<h:form>
-						<div class="form-group">
 
-							<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
-								<h:commandButton class="btn btn-warning pull-left btn-md m-t-md"
-									value="Voltar" action="#{uploadBean.voltar}" />
-							</div>
-						</div>
-
-					</h:form>
 
 				</div>
 
@@ -265,19 +275,12 @@
 
 	<script>
 	
-		function confirmarCadastroServidor(boolean textoConfirmacaoServidor) {
-			var imprimirTextoConfirmacao
-			imprimirTextoConfirmacao = textoConfirmacaoServidor;
-			
-			if (imprimirTextoConfirmacao == true) {
-				var notification = alertify.notify('Servidor cadastrado!', 'success', 5, function(){  console.log('dismissed'); });
-		    } else {
-		    	var notification = alertify.notify('Servidor NÃO cadastrado!', 'error', 5, function(){  console.log('dismissed'); });
-		    }
-			setTimeout(confirmarCadastroServidor, delay)
-		}
-		var delay = 200;
-		setTimeout(confirmarCadastroServidor, delay)
+
+	$(function() {
+	    $('input[name="daterange"]').daterangepicker();
+	});
+
+	
 	
 	</script>
 </html>
