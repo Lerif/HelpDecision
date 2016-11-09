@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html
+    [<!ENTITY times "&#215;"  >]
+    >
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
@@ -82,12 +84,6 @@
 					<h:inputText id="comentario" placeholder="text" type="text"
 						class="form-control" />
 				</div>
-
-				<p id="mostrarMensagemServidor"></p>
-
-				<br></br>
-				<h:messages id="msg" style="color:blue" layout="table" />
-				<br></br>
 				<div class="form-group">
 					
 					<h:commandButton type="submit"
@@ -212,9 +208,6 @@
 						type="text" class="form-control" required="true"
 						requiredMessage="Por gentiliza, preencha um nome para o novo Servidor" />
 
-					<div class="form-group">
-						<h:messages id="msgErro" style="color: red" layout="table" />
-					</div>
 					<div class="form-group">
 
 
