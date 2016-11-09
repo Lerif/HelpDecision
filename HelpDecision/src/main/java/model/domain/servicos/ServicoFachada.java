@@ -86,7 +86,13 @@ public class ServicoFachada {
 
 	public List<Servidor> solicitarTodosServidoresDB() throws SQLException {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
-	} 
+	}
+	
+	// METODOS REFERENTE AO AGREGADOR
+	public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long duracaoInicio, long duracaoFim, Date dataInicio,
+			Date dataFim){
+		return servicoAgregador.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
+	}
 	
 	// METODOS REFERENTE AO SERVICO DESCOMPACTADOR
 	public List<File> extrairTarGz (File arquivoTarGz, File localDestino){
