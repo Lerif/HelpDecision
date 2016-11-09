@@ -5,13 +5,17 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css"
+		type="text/css" media="all" />
 	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
-	<link rel="script" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css"
+		type="text/css" media="all" />
+	<link rel="script" href="../css/bootstrap/bootstrap-theme.css"
+		type="text/css" media="all" />
 	<script src="../dist/js/alertify.min.js"></script>
 	<link rel="stylesheet" href="../css/alertify.min.css" />
 	<link rel="stylesheet" href="../css/themes/default.min.css" />
@@ -38,12 +42,11 @@
 			id="bs-example-navbar-collapse-1">
 			<p class="navbar-text">Help Decision</p>
 			<ul class="nav navbar-nav navbar-right">
-										
+
 				<li data-toggle="modal" data-target="#modal_sobre"><a href="#">Sobre</a></li>
 				<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
-					<a href="home.xhtml">
-						<h:commandButton class="btn btn-warning pull-left btn-md m-t-md"
-						value="Dashboard" />
+					<a href="home.xhtml"> <h:commandButton
+							class="btn btn-warning pull-left btn-md m-t-md" value="Dashboard" />
 					</a>
 				</div>
 			</ul>
@@ -89,11 +92,11 @@
 				<h:messages id="msg" style="color:blue" layout="table" />
 				<br></br>
 				<div class="form-group">
-					
+
 					<h:commandButton type="submit"
 						class="btn btn-success btn-login-submit btn-md m-t-md"
 						value="Upload" action="#{uploadBean.upload}" />
-					
+
 				</div>
 			</h:form>
 		</div>
@@ -158,47 +161,49 @@
 			</div>
 		</div>
 	</div>
-
-	<!--  Modal excluir arquivo anterior  -->
-	<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-		aria-labelledby="edit" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-					</button>
-					<h4 class="modal-title custom_align" id="Heading">Excluir</h4>
-				</div>
-				<div class="modal-body">
-
-					<div class="alert alert-danger">
-						<span class="glyphicon glyphicon-warning-sign"></span> Você tem
-						certeza que deseja excluir este Registro?
-					</div>
-
-				</div>
-				<div class="modal-footer ">
-					<button type="button" class="btn btn-success">
-						<span class="glyphicon glyphicon-ok-sign"></span> Sim
-					</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">
-						<span class="glyphicon glyphicon-remove"></span> Não
-					</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
-
 </h:body>
+
+<h:form>
+	<!--  Modal excluir arquivo anterior  -->
+		<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+			aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">
+							<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						</button>
+						<h4 class="modal-title custom_align" id="Heading">Excluir</h4>
+					</div>
+					<div class="modal-body">
+
+						<div class="alert alert-danger">
+							<span class="glyphicon glyphicon-warning-sign"></span> Você tem
+							certeza que deseja excluir este Registro?
+						</div>
+
+					</div>
+					<div class="modal-footer ">
+						<button type="button" class="btn btn-success">
+							<span class="glyphicon glyphicon-ok-sign"></span> Sim
+						</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">
+							<span class="glyphicon glyphicon-remove"></span> Não
+						</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+
+
 
 <!--  Modal Cadastrar novo servidor  -->
 <div id="cadastra_servidor" class="modal fade" role="dialog">
 	<div class="modal-dialog">
-	<h:form id="formCadastraServidor">
+		<h:form id="formCadastraServidor">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -258,11 +263,11 @@
 	</div>
 </div>
 
+</h:form>
 
 
 
-
-	<script>
+<script>
 	
 		function confirmarCadastroServidor(boolean textoConfirmacaoServidor) {
 			var imprimirTextoConfirmacao
