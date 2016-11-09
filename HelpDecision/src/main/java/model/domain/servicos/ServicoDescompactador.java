@@ -30,6 +30,7 @@ public class ServicoDescompactador {
 		
 		File arquivoTar = unGzip(arquivoTarGz, localDestino);
 		arquivosExtraidos = unTar(arquivoTar, localDestino);
+
 		if (!arquivoTar.delete()) {
 			System.err.println("Could not delete file: " + arquivoTar);
 		}

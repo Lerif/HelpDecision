@@ -20,9 +20,9 @@ public class ChamadaMetodo {
 	@Column(name = "nome_metodo")
 	private String nomeMetodo;
 	@Column(name = "data_inicio")
-	private java.sql.Date dataInicio;
+	private Date dataInicio;
 	@Column(name = "data_fim")
-	private java.sql.Date dataFim;
+	private Date dataFim;
 	@Column(name = "duracao")
 	private long duracao;
 	@Column(name = "id_elementro")
@@ -58,20 +58,22 @@ public class ChamadaMetodo {
 		this.nomeMetodo = nomeMetodo;
 	}
 
-	public java.sql.Date getDataInicio() {
+
+	public Date getDataInicio() {
 		return dataInicio;
 	}
 
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = (java.sql.Date) dataInicio;
-	}
-
-	public java.sql.Date getDataFim() {
+	public Date getDataFim() {
 		return dataFim;
 	}
 
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio =  dataInicio;
+	}
+
+
 	public void setDataFim(Date dataFim) {
-		this.dataFim = (java.sql.Date) dataFim;
+		this.dataFim =  dataFim;
 	}
 
 	public String getIdElemento() {
