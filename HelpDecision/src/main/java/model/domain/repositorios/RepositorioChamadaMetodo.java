@@ -3,6 +3,7 @@ package model.domain.repositorios;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,7 +55,32 @@ public class RepositorioChamadaMetodo {
 		return null;
 	}
 
-	public void removeByID(String idChamadaMetodo) {
+	public void removeByID(Integer idChamadaMetodo) {
+		
+		Connection dbConnection = new ConexaoDB().conectarDB();
+		PreparedStatement preparedStatement = null;
+
+		String sql = "DELETE FROM tb_chamada_metodo a WHERE a.id_chamada_metodo = ?";
+
+		try {
+			preparedStatement = dbConnection.prepareStatement(sql);
+			preparedStatement.setInt(1,idChamadaMetodo);
+			preparedStatement.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (preparedStatement != null)
+					dbConnection.close();
+			} catch (SQLException se) {
+			} // do nothing
+			try {
+				if (dbConnection != null)
+					dbConnection.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
 
 	}
 

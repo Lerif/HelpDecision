@@ -45,7 +45,7 @@ public class UploadBean {
 		arquivo.write(CAMINHO_ABSOLUTO_DO_PROJETO_WEB_CONTENT + File.separator + buscarNomeDoArquivo(arquivo));
 	}
 
-	public String deleteAction(ArquivoLog arquivoLog) {
+	public String deleteAction(ArquivoLog arquivoLog) throws SQLException {
 
 		servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLog);
 		return null;

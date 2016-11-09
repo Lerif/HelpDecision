@@ -1,5 +1,6 @@
 package model.domain.servicos;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
@@ -30,7 +31,7 @@ public class ChamadaMetodoArquivoLogServidorServico {
 		return repositorioAgregador.insert(agregador);
 	}
 
-	public void removerAgregadorEmCascataByArquivoLogId(int idArquivoLog) {
+	public void removerAgregadorEmCascataByArquivoLogId(int idArquivoLog) throws SQLException {
 		repositorioAgregador.removeAgregadorThreeByIdArquivoLog(idArquivoLog);
 	}
 }
