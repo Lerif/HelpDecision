@@ -30,7 +30,7 @@ public class ChamadaMetodoArquivoLogServidorServico {
 	}
 	
 	public Boolean inserirAgregador(ChamadaMetodoArquivoLogServidor agregador){
-		return repositorioAgregador.insert(agregador);
+  		return repositorioAgregador.insert(agregador);
 	}
 	
 	public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long duracaoInicio, long duracaoFim, Date dataInicio,

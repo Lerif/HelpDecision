@@ -1,5 +1,7 @@
 package model.domain.entidades;
 
+
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import model.domain.util.CalendarioUtil;
 
 @Entity
 @Table(name = "tb_chamada_metodo", schema = "public")
@@ -20,9 +24,9 @@ public class ChamadaMetodo {
 	@Column(name = "nome_metodo")
 	private String nomeMetodo;
 	@Column(name = "data_inicio")
-	private Date dataInicio;
+	private Timestamp dataInicio;
 	@Column(name = "data_fim")
-	private Date dataFim;
+	private Timestamp dataFim;
 	@Column(name = "duracao")
 	private long duracao;
 	@Column(name = "id_elementro")
@@ -38,8 +42,8 @@ public class ChamadaMetodo {
 			String tipoElemento, long duracao) {
 		setIdChamadaMetodo(idChamadaMetodo);
 		setNomeMetodo(nomeMetodo);
-		setDataInicio(dataInicio);
-		setDataFim(dataFim);
+		setDataInicio(CalendarioUtil.dateParaSqlTimestamp(dataInicio));
+		setDataFim(CalendarioUtil.dateParaSqlTimestamp(dataFim));
 		setIdElemento(idElemento);
 		setTipoElemento(tipoElemento);
 		setDuracao(duracao);
@@ -59,20 +63,20 @@ public class ChamadaMetodo {
 	}
 
 
-	public Date getDataInicio() {
+	public Timestamp getDataInicio() {
 		return dataInicio;
 	}
 
-	public Date getDataFim() {
+	public Timestamp getDataFim() {
 		return dataFim;
 	}
 
-	public void setDataInicio(Date dataInicio) {
+	public void setDataInicio(Timestamp dataInicio) {
 		this.dataInicio =  dataInicio;
 	}
 
 
-	public void setDataFim(Date dataFim) {
+	public void setDataFim(Timestamp dataFim) {
 		this.dataFim =  dataFim;
 	}
 
