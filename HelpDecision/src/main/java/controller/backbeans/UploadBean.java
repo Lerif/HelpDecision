@@ -33,6 +33,7 @@ public class UploadBean {
 	private String nomeServidor;
 	private String itemSelecionado;
 	private String comentarioArquivo;
+	private Boolean servidorCadastrado;
 	
 	public UploadBean() {
 		servicoFachada = new ServicoFachada();
@@ -78,7 +79,8 @@ public class UploadBean {
 	}
 
 	public void cadastrarServidor() throws SQLException {
-		servicoFachada.cadastrarServidor(0, getNomeServidor());
+		this.setServidorCadastrado(servicoFachada.cadastrarServidor(0, getNomeServidor()));
+		System.out.println(getServidorCadastrado());
 	}
 
 	public List<ArquivoLog> getListaArquivoLog() {
@@ -158,6 +160,14 @@ public class UploadBean {
 
 	public void setComentarioArquivo(String comentarioArquivo) {
 		this.comentarioArquivo = comentarioArquivo;
+	}
+
+	public Boolean getServidorCadastrado() {
+		return servidorCadastrado;
+	}
+
+	public void setServidorCadastrado(Boolean servidorCadastrado) {
+		this.servidorCadastrado = servidorCadastrado;
 	}
 	
 	

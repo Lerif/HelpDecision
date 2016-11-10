@@ -220,10 +220,9 @@
 
 						<div class="modal-footer">
 							<h:commandButton
-								onclick="setTimeout(confirmarCadastroServidor(), delay)"
 								id="botaoConfirmar"
 								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
-								value="Confirmar" action="#{uploadBean.cadastrarServidor()}">
+								value="Confirmar" action="#{uploadBean.cadastrarServidor()}"  oncomplete="teste('#{uploadBean.servidorCadastrado}')">
 							</h:commandButton>
 						</div>
 					</div>
@@ -263,6 +262,10 @@
 
 
 	<script>
+
+function teste(valor){
+	alert(valor);
+}
 	
 		function confirmarCadastroServidor(boolean textoConfirmacaoServidor) {
 			var imprimirTextoConfirmacao

@@ -27,6 +27,6 @@ public class ChamadaMetodoArquivoLogServidorServico {
 	}
 	
 	public Boolean inserirAgregador(ChamadaMetodoArquivoLogServidor agregador){
-		return repositorioAgregador.insert(agregador);
+  		return repositorioAgregador.insert(agregador);
 	}
 }
