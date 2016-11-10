@@ -7,20 +7,15 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css"
-		type="text/css" media="all" />
-	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css"
-		type="text/css" media="all" />
-	<link rel="script" href="../css/bootstrap/bootstrap-theme.css"
-		type="text/css" media="all" />
-	<script src="../dist/js/alertify.min.js"></script>
-	<link rel="stylesheet" href="../css/alertify.min.css" />
+	<script src="../dist/js/nprogress.js"></script>
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
+	<link rel="script" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="../css/themes/default.min.css" />
+		<link rel="stylesheet" href="../css/nprogress.css" type="text/css" />
+	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
 
 
 	<title>Upload | Help Decision</title>
@@ -43,16 +38,20 @@
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<p class="navbar-text">Help Decision</p>
+
 				<ul class="nav navbar-nav navbar-right">
 
 					<li data-toggle="modal" data-target="#modal_sobre"><a href="#">Sobre</a></li>
 					<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
-						<a href="home.xhtml"> <h:commandButton
-								class="btn btn-warning pull-left btn-md m-t-md"
-								value="Dashboard" />
-						</a>
+
+						<form action="home.xhtml">
+    					<input type="submit" value="Dashboard" id="botaoDash"
+    					class="btn btn-warning pull-left btn-md m-t-md"/>
+						</form>
+								
 					</div>
 				</ul>
+
 			</div>
 
 		</div>
@@ -90,9 +89,9 @@
 				</div>
 				<div class="form-group">
 
-					<h:commandButton type="submit"
-						class="btn btn-success btn-login-submit btn-md m-t-md"
-						value="Upload" action="#{uploadBean.upload}" />
+<h:commandButton id="uploadButton" type="submit" 
+	class="quick-upload btn btn-success btn-login-submit btn-md m-t-md"
+	value="Upload" action="#{uploadBean.upload}"/>	
 
 				</div>
 			</h:form>
@@ -255,21 +254,8 @@
 	</div>
 </div>
 
-<script>
+	<script>
 	
-		function confirmarCadastroServidor(boolean textoConfirmacaoServidor) {
-			var imprimirTextoConfirmacao
-			imprimirTextoConfirmacao = textoConfirmacaoServidor;
-			
-			if (imprimirTextoConfirmacao == true) {
-				var notification = alertify.notify('Servidor cadastrado!', 'success', 5, function(){  console.log('dismissed'); });
-		    } else {
-		    	var notification = alertify.notify('Servidor NÃO cadastrado!', 'error', 5, function(){  console.log('dismissed'); });
-		    }
-			setTimeout(confirmarCadastroServidor, delay)
-		}
-		var delay = 200;
-		setTimeout(confirmarCadastroServidor, delay)
 	
 	</script>
 </html>

@@ -2,6 +2,7 @@ package controller.backbeans;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +10,9 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
 import javax.servlet.http.Part;
 
 import model.domain.entidades.ArquivoLog;
@@ -19,8 +22,15 @@ import model.domain.servicos.ServicoFachada;
 
 @ManagedBean(eager = true)
 @RequestScoped
-public class UploadBean {
 
+public class UploadBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	private Part arquivo;
 	protected static final String NOME_DO_PROJETO = "HelpDecision";
 	protected static final String CAMINHO_INTERNO = "src" + File.separator + "main" + File.separator + "webapp";
