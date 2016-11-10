@@ -1,5 +1,6 @@
 package model.domain.servicos;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +33,10 @@ public class ChamadaMetodoServico {
 	
 	public List<ChamadaMetodo> buscarPorServido(String nomeDoServidor){
 		return chamadaMetodoRepositorio.buscaPorServidor(nomeDoServidor);
+	}
+	
+	public List<ChamadaMetodo> buscarTodosMetodos() throws SQLException{
+		return chamadaMetodoRepositorio.findAll();
 	}
 	
 }

@@ -25,9 +25,9 @@ public class ChamadaMetodo {
 	private Date dataFim;
 	@Column(name = "duracao")
 	private long duracao;
-	@Column(name = "id_elementro")
+	@Column(name = "id_elemento")
 	private String idElemento;
-	@Column(name = "tipo_elementro")
+	@Column(name = "tipo_elemento")
 	private String tipoElemento;
 
 	public ChamadaMetodo() {

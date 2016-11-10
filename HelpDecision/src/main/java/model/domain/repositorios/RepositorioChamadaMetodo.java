@@ -57,16 +57,16 @@ public class RepositorioChamadaMetodo {
 	public List<ChamadaMetodo> findAll() throws SQLException {
 
 		List<ChamadaMetodo> chamadasMetodo = new ArrayList<ChamadaMetodo>();
-		String sql = "SELECT * FROM tb_chamada_metodo ";
+		String sql = "SELECT * FROM tb_chamada_metodo";
 		Statement stm = (Statement) conexao.createStatement();
 		try {
 			ResultSet retornoSelect = stm.executeQuery(sql);
 			while (retornoSelect.next()) {
 				chamadasMetodo
 						.add(FabricaChamadaMetodo.nova().NovaChamadaMetodo(retornoSelect.getInt("id_chamada_metodo"),
-								retornoSelect.getString("nome_metodo"), retornoSelect.getDate("data_inicio"),
-								retornoSelect.getDate("data_fim"), retornoSelect.getString("id_metodo"),
-								retornoSelect.getString("tipo_metodo"), retornoSelect.getLong("duracao")));
+								retornoSelect.getString("nome_metodo"), retornoSelect.getTimestamp("data_inicio"),
+								retornoSelect.getTimestamp("data_fim"), retornoSelect.getString("id_elemento"),
+								retornoSelect.getString("tipo_elemento"), retornoSelect.getLong("duracao")));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -87,8 +87,8 @@ public class RepositorioChamadaMetodo {
 				chamadasMetodo
 						.add(FabricaChamadaMetodo.nova().NovaChamadaMetodo(retornoSelect.getInt("id_chamada_metodo"),
 								retornoSelect.getString("nome_metodo"), retornoSelect.getDate("data_inicio"),
-								retornoSelect.getDate("data_fim"), retornoSelect.getString("id_metodo"),
-								retornoSelect.getString("tipo_metodo"), retornoSelect.getLong("duracao")));
+								retornoSelect.getDate("data_fim"), retornoSelect.getString("id_elemento"),
+								retornoSelect.getString("tipo_elemento"), retornoSelect.getLong("duracao")));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -109,8 +109,8 @@ public class RepositorioChamadaMetodo {
 				chamadasMetodo
 						.add(FabricaChamadaMetodo.nova().NovaChamadaMetodo(retornoSelect.getInt("id_chamada_metodo"),
 								retornoSelect.getString("nome_metodo"), retornoSelect.getDate("data_inicio"),
-								retornoSelect.getDate("data_fim"), retornoSelect.getString("id_metodo"),
-								retornoSelect.getString("tipo_metodo"), retornoSelect.getLong("duracao")));
+								retornoSelect.getDate("data_fim"), retornoSelect.getString("id_elemento"),
+								retornoSelect.getString("tipo_elemento"), retornoSelect.getLong("duracao")));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -134,13 +134,12 @@ public class RepositorioChamadaMetodo {
 				chamadasMetodo
 						.add(FabricaChamadaMetodo.nova().NovaChamadaMetodo(retornoSelect.getInt("id_chamada_metodo"),
 								retornoSelect.getString("nome_metodo"), retornoSelect.getDate("data_inicio"),
-								retornoSelect.getDate("data_fim"), retornoSelect.getString("id_metodo"),
-								retornoSelect.getString("tipo_metodo"), retornoSelect.getLong("duracao")));
+								retornoSelect.getDate("data_fim"), retornoSelect.getString("id_elemento"),
+								retornoSelect.getString("tipo_elemento"), retornoSelect.getLong("duracao")));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}	
 		return chamadasMetodo;
 	}
-	
 }

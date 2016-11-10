@@ -37,6 +37,7 @@ public class RepositorioArquivoLog {
 			pst.close();
 			return arquivoLog;
 		} catch (Exception e) {
+			System.out.println("[RepositorioArquivoLog] Erro: " + e);
 			return null;
 		}
 	}

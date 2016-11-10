@@ -1,9 +1,7 @@
 package controller.backbeans;
 
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +11,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 
 import model.domain.entidades.ChamadaMetodo;
+import model.domain.entidades.LogDashboard;
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
 
@@ -24,10 +23,13 @@ public class HomeBean {
 	private ServicoFachada servicoFachada;
 	private List<SelectItem> comboServidores;
 	private Servidor servidorSelecionado;
+	private List<LogDashboard> gerarLogDashboardInicial;
 
 	
 	public HomeBean() {
 		servicoFachada = new ServicoFachada();
+		
+		gerarLogDashboardInicial = servicoFachada.gerarLogDashboardInicial();
 	}
 	
 	public List<SelectItem> getComboServidores() throws SQLException {
@@ -59,5 +61,20 @@ public class HomeBean {
 			long duracaoInicio, long duracaoFim, Date dataInicio, Date dataFim) throws ParseException {
 
 		return servicoFachada.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
-	}	
+	}
+
+	public List<ChamadaMetodo> getChamadasMetodos() {
+		try {
+			return servicoFachada.buscarTodosMetodos();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<ChamadaMetodo>();
+	}
+	
+	public List<LogDashboard> getGerarLogDashboardInicial() {
+		return gerarLogDashboardInicial;
+	}
+		
 }
