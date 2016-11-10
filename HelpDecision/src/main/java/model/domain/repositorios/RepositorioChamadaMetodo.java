@@ -58,10 +58,15 @@ public class RepositorioChamadaMetodo {
 	}
 
 	public Boolean verificarChamadaMetodoExiste(ChamadaMetodo chamadaMetodo) throws SQLException {
-		String sql = "SELECT * FROM tb_chamada_metodo WHERE nome_metodo = '" + chamadaMetodo.getNomeMetodo()
-				+ "' AND data_inicio = '" + chamadaMetodo.getDataInicio() + "' AND data_fim = '"
-				+ chamadaMetodo.getDataFim() + "' AND id_elemento = '" + chamadaMetodo.getIdElemento()
-				+ "' and tipo_elemento = '" + chamadaMetodo.getTipoElemento() + "'";
+		String sql = "SELECT * FROM tb_chamada_metodo_arquivo_servidor "
+				+ "INNER JOIN tb_chamada_metodo on tb_chamada_metodo_arquivo_servidor.id_chamada_metodo = tb_chamada_metodo.id_chamada_metodo "
+				+ "INNER JOIN tb_arquivo on tb_chamada_metodo_arquivo_servidor.id_arquivo = tb_arquivo.id_arquivo "
+				+ "WHERE tb_chamada_metodo.nome_metodo = '" + chamadaMetodo.getNomeMetodo()
+				+ "' AND tb_chamada_metodo.data_inicio = '" + chamadaMetodo.getDataInicio()
+				+ "' AND tb_chamada_metodo.data_fim = '" + chamadaMetodo.getDataFim()
+				+ "' AND tb_chamada_metodo.id_elemento = '" + chamadaMetodo.getIdElemento()
+				+ "' AND tb_chamada_metodo.tipo_elemento = '" + chamadaMetodo.getTipoElemento() 
+				+ "' AND tb_arquivo.arquivo_excluido = false";
 		Statement stm = (Statement) conexao.createStatement();
 		try {
 			ResultSet retornoSelect = stm.executeQuery(sql);
@@ -96,6 +101,7 @@ public class RepositorioChamadaMetodo {
 		}
 		return chamadasMetodo;
 	}
+
 	public List<ChamadaMetodo> findAll() throws SQLException {
 
 		List<ChamadaMetodo> chamadasMetodo = new ArrayList<ChamadaMetodo>();
@@ -115,7 +121,6 @@ public class RepositorioChamadaMetodo {
 		}
 		return chamadasMetodo;
 	}
-
 
 	public List<ChamadaMetodo> buscarPorData(Date inicio, Date fim) {
 
@@ -164,7 +169,7 @@ public class RepositorioChamadaMetodo {
 		}
 		return chamadasMetodo;
 	}
-	
+
 	public void removeByID(Integer idChamadaMetodo) {
 
 		PreparedStatement preparedStatement = null;
@@ -193,5 +198,5 @@ public class RepositorioChamadaMetodo {
 		}
 
 	}
-	
+
 }

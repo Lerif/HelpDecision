@@ -21,12 +21,14 @@ public class RepositorioArquivoLog {
 	}
 
 	public ArquivoLog insert(ArquivoLog arquivoLog) {
-		String sql = "INSERT INTO tb_arquivo " + "(nome_arquivo, data_upload, descricao) " + "VALUES (?, ?, ?)";
+		String sql = "INSERT INTO tb_arquivo " + "(nome_arquivo, data_upload, descricao, arquivo_excluido) "
+				+ "VALUES (?, ?, ?, ?)";
 		try {
 			PreparedStatement pst = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, arquivoLog.getNomeArquivo());
 			pst.setTimestamp(2, CalendarioUtil.dateParaSqlTimestamp(arquivoLog.getDataUpload()));
 			pst.setString(3, arquivoLog.getDescricao());
+			pst.setBoolean(4, false);
 			pst.execute();
 			final ResultSet resultSet = pst.getGeneratedKeys();
 			if (resultSet.next()) {
@@ -70,6 +72,17 @@ public class RepositorioArquivoLog {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
 
+	public Boolean flegarArquivoExcluido(ArquivoLog arquivoLog) {
+		String sql = "UPDATE tb_arquivo SET arquivo_excluido = true WHERE id_arquivo = " + arquivoLog.getIdArquivo();
+		try {
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			pst.execute();
+			pst.close();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

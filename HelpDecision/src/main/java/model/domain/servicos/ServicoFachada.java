@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.commons.compress.archivers.ArchiveException;
 
+import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
@@ -61,6 +62,9 @@ public class ServicoFachada {
 		return servicoArquivoLog.criarArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
 	}
 
+	public Boolean solicitarFlagDeArquivoDeletado(ArquivoLog arquivoLog){
+		return servicoArquivoLog.solicitarFlagArquivoExcluido(arquivoLog);
+	}
 	public List<ArquivoLog> solicitarTodosArquivoLogDB() throws SQLException {
 		return servicoArquivoLog.solicitarListaDeArquivoLogCadastradoDB();
 	}
@@ -85,6 +89,10 @@ public class ServicoFachada {
 	public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long duracaoInicio, long duracaoFim, Date dataInicio,
 			Date dataFim){
 		return servicoAgregador.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
+	}
+	
+	public List<ChamadaMetodoArquivoLogServidor> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
+		return servicoAgregador.solicitarListaDeArquivoLogEServidorCadastradoDB();
 	}
 	
 	// METODOS REFERENTE AO SERVICO DESCOMPACTADOR

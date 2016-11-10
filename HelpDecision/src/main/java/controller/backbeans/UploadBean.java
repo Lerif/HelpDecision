@@ -15,6 +15,7 @@ import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.Part;
 
+import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
@@ -29,8 +30,7 @@ public class UploadBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	private Part arquivo;
 	protected static final String NOME_DO_PROJETO = "HelpDecision";
 	protected static final String CAMINHO_INTERNO = "src" + File.separator + "main" + File.separator + "webapp";
@@ -41,44 +41,46 @@ public class UploadBean implements Serializable {
 	private Servidor servidorSelecionado;
 	private List<SelectItem> comboServidores;
 	private ArquivoLog arquivoLog;
+	private ChamadaMetodoArquivoLogServidor agregador;
 	private String nomeServidor;
 	private String itemSelecionado;
 	private String comentarioArquivo;
 	private Boolean servidorCadastrado;
-	
+
 	public UploadBean() {
 		servicoFachada = new ServicoFachada();
 	}
 
 	public void upload() throws IOException {
-		
+
 		long time = System.currentTimeMillis();
 		Date date = new Date(time);
 
 		List<File> arquivosExtraidos;
 		List<ChamadaMetodo> chamadaMetodos;
 		ArquivoLog arquivoLog;
-				
+
 		File dirUpload = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ);
 		File fileTarGz;
 
 		if (!dirUpload.exists()) {
 			dirUpload.mkdirs();
 		}
-		
+
 		// Escreve arquivo que foi dado upload em diretorio arquivo_log
 		arquivo.write(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ + File.separator + buscarNomeDoArquivo(arquivo));
-		
+
 		// Pega nome do arquivo .tar.gz
-		fileTarGz = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ + File.separator + buscarNomeDoArquivo(arquivo));
-		
+		fileTarGz = new File(
+				CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ + File.separator + buscarNomeDoArquivo(arquivo));
+
 		arquivosExtraidos = servicoFachada.extrairTarGz(fileTarGz, dirUpload);
-		
-		for (File arq : arquivosExtraidos){
+
+		for (File arq : arquivosExtraidos) {
 			arquivoLog = ArquivoLog.novo(1, arq.getName(), date, comentarioArquivo);
-			
+
 			chamadaMetodos = servicoFachada.lerArquivoLog(arq.getAbsolutePath());
-			
+
 			try {
 				servicoFachada.inserirNovoArquivo(chamadaMetodos, arquivoLog, Integer.parseInt(itemSelecionado));
 			} catch (NumberFormatException e) {
@@ -96,9 +98,26 @@ public class UploadBean implements Serializable {
 		servicoFachada.cadastrarServidor(0, getNomeServidor());
 	}
 
-	public String deleteAction(ArquivoLog arquivoLog) throws SQLException {
+//	public String deleteAction(ArquivoLog arquivoLog) throws SQLException {
+//		servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLog);
+//		//servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLog);
+//		return null;
+//	}
 
-		servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLog);
+	public String deleteActionArquivoLogServidor(ChamadaMetodoArquivoLogServidor arquivoLogServidor)
+			throws SQLException {
+		servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLogServidor.getArquivoLog());
+		//servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLogServidor.getArquivoLog());
+		return null;
+	}
+
+	public List<ChamadaMetodoArquivoLogServidor> getListaArquivoLogComServidor() {
+
+		try {
+			return servicoFachada.solicitarTodosArquivoLogEServidoresDB();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -144,7 +163,7 @@ public class UploadBean implements Serializable {
 		for (Servidor servidor : servidores) {
 			SelectItem item = new SelectItem(servidor.getIdServidor(), servidor.getNomeServidor());
 			this.comboServidores.add(item);
-			
+
 		}
 		return comboServidores;
 	}
@@ -188,10 +207,17 @@ public class UploadBean implements Serializable {
 	public void setServidorCadastrado(Boolean servidorCadastrado) {
 		this.servidorCadastrado = servidorCadastrado;
 	}
-	
 
 	public ArquivoLog getArquivoLog() {
 		return arquivoLog;
+	}
+
+	public ChamadaMetodoArquivoLogServidor getAgregador() {
+		return agregador;
+	}
+
+	public void setAgregador(ChamadaMetodoArquivoLogServidor agregador) {
+		this.agregador = agregador;
 	}
 
 }

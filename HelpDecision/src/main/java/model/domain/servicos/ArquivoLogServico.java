@@ -30,5 +30,9 @@ public class ArquivoLogServico {
 	public List<ArquivoLog> solicitarListaDeArquivoLogCadastradoDB() throws SQLException {
 		return repositorioArquivoLog.findAll();
 	}
+	
+	public Boolean solicitarFlagArquivoExcluido(ArquivoLog arquivoLog){
+		return repositorioArquivoLog.flegarArquivoExcluido(arquivoLog);
+	}
 
 }

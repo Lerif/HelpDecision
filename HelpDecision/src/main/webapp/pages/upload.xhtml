@@ -112,35 +112,47 @@
 					<h:form>
 						<h:dataTable id="historico"
 							class="table table-bordred table-striped"
-							value="#{uploadBean.listaArquivoLog}" var="arquivoLog">
+							value="#{uploadBean.listaArquivoLogComServidor}"
+							var="arquivoLogComServidor">
 
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Nome" />
 								</f:facet>
-								<h:outputText value="#{arquivoLog.nomeArquivo}" />
+								<h:outputText
+									value="#{arquivoLogComServidor.arquivoLog.nomeArquivo}" />
 							</h:column>
 
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Data Upload" />
 								</f:facet>
-								<h:outputText value="#{arquivoLog.dataUpload}" />
+								<h:outputText
+									value="#{arquivoLogComServidor.arquivoLog.dataUpload}" />
 							</h:column>
 
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Descrição" />
 								</f:facet>
-								<h:outputText value="#{arquivoLog.descricao}" />
+								<h:outputText
+									value="#{arquivoLogComServidor.arquivoLog.descricao}" />
 							</h:column>
 
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Servidor" />
+								</f:facet>
+								<h:outputText
+									value="#{arquivoLogComServidor.servidor.nomeServidor}" />
+							</h:column>
+							
 							<h:column>
 
 								<f:facet name="header">Delete</f:facet>
 
 								<h:commandLink value="Delete"
-									action="#{uploadBean.deleteAction(arquivoLog)}" />
+									action="#{uploadBean.deleteActionArquivoLogServidor(arquivoLogComServidor)}" />
 
 							</h:column>
 

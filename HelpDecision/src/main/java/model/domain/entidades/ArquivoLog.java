@@ -1,6 +1,5 @@
 package model.domain.entidades;
 
-
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -47,7 +46,6 @@ public class ArquivoLog {
 	public void setNomeArquivo(String nomeArquivo) {
 		this.nomeArquivo = nomeArquivo;
 	}
-
 
 	public Date getDataUpload() {
 		return dataUpload;
