@@ -40,6 +40,7 @@ public class UploadBean implements Serializable {
 	private ServicoFachada servicoFachada;
 	private Servidor servidorSelecionado;
 	private List<SelectItem> comboServidores;
+	private ArquivoLog arquivoLog;
 	private String nomeServidor;
 	private String itemSelecionado;
 	private String comentarioArquivo;
@@ -91,6 +92,14 @@ public class UploadBean implements Serializable {
 	public void cadastrarServidor() throws SQLException {
 		this.setServidorCadastrado(servicoFachada.cadastrarServidor(0, getNomeServidor()));
 		System.out.println(getServidorCadastrado());
+
+		servicoFachada.cadastrarServidor(0, getNomeServidor());
+	}
+
+	public String deleteAction(ArquivoLog arquivoLog) throws SQLException {
+
+		servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLog);
+		return null;
 	}
 
 	public List<ArquivoLog> getListaArquivoLog() {
@@ -180,6 +189,9 @@ public class UploadBean implements Serializable {
 		this.servidorCadastrado = servidorCadastrado;
 	}
 	
-	
+
+	public ArquivoLog getArquivoLog() {
+		return arquivoLog;
+	}
 
 }

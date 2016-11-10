@@ -1,6 +1,6 @@
 package testes;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -23,4 +23,10 @@ public class TesteCarregarDropDownServidores {
 		List<Servidor> servidores = servicoFachada.solicitarTodosServidoresDB();
 		assertNotNull(servidores);
 	}
+
+	@Test
+	public void removerArquivoLog() {
+
+	}
+
 }

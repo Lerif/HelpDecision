@@ -75,26 +75,6 @@ public class RepositorioChamadaMetodo {
 		}
 	}
 
-	public List<ChamadaMetodo> findAll() throws SQLException {
-
-		List<ChamadaMetodo> chamadasMetodo = new ArrayList<ChamadaMetodo>();
-		String sql = "SELECT * FROM tb_chamada_metodo ";
-		Statement stm = (Statement) conexao.createStatement();
-		try {
-			ResultSet retornoSelect = stm.executeQuery(sql);
-			while (retornoSelect.next()) {
-				chamadasMetodo
-						.add(FabricaChamadaMetodo.nova().NovaChamadaMetodo(retornoSelect.getInt("id_chamada_metodo"),
-								retornoSelect.getString("nome_metodo"), retornoSelect.getDate("data_inicio"),
-								retornoSelect.getDate("data_fim"), retornoSelect.getString("id_metodo"),
-								retornoSelect.getString("tipo_metodo"), retornoSelect.getLong("duracao")));
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return chamadasMetodo;
-	}
-
 	public List<ChamadaMetodo> buscarPorDuracao(long inicio, long fim) {
 
 		List<ChamadaMetodo> chamadasMetodo = new ArrayList<ChamadaMetodo>();
@@ -116,6 +96,26 @@ public class RepositorioChamadaMetodo {
 		}
 		return chamadasMetodo;
 	}
+	public List<ChamadaMetodo> findAll() throws SQLException {
+
+		List<ChamadaMetodo> chamadasMetodo = new ArrayList<ChamadaMetodo>();
+		String sql = "SELECT * FROM tb_chamada_metodo ";
+		Statement stm = (Statement) conexao.createStatement();
+		try {
+			ResultSet retornoSelect = stm.executeQuery(sql);
+			while (retornoSelect.next()) {
+				chamadasMetodo
+						.add(FabricaChamadaMetodo.nova().NovaChamadaMetodo(retornoSelect.getInt("id_chamada_metodo"),
+								retornoSelect.getString("nome_metodo"), retornoSelect.getDate("data_inicio"),
+								retornoSelect.getDate("data_fim"), retornoSelect.getString("id_metodo"),
+								retornoSelect.getString("tipo_metodo"), retornoSelect.getLong("duracao")));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return chamadasMetodo;
+	}
+
 
 	public List<ChamadaMetodo> buscarPorData(Date inicio, Date fim) {
 
@@ -163,6 +163,35 @@ public class RepositorioChamadaMetodo {
 			// TODO: handle exception
 		}
 		return chamadasMetodo;
+	}
+	
+	public void removeByID(Integer idChamadaMetodo) {
+
+		PreparedStatement preparedStatement = null;
+
+		String sql = "DELETE FROM tb_chamada_metodo a WHERE a.id_chamada_metodo = ?";
+
+		try {
+			preparedStatement = conexao.prepareStatement(sql);
+			preparedStatement.setInt(1, idChamadaMetodo);
+			preparedStatement.execute();
+			preparedStatement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (preparedStatement != null)
+					conexao.close();
+			} catch (SQLException se) {
+			} // do nothing
+			try {
+				if (conexao != null)
+					conexao.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+
 	}
 	
 }

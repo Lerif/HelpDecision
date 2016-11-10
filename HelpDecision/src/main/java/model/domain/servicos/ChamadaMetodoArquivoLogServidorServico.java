@@ -43,4 +43,7 @@ public class ChamadaMetodoArquivoLogServidorServico {
 		}
 		return new ArrayList<ChamadaMetodo>();
 	}
+	public void removerAgregadorEmCascataByArquivoLogId(int idArquivoLog) throws SQLException {
+		repositorioAgregador.removeAgregadorThreeByIdArquivoLog(idArquivoLog);
+	}
 }
