@@ -29,8 +29,8 @@ public class LogDashboard {
 				 tempoTotal,  tempoMedio,  tempoMenor,  tempoMaior, quantidadeChamadasTotal);
 	}
 	
-	public void calcularPorcentagemTotal(){
-		this.porcentagemTotal = (this.quantidadeDessaChamada / this.quantidadeChamadasTotal);
+	public void calcularPorcentagemTotal(int quantidadeDeChamadas, int chamadasTotal){
+		this.porcentagemTotal = (quantidadeDeChamadas / chamadasTotal);
 	}
 
 	public String getNomeMetodo() {

@@ -24,8 +24,6 @@ public class RepositorioLogDashboard {
 	}
 
 	public List<LogDashboard> buscarDashboardDoBanco() {
-		repositorioLogDashboard = new ArrayList<LogDashboard>();
-		totalChamadas = 0;
 		String sql = "select chamada_metodo.nome_metodo, count(*), "
 				+ "max(chamada_metodo.duracao), min(chamada_metodo.duracao), avg(chamada_metodo.duracao) from "
 				+ TABELA_CHAMADA_METODO + " chamada_metodo group by 1";
@@ -33,17 +31,18 @@ public class RepositorioLogDashboard {
 			Statement stm = (Statement) conexao.createStatement();
 			ResultSet retornoSelect = stm.executeQuery(sql);
 			while (retornoSelect.next()) {
-				//FabricaDashboard.nova();
 				repositorioLogDashboard.add(FabricaDashboard.novoDashboard(retornoSelect.getString("nome_metodo"),
 						retornoSelect.getInt("count"), 0, 0, retornoSelect.getFloat("avg"),
 						retornoSelect.getLong("min"), retornoSelect.getLong("max"), 1));
 				totalChamadas += retornoSelect.getInt("count");
 			}
 
-			System.out.println("totalChamadas: " + totalChamadas);
 			for (LogDashboard ld : repositorioLogDashboard){
 				ld.setQuantidadeChamadasTotal(totalChamadas);
-				ld.calcularPorcentagemTotal();
+				ld.setPorcentagemTotal(ld.getQuantidadeDessaChamada()/totalChamadas);
+				System.out.println("getQtdDessa: " + ld.getQuantidadeDessaChamada());
+				System.out.println("getQtdTotal: " + ld.getQuantidadeChamadasTotal());
+				System.out.println("getQtdTotals: " + ld.getPorcentagemTotal());
 			}
 
 		} catch (Exception e) {
