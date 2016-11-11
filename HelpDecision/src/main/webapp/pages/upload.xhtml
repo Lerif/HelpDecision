@@ -4,6 +4,9 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
+<link rel="icon" 
+      type="image/png" 
+      href="/images/favicon.png" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<script
 		src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -19,6 +22,7 @@
 	<script src="../dist/js/alertify.min.js"></script>
 	<link rel="stylesheet" href="../css/alertify.min.css" />
 	<link rel="stylesheet" href="../css/themes/default.min.css" />
+	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
 
 	<title>Upload | Help Decision</title>
 </h:head>
@@ -151,7 +155,7 @@
 
 								<f:facet name="header">Delete</f:facet>
 
-								<h:commandLink value="Delete"
+								<h:commandLink value="✗" styleClass="btn btn-danger"
 									action="#{uploadBean.deleteActionArquivoLogServidor(arquivoLogComServidor)}" />
 
 							</h:column>
