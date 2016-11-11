@@ -1,119 +1,122 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE xhtml
+    [<!ENTITY times "&#215;"  >]
+    >
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css" type="text/css" media="all" />
-	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
-	<link rel="script" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
+
+
+	<!--BOOTSTRAP -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<!--JQUERY-->
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<!--DATETIMEPICKER-->
+	<!-- Include Required Prerequisites -->
+	<script type="text/javascript"
+		src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+	<!-- Include Date Range Picker -->
+	<script type="text/javascript"
+		src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+
+	<!--ALERTFY-->
 	<script src="../dist/js/alertify.min.js"></script>
 	<link rel="stylesheet" href="../css/alertify.min.css" />
-	<link rel="stylesheet" href="../css/themes/default.min.css" />
 	
-	<!-- Include Required Prerequisites -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
- 
-<!-- Include Date Range Picker -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
-
 	<title>Home | Help Decision</title>
 </h:head>
 
+
+
 <h:body>
 	<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<!-- Brand e toggle agrupados para melhor visualização em mobiles -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-				aria-expanded="false">
-				<span class="sr-only">Barra de Navegação</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
+		<div class="container-fluid">
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+					aria-expanded="false">
+					<span class="sr-only">Barra de Navegação</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+			</div>
+
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<p class="navbar-text">Help Decision</p>
+				<ul class="nav navbar-nav navbar-right">
+					<li data-toggle="modal" data-target="#modal_sobre"><a href="#">Sobre</a></li>
+					<li>
+						<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
+							<a href="upload.xhtml"> <h:commandButton
+									class="btn btn-warning pull-left btn-md m-t-md" value="Upload" /></a>
+						</div>
+					</li>
+				</ul>
+			</div>
+
 		</div>
-
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<p class="navbar-text">Help Decision</p>
-			<ul class="nav navbar-nav navbar-right">
-				<li data-toggle="modal" data-target="#modal_sobre"><a href="#">Sobre</a></li>
-							<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
-								<a href="upload.xhtml">
-								<h:commandButton class="btn btn-warning pull-left btn-md m-t-md"
-									value="Upload" /></a>
-							</div>
-				
-			</ul>
-
-		</div>
-
-	</div>
 	</nav>
 
-	<h3 class="text-primary">Dashboard</h3>
-	<br></br>
-
-	<div class="container">
+	<h3 class="text-primary text-center">Dashboard</h3>
+	<div class="container" style="text-align: center" >
 		<div class="login-box well">
-			<h:form id="formLogin" enctype="multipart/form-data">
-				<div class="dropdown">
-					<!-- converter="#{servidorConverter}" -->
+			<h:form id="formLogin" class="form-inline">
+
+				<div class="form-group">
 					<h:selectOneMenu value="#{uploadBean.itemSelecionado}"
 						class="btn btn-default">
 						<f:selectItem itemLabel="Selecione um Servidor" />
 						<f:selectItems value="#{uploadBean.comboServidores}" />
-						<!-- var="servidor" itemLabel="#{servidor.label}" -->
 					</h:selectOneMenu>
-
-					<br></br>
-					<button type="button" class="btn btn-md btn-primary"
-						id="botaoCadastre" data-toggle="modal"
-						data-target="#cadastra_servidor">Cadastre um Novo</button>
 				</div>
 
 				<div class="form-group">
-					
-					
-						
-						<label for="portas"><h:outputText class="cadastroProduto"
-							value="Data Início e Fim:" /></label>
-
-
-					Inicio:
-					<h:inputText value="#{homeBean.rangeInicio}" converterMessage="Please enter digits only." />
-					Fim:
-					<h:inputText value="#{homeBean.rangeFim}" converterMessage="Please enter digits only." />
-
-					
+					<label>Data Início e Fim:</label> <input type="text"
+						name="daterange" value="01/01/2016 1:30 PM - 01/01/2016 2:00 PM" />
 				</div>
-				<p id="mostrarMensagemServidor"></p>
 
-				<br></br>
-				<h:messages id="msg" style="color:blue" layout="table" />
-				<br></br>
 				<div class="form-group">
-					
+					<label>Range(ms):</label>
+					<textarea class="form-control" rows="1" cols="8" id="min"
+						title=" Min"></textarea>
+				</div>
+
+				<div class="form-group">
+					<h5>&lt;-&gt;</h5>
+				</div>
+
+				<div class="form-group">
+					<textarea class="form-control" rows="1" cols="8" id="max"
+						title="Max"></textarea>
+				</div>
+
+				<div class="form-group">
 					<h:commandButton type="submit"
-						class="btn btn-success btn-login-submit btn-md m-t-md"
-						value="Filtrar" action="#{homeBean.filtrar}" />
-					
+						class="btn btn-success btn-login-submit btn-md" value="Filtrar"
+						onclick="teste();" />
 				</div>
+
 			</h:form>
 		</div>
 	</div>
-	<div class='col-md-3'></div>
-
 	<div class="container">
 		<div class="row">
 
@@ -202,7 +205,6 @@
 			</div>
 		</div>
 	</div>
-
 </h:body>
 
 
@@ -231,14 +233,32 @@
 	</div>
 </div>
 
-	<script>
-	
-
+<script>
 	$(function() {
-	    $('input[name="daterange"]').daterangepicker();
+		$('input[name="daterange"]').daterangepicker({
+			timePicker : true,
+			timePicker24Hour : true,
+			timePickerSeconds : true,
+			locale : {
+				format : 'DD/MM/YYYY hh:mm:ss'
+			}
+		});
 	});
 
-	
-	
-	</script>
+	function teste1() {
+		alert(document.getElementById("min").value);
+	}
+
+	function teste() {
+		var str = document.getElementById("min").value;
+		var res = /[^0-9]/.test(str);
+		var delay = 200;
+		if (res) {
+	            alertify.notify('ok', 'error', 5, function(){  console.log('dismissed'); });
+	        } else {
+	            alertify.notify('!ok', 'success', 5, function(){  console.log('dismissed'); });
+	        }
+	        setTimeout(teste, delay)
+	    }
+</script>
 </html>

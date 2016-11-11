@@ -30,6 +30,15 @@ public class RepositorioLogDashboard {
 				+ "from " + TABELA_CHAMADA_METODO  +" group by 1 "
 				+ "order by tempo_maior desc";
 		
+		sql = "select nome_metodo, count(*) as quantidade_chamada, sum(duracao) as tempo_total, " 
+			+ "avg(duracao) as tempo_medio, max(duracao) as tempo_maior, min(duracao) as tempo_menor, ser.nome_servidor "
+			+ "from tb_chamada_metodo met join tb_chamada_metodo_arquivo_servidor mas on "
+			+ "met.id_chamada_metodo = mas.id_chamada_metodo "
+			+ "join tb_servidor ser on ser.id_servidor = mas.id_servidor "
+			+ "join tb_arquivo ar on mas.id_arquivo = ar.id_arquivo "
+			+ "where (ar.arquivo_excluido != true) "
+			+ "group by 1, 7 order by tempo_maior desc";
+		
 		try {
 			Statement stm = (Statement) conexao.createStatement();
 			ResultSet retornoSelect = stm.executeQuery(sql);
@@ -37,7 +46,7 @@ public class RepositorioLogDashboard {
 				repositorioLogDashboard.add(FabricaDashboard.novoDashboard(retornoSelect.getString("nome_metodo"),
 						retornoSelect.getInt("quantidade_chamada"), 0, retornoSelect.getLong("tempo_total"),
 						retornoSelect.getFloat("tempo_medio"), retornoSelect.getLong("tempo_menor"),
-						retornoSelect.getLong("tempo_maior"), 1, "ser"));
+						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor")));
 				totalChamadas += retornoSelect.getInt("quantidade_chamada");
 			}
 
