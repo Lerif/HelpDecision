@@ -12,8 +12,8 @@ public class FabricaDashboard {
 	}
 
 	public static LogDashboard novoDashboard(String nomeMetodo, int quantidadeChamadas, float porcentagemTotal, long tempoTotal,
-			float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal) {
+			float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal, String nomeServidor) {
 		return LogDashboard.novo(nomeMetodo, quantidadeChamadas, porcentagemTotal, tempoTotal, tempoMedio, tempoMenor,
-				tempoMaior, quantidadeChamadasTotal);
+				tempoMaior, quantidadeChamadasTotal, nomeServidor);
 	}
 }

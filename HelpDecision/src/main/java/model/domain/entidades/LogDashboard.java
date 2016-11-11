@@ -10,9 +10,11 @@ public class LogDashboard {
 	private long tempoMenor;
 	private long tempoMaior;
 	private int quantidadeChamadasTotal;
+	private String nomeServidor;
 	
 	private LogDashboard(String nomeMetodo, int quantidadeChamadas, float porcentagemTotal,	
-			long tempoTotal, float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal){
+			long tempoTotal, float tempoMedio, long tempoMenor, long tempoMaior, 
+			int quantidadeChamadasTotal, String nomeServidor){
 		this.nomeMetodo = nomeMetodo;
 		this.quantidadeDessaChamada = quantidadeChamadas;
 		this.porcentagemTotal = porcentagemTotal;
@@ -21,12 +23,14 @@ public class LogDashboard {
 		this.tempoMenor = tempoMenor;
 		this.tempoMaior = tempoMaior;
 		this.quantidadeChamadasTotal = quantidadeChamadasTotal;
+		this.nomeServidor = nomeServidor;
 	}
 	
 	public static LogDashboard novo(String nomeMetodo, int quantidadeChamadas, float porcentagemTotal,	
-			long tempoTotal, float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal){
+			long tempoTotal, float tempoMedio, long tempoMenor, long tempoMaior, 
+			int quantidadeChamadasTotal, String nomeServidor){
 		return new LogDashboard(nomeMetodo,  quantidadeChamadas,  porcentagemTotal,	
-				 tempoTotal,  tempoMedio,  tempoMenor,  tempoMaior, quantidadeChamadasTotal);
+				 tempoTotal,  tempoMedio,  tempoMenor,  tempoMaior, quantidadeChamadasTotal, nomeServidor);
 	}
 
 	public String getNomeMetodo() {
@@ -93,6 +97,12 @@ public class LogDashboard {
 		this.quantidadeChamadasTotal = quantidadeChamadasTotal;
 	}
 
-	
+	public String getNomeServidor() {
+		return nomeServidor;
+	}
+
+	public void setNomeServidor(String nomeServidor) {
+		this.nomeServidor = nomeServidor;
+	}	
 	
 }
