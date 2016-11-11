@@ -4,21 +4,17 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-<link rel="icon" 
+	<link rel="icon" 
       type="image/png" 
       href="/images/favicon.png" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css"
-		type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css"
-		type="text/css" media="all" />
-	<link rel="script" href="../css/bootstrap/bootstrap-theme.css"
-		type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
+	<link rel="script" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
 	<script src="../dist/js/alertify.min.js"></script>
 	<link rel="stylesheet" href="../css/alertify.min.css" />
 	<link rel="stylesheet" href="../css/themes/default.min.css" />
@@ -48,29 +44,25 @@
 
 				<li data-toggle="modal" data-target="#modal_sobre"><a href="#">Sobre</a></li>
 				<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
-					<a href="home.xhtml"> <h:commandButton
-							class="btn btn-warning pull-left btn-md m-t-md" value="Dashboard" />
+					<a href="home.xhtml"> 
+						<h:commandButton class="btn btn-warning pull-left btn-md m-t-md" value="Dashboard" />
 					</a>
 				</div>
 			</ul>
 		</div>
-
 	</div>
 	</nav>
 
 	<h3 class="text-primary">Upload</h3>
 	<br></br>
-
 	<div class="container">
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
-					<!-- converter="#{servidorConverter}" -->
 					<h:selectOneMenu value="#{uploadBean.itemSelecionado}"
 						class="btn btn-default">
 						<f:selectItem itemLabel="Selecione um Servidor" />
 						<f:selectItems value="#{uploadBean.comboServidores}" />
-						<!-- var="servidor" itemLabel="#{servidor.label}" -->
 					</h:selectOneMenu>
 					ou
 					<button type="button" class="btn btn-md btn-primary"
@@ -88,28 +80,21 @@
 					<h:inputText id="comentario" placeholder="text" type="text"
 						class="form-control" value="#{uploadBean.comentarioArquivo}" />
 				</div>
-
 				<p id="mostrarMensagemServidor"></p>
-
 				<br></br>
 				<h:messages id="msg" style="color:blue" layout="table" />
 				<br></br>
 				<div class="form-group">
-
 					<h:commandButton type="submit"
 						class="btn btn-success btn-login-submit btn-md m-t-md"
 						value="Upload" action="#{uploadBean.upload}" />
-
 				</div>
 			</h:form>
 		</div>
 	</div>
 	<div class='col-md-3'></div>
-
 	<div class="container">
 		<div class="row">
-
-
 			<div class="col-md-12">
 				<h3 class="text-center text-primary">Histórico de Arquivos</h3>
 				<div class="table-responsive">
@@ -118,7 +103,6 @@
 							class="table table-bordred table-striped"
 							value="#{uploadBean.listaArquivoLogComServidor}"
 							var="arquivoLogComServidor">
-
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Nome" />
@@ -126,7 +110,6 @@
 								<h:outputText
 									value="#{arquivoLogComServidor.arquivoLog.nomeArquivo}" />
 							</h:column>
-
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Data Upload" />
@@ -134,7 +117,6 @@
 								<h:outputText
 									value="#{arquivoLogComServidor.arquivoLog.dataUpload}" />
 							</h:column>
-
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Descrição" />
@@ -142,29 +124,22 @@
 								<h:outputText
 									value="#{arquivoLogComServidor.arquivoLog.descricao}" />
 							</h:column>
-
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Servidor" />
 								</f:facet>
 								<h:outputText
 									value="#{arquivoLogComServidor.servidor.nomeServidor}" />
-							</h:column>
-							
+							</h:column>							
 							<h:column>
-
+							
 								<f:facet name="header">Delete</f:facet>
-
 								<h:commandLink value="✗" styleClass="btn btn-danger"
 									action="#{uploadBean.deleteActionArquivoLogServidor(arquivoLogComServidor)}" />
-
 							</h:column>
-
 						</h:dataTable>
 					</h:form>
-
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -182,12 +157,10 @@
 					<h4 class="modal-title custom_align" id="Heading">Excluir</h4>
 				</div>
 				<div class="modal-body">
-
 					<div class="alert alert-danger">
 						<span class="glyphicon glyphicon-warning-sign"></span> Você tem
 						certeza que deseja excluir este Registro?
 					</div>
-
 				</div>
 				<div class="modal-footer ">
 					<button type="button" class="btn btn-success">
@@ -198,9 +171,7 @@
 					</button>
 				</div>
 			</div>
-			<!-- /.modal-content -->
 		</div>
-		<!-- /.modal-dialog -->
 	</div>
 </h:body>
 
@@ -214,19 +185,15 @@
 					<h4 class="modal-title">Cadastrar Novo Servidor</h4>
 				</div>
 				<div class="modal-body">
-					<label for="variavelDeServidor"><h:outputText
-							id="servidorLabel" value="Nome do Servidor:" /></label>
-
+					<label for="variavelDeServidor">
+					<h:outputText id="servidorLabel" value="Nome do Servidor:" /></label>
 					<h:inputText id="nomeServidor" value="#{uploadBean.nomeServidor}"
 						type="text" class="form-control" required="true"
 						requiredMessage="Por gentiliza, preencha um nome para o novo Servidor" />
-
 					<div class="form-group">
 						<h:messages id="msgErro" style="color: red" layout="table" />
 					</div>
 					<div class="form-group">
-
-
 						<div class="modal-footer">
 							<h:commandButton
 								onclick="setTimeout(confirmarCadastroServidor(), delay)"
@@ -268,7 +235,6 @@
 </div>
 
 <script>
-
     function confirmarCadastroServidor(boolean textoConfirmacaoServidor) {
         var imprimirTextoConfirmacao
         imprimirTextoConfirmacao = textoConfirmacaoServidor;
@@ -282,6 +248,5 @@
     }
     var delay = 200;
     setTimeout(confirmarCadastroServidor, delay)
-
 </script>
 </html>
