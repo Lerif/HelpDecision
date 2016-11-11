@@ -13,6 +13,7 @@ import org.apache.commons.compress.archivers.ArchiveException;
 import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
+import model.domain.entidades.LogDashboard;
 import model.domain.entidades.Servidor;
 
 public class ServicoFachada {
@@ -22,6 +23,7 @@ public class ServicoFachada {
 	private ServidorServico servicoServidor = new ServidorServico();
 	private ChamadaMetodoArquivoLogServidorServico servicoAgregador = new ChamadaMetodoArquivoLogServidorServico();
 	private ServicoDescompactador servicoDescompactador = ServicoDescompactador.novo();
+	private ServicoDashboard servicoDashboard = ServicoDashboard.novo();
 	private Leitor leitor = new Leitor();
 
 
@@ -31,6 +33,10 @@ public class ServicoFachada {
 
 	public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo, ArquivoLog arquivoLog, Servidor servidor)
 			throws SQLException {
+		// Faz insert na tb_chamada_metodo
+		// Faz insert na tb_arquivo
+		// Recuperar o id_servidor a partir do seu nome
+		// Agrega listChamadaMetodo, ArquivoLog e Servidor
 		return servicoAgregador.inserirAgregador(servicoAgregador.agregar(
 				servicoChamadaMetodo.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo),
 				servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog), servicoServidor.recuperarIdServidor(servidor)));
@@ -107,7 +113,12 @@ public class ServicoFachada {
 		return new ArrayList<File>();
 	}
 	
-	// METODO REFERENTE AO LEITO
+	// METODO REFERENTE AO SERVICO DASHBOARD
+	public List<LogDashboard> gerarLogDashboardInicial (){
+		return servicoDashboard.gerarLogDashboardInicial();
+	}
+	
+	// METODO REFERENTE AO LEITOR
 	public List<ChamadaMetodo> lerArquivoLog(String arquivo){
 		try {
 			return leitor.ler(arquivo);
@@ -135,3 +146,4 @@ public class ServicoFachada {
 	}
 
 }
+
