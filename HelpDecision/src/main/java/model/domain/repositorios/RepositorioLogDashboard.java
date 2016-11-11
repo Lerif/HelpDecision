@@ -24,11 +24,8 @@ public class RepositorioLogDashboard {
 	}
 
 	public List<LogDashboard> buscarDashboardDoBanco() {
-		String sql = "select chamada_metodo.nome_metodo, count(*), "
-				+ "max(chamada_metodo.duracao), min(chamada_metodo.duracao), avg(chamada_metodo.duracao) from "
-				+ TABELA_CHAMADA_METODO + " chamada_metodo group by 1";
 		
-		sql = "select nome_metodo, count(*) as quantidade_chamada, sum(duracao) as tempo_total, "
+		String sql = "select nome_metodo, count(*) as quantidade_chamada, sum(duracao) as tempo_total, "
 				+ "avg(duracao) as tempo_medio, max(duracao) as tempo_maior, min(duracao) as tempo_menor "
 				+ "from " + TABELA_CHAMADA_METODO  +" group by 1 "
 				+ "order by tempo_maior desc";

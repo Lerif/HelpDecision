@@ -89,9 +89,11 @@
 						<label for="portas"><h:outputText class="cadastroProduto"
 							value="Data Início e Fim:" /></label>
 
-					
-					<input type="text" name="daterange" value="01/01/2016 - 01/31/2016" />
 
+					Inicio:
+					<h:inputText value="#{homeBean.rangeInicio}" converterMessage="Please enter digits only." />
+					Fim:
+					<h:inputText value="#{homeBean.rangeFim}" converterMessage="Please enter digits only." />
 
 					
 				</div>
@@ -104,7 +106,7 @@
 					
 					<h:commandButton type="submit"
 						class="btn btn-success btn-login-submit btn-md m-t-md"
-						value="Upload" action="#{uploadBean.upload}" />
+						value="Filtrar" action="#{homeBean.filtrar}" />
 					
 				</div>
 			</h:form>

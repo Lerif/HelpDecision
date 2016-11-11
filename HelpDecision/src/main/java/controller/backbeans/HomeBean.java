@@ -24,12 +24,23 @@ public class HomeBean {
 	private List<SelectItem> comboServidores;
 	private Servidor servidorSelecionado;
 	private List<LogDashboard> gerarLogDashboardInicial;
+	private long rangeInicio;
+	private long rangeFim;
+	private String dataInicio;
+	private String dataFim;
 
 	
 	public HomeBean() {
 		servicoFachada = new ServicoFachada();
 		
 		gerarLogDashboardInicial = servicoFachada.gerarLogDashboardInicial();
+	}
+	
+	public void filtrar(){
+		System.out.print("DataInicio: " + this.dataInicio);
+		System.out.println("	DataFim: " + this.dataFim);
+		System.out.print("rangeInicio: " + this.rangeInicio);
+		System.out.print("	rangeFim: " + this.rangeFim);
 	}
 	
 	public List<SelectItem> getComboServidores() throws SQLException {
@@ -76,5 +87,36 @@ public class HomeBean {
 	public List<LogDashboard> getGerarLogDashboardInicial() {
 		return gerarLogDashboardInicial;
 	}
-		
+
+	public long getRangeInicio() {
+		return rangeInicio;
+	}
+
+	public void setRangeInicio(long rangeInicio) {
+		this.rangeInicio = rangeInicio;
+	}
+
+	public long getRangeFim() {
+		return rangeFim;
+	}
+
+	public void setRangeFim(long rangeFim) {
+		this.rangeFim = rangeFim;
+	}
+
+	public String getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(String dataInicio) {
+		this.dataInicio = dataInicio;	
+	}
+
+	public String getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(String dataFim) {
+		this.dataFim = dataFim;
+	}
 }
