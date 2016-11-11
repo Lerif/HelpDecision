@@ -143,7 +143,9 @@
 								<h:outputText value="% De Quantidade de Chamadas"/>
 							</f:facet>
 							<div align="center">
-								<h:outputText value="#{log.porcentagemTotal}"/>
+								<h:outputText value="#{log.porcentagemTotal}">
+									<f:convertNumber pattern="#0.00"/>
+								</h:outputText>
 							</div>				
 						</h:column>
 						
