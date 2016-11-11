@@ -38,7 +38,7 @@
 	<!--ALERTFY-->
 	<script src="../dist/js/alertify.min.js"></script>
 	<link rel="stylesheet" href="../css/alertify.min.css" />
-	
+
 	<title>Home | Help Decision</title>
 </h:head>
 
@@ -76,7 +76,7 @@
 	</nav>
 
 	<h3 class="text-primary text-center">Dashboard</h3>
-	<div class="container" style="text-align: center" >
+	<div class="container" style="text-align: center">
 		<div class="login-box well">
 			<h:form id="formLogin" class="form-inline">
 
@@ -123,84 +123,87 @@
 
 			<div class="col-md-12">
 				<div class="table-responsive">
-				<h:form>
-					<h:dataTable class="table table-bordred table-striped" 
-						id="chamadaMetodo" value="#{homeBean.gerarLogDashboardInicial}" var="log">
-						
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Nome"/>
-							</f:facet>
-							<h:outputText value="#{log.nomeMetodo}"/>				
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Quantidade de Chamadas"/>
-							</f:facet>
-							<div align="center">	
-							<h:outputText value="#{log.quantidadeDessaChamada}"/>
-							</div>				
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="% De Quantidade de Chamadas"/>
-							</f:facet>
-							<div align="center">
-								<h:outputText value="#{log.porcentagemTotal}">
-									<f:convertNumber pattern="#0.00"/>
-								</h:outputText>
-							</div>				
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Tempo Total"/>
-							</f:facet>
-							<div align="center">	
-								<h:outputText value="#{log.tempoTotal}"/>
-							</div>				
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Tempo Medio"/>
-							</f:facet>
-							<div align="center">	
-								<h:outputText value="#{log.tempoMedio}"/>
-							</div>				
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Maior Tempo"/>
-							</f:facet>
-							<div align="center">
-								<h:outputText value="#{log.tempoMaior}"/>
-							</div>				
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Menor Tempo"/>
-							</f:facet>
-							<div align="center">	
-								<h:outputText value="#{log.tempoMenor}"/>
-							</div>				
-						</h:column>
-						
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="Servidor"/>
-							</f:facet>
-							<div align="center">	
-								<h:outputText value="#{log.nomeServidor}"/>
-							</div>				
-						</h:column>
-						
-					</h:dataTable>
-				</h:form>
+					<h:form>
+						<h:dataTable class="table table-bordred table-striped"
+							id="chamadaMetodo" value="#{homeBean.gerarLogDashboardInicial}"
+							var="log">
+							
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Nome" />
+								</f:facet>
+								<h:commandLink>
+								<h:outputText value="#{log.nomeMetodo}" />
+								</h:commandLink>
+							</h:column>
+
+							<h:column>
+
+								<f:facet name="header">
+									<h:outputText value="Quantidade de Chamadas" />
+								</f:facet>
+								<div align="center">
+										<h:outputText value="#{log.quantidadeDessaChamada}" />
+								</div>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="% De Quantidade de Chamadas" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.porcentagemTotal}">
+										<f:convertNumber pattern="#0.00" />
+									</h:outputText>
+								</div>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Tempo Total" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.tempoTotal}" />
+								</div>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Tempo Medio" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.tempoMedio}" />
+								</div>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Maior Tempo" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.tempoMaior}" />
+								</div>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Menor Tempo" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.tempoMenor}" />
+								</div>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Servidor" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.nomeServidor}" />
+								</div>
+							</h:column>
+						</h:dataTable>
+					</h:form>
 				</div>
 			</div>
 		</div>
@@ -254,11 +257,15 @@
 		var res = /[^0-9]/.test(str);
 		var delay = 200;
 		if (res) {
-	            alertify.notify('ok', 'error', 5, function(){  console.log('dismissed'); });
-	        } else {
-	            alertify.notify('!ok', 'success', 5, function(){  console.log('dismissed'); });
-	        }
-	        setTimeout(teste, delay)
-	    }
+			alertify.notify('ok', 'error', 5, function() {
+				console.log('dismissed');
+			});
+		} else {
+			alertify.notify('!ok', 'success', 5, function() {
+				console.log('dismissed');
+			});
+		}
+		setTimeout(teste, delay)
+	}
 </script>
 </html>
