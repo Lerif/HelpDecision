@@ -12,8 +12,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import javax.faces.model.SelectItem;
-import javax.faces.view.ViewScoped;
 import javax.servlet.http.Part;
+
+import org.primefaces.context.RequestContext;
 
 import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
@@ -93,11 +94,22 @@ public class UploadBean implements Serializable {
 
 	public void cadastrarServidor() throws SQLException {
 		this.setServidorCadastrado(servicoFachada.cadastrarServidor(0, getNomeServidor()));
-		System.out.println(getServidorCadastrado());
-
+		//System.out.println(getServidorCadastrado());
 		servicoFachada.cadastrarServidor(0, getNomeServidor());
+		executaJavaScriptQueImprimeSeServidorFoiCadastrado();
 	}
 
+	public void executaJavaScriptQueImprimeSeServidorFoiCadastrado() {
+
+		if(getServidorCadastrado()){
+			RequestContext requestContext = RequestContext.getCurrentInstance();  
+			  requestContext.execute("confirmarServidorCadastrado()");
+		} else {
+			RequestContext requestContext = RequestContext.getCurrentInstance();  
+			  requestContext.execute("negarServidorCadastrado()");
+		}
+	}
+	
 //	public String deleteAction(ArquivoLog arquivoLog) throws SQLException {
 //		servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLog);
 //		//servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLog);
@@ -156,14 +168,12 @@ public class UploadBean implements Serializable {
 		try {
 			servidores = servicoFachada.solicitarTodosServidoresDB();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		for (Servidor servidor : servidores) {
 			SelectItem item = new SelectItem(servidor.getIdServidor(), servidor.getNomeServidor());
 			this.comboServidores.add(item);
-
 		}
 		return comboServidores;
 	}
@@ -219,5 +229,4 @@ public class UploadBean implements Serializable {
 	public void setAgregador(ChamadaMetodoArquivoLogServidor agregador) {
 		this.agregador = agregador;
 	}
-
 }

@@ -60,7 +60,7 @@ public class ServicoFachada {
 		}
 	}
 
-	// M�TODOS REFERENTE AO SERVICO CHAMADA METODO
+	// METODOS REFERENTE AO SERVICO CHAMADA METODO
 
 	public List<ChamadaMetodo> buscarPorDuracao(long inicio, long fim) {
 		return servicoChamadaMetodo.buscarPorDuracao(inicio, fim);
@@ -91,6 +91,15 @@ public class ServicoFachada {
 		return servicoServidor.cadastrarServidorDB(solicitarNovoServidor(idServidor, nomeServidor));
 	}
 
+		public Boolean imprimeSeServidorFoiCadastrado(Servidor servidor) {
+		try {
+			return servicoServidor.verificarServidorExiste(servidor);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public void solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(ArquivoLog arquivoLog) throws SQLException {
 		this.servicoAgregador.removerAgregadorEmCascataByArquivoLogId(arquivoLog.getIdArquivo());
 	}
@@ -119,7 +128,6 @@ public class ServicoFachada {
 		try {
 			return servicoDescompactador.extrairTarGz(arquivoTarGz, localDestino);
 		} catch (IOException | ArchiveException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ArrayList<File>();
@@ -135,7 +143,6 @@ public class ServicoFachada {
 		try {
 			return leitor.ler(arquivo);
 		} catch (IOException | ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ArrayList<ChamadaMetodo>();

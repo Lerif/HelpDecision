@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<link rel="icon" 
       type="image/png" 
@@ -145,11 +145,6 @@
 		</div>
 	</div>
 
-
-<b:alert severity="success"><strong>Well done!</strong> You successfully read this important alert message.</b:alert>
-
-
-	
 </h:body>
 
 <!--  Modal excluir arquivo anterior  -->
@@ -181,7 +176,7 @@
 			</div>
 		</div>
 	</div>
-
+							
 <!-- Modal Cadastrar novo servidor -->
 <div id="cadastra_servidor" class="modal fade" role="dialog">
 	<div class="modal-dialog">
@@ -203,7 +198,7 @@
 					<div class="form-group">
 						<div class="modal-footer">
 							<h:commandButton
-								onclick="setTimeout(confirmarCadastroServidor(), delay)"
+								
 								id="botaoConfirmar"
 								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
 								value="Confirmar" action="#{uploadBean.cadastrarServidor()}">
@@ -242,18 +237,13 @@
 </div>
 
 <script>
-    function confirmarCadastroServidor(boolean textoConfirmacaoServidor) {
-        var imprimirTextoConfirmacao
-        imprimirTextoConfirmacao = textoConfirmacaoServidor;
+    function confirmarServidorCadastrado() {
+    	var notification = alertify.notify('Servidor cadastrado!', 'success', 5, function(){  console.log('dismissed'); });
 
-        if (imprimirTextoConfirmacao) {
-            var notification = alertify.notify('Servidor cadastrado!', 'success', 5, function(){  console.log('dismissed'); });
-        } else {
-            var notification = alertify.notify('Servidor NÃO cadastrado!', 'error', 5, function(){  console.log('dismissed'); });
-        }
-        setTimeout(confirmarCadastroServidor, delay)
     }
-    var delay = 200;
-    setTimeout(confirmarCadastroServidor, delay)
+
+     function negarServidorCadastrado() {
+       	var notification = alertify.notify('Servidor não cadastrado!', 'error', 5, function(){  console.log('dismissed'); });
+    }
 </script>
 </html>
