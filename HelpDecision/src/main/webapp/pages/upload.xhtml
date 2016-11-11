@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
 <h:head>
 	<link rel="icon" 
       type="image/png" 
@@ -10,14 +11,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
 	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css" type="text/css" media="all" />
-	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
 	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
 	<link rel="script" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
+	<script src="../dist/js/nprogress.js"></script>
 	<script src="../dist/js/alertify.min.js"></script>
 	<link rel="stylesheet" href="../css/alertify.min.css" />
 	<link rel="stylesheet" href="../css/themes/default.min.css" />
+	<link rel="stylesheet" href="../css/nprogress.css" type="text/css" />
 	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
 
 	<title>Upload | Help Decision</title>
@@ -86,7 +87,7 @@
 				<br></br>
 				<div class="form-group">
 					<h:commandButton type="submit"
-						class="btn btn-success btn-login-submit btn-md m-t-md"
+						class="btn btn-success btn-login-submit btn-md m-t-md" onclick="NProgress.start();NProgress.done();"
 						value="Upload" action="#{uploadBean.upload}" />
 				</div>
 			</h:form>
@@ -144,7 +145,14 @@
 		</div>
 	</div>
 
-	<!--  Modal excluir arquivo anterior  -->
+
+<b:alert severity="success"><strong>Well done!</strong> You successfully read this important alert message.</b:alert>
+
+
+	
+</h:body>
+
+<!--  Modal excluir arquivo anterior  -->
 	<div class="modal fade" id="delete" tabindex="-1" role="dialog"
 		aria-labelledby="edit" aria-hidden="true">
 		<div class="modal-dialog">
@@ -173,7 +181,6 @@
 			</div>
 		</div>
 	</div>
-</h:body>
 
 <!-- Modal Cadastrar novo servidor -->
 <div id="cadastra_servidor" class="modal fade" role="dialog">
@@ -239,7 +246,7 @@
         var imprimirTextoConfirmacao
         imprimirTextoConfirmacao = textoConfirmacaoServidor;
 
-        if (imprimirTextoConfirmacao == true) {
+        if (imprimirTextoConfirmacao) {
             var notification = alertify.notify('Servidor cadastrado!', 'success', 5, function(){  console.log('dismissed'); });
         } else {
             var notification = alertify.notify('Servidor NÃO cadastrado!', 'error', 5, function(){  console.log('dismissed'); });
