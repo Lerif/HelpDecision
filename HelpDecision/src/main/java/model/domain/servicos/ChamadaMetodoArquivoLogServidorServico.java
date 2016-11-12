@@ -1,5 +1,6 @@
 package model.domain.servicos;
 
+import java.security.Timestamp;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,16 +34,16 @@ public class ChamadaMetodoArquivoLogServidorServico {
   		return repositorioAgregador.insert(agregador);
 	}
 	
-	public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long duracaoInicio, long duracaoFim, Date dataInicio,
-			Date dataFim){
-		try {
-			return repositorioAgregador.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new ArrayList<ChamadaMetodo>();
-	}
+//	public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long duracaoInicio, long duracaoFim, Date dataInicio,
+//			Date dataFim){
+//		try {
+//			return repositorioAgregador.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return new ArrayList<ChamadaMetodo>();
+//	}
 	public void removerAgregadorEmCascataByArquivoLogId(int idArquivoLog) throws SQLException {
 		repositorioAgregador.removeAgregadorThreeByIdArquivoLog(idArquivoLog);
 	}
@@ -50,4 +51,5 @@ public class ChamadaMetodoArquivoLogServidorServico {
 	public List<ChamadaMetodoArquivoLogServidor> solicitarListaDeArquivoLogEServidorCadastradoDB() throws SQLException {
 		return repositorioAgregador.findArquivoLogAndServidor();
 	}
+
 }

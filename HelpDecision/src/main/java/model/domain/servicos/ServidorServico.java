@@ -11,11 +11,7 @@ public class ServidorServico {
 
 	private RepositorioServidor servidorRepositorio = new RepositorioServidor();
 
-	public ServidorServico() {
-		
-	}
-
-
+	public ServidorServico() {}
 
 	public Servidor criarServidor(int idServidor, String nomeServidor) {
 		return FabricaServidor.novo().novoServidor(idServidor, nomeServidor);
@@ -36,5 +32,8 @@ public class ServidorServico {
 	public Servidor buscarPorId(Integer id) throws SQLException{
 		return servidorRepositorio.findById(id);
 	}
-
+	
+	public Boolean verificarServidorExiste(Servidor servidor) throws SQLException {
+		return servidorRepositorio.verificarServidorExiste(servidor);
+	}
 }
