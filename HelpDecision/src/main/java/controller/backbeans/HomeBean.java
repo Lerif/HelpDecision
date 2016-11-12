@@ -1,16 +1,14 @@
 package controller.backbeans;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
+
+import org.primefaces.context.RequestContext;
 
 import model.domain.entidades.LogDashboard;
 import model.domain.entidades.Servidor;
@@ -28,15 +26,23 @@ public class HomeBean {
 	private long rangeInicio;
 	private long rangeFim;
 
-
 	public HomeBean() {
 		servicoFachada = new ServicoFachada();
-
 		gerarLogDashboardInicial = servicoFachada.gerarLogDashboardInicial();
 	}
 
 	public void filtrar() throws SQLException {
 		
+		RequestContext requestContext = RequestContext.getCurrentInstance();
+		
+		try{
+			Integer.parseInt(servidorSelecionado);
+		}catch(NumberFormatException e){
+			requestContext.execute("alertServidorNaoSelecionado()");
+			return;
+		}
+		
+		requestContext.execute("alertLetras");
 		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(Integer.parseInt(servidorSelecionado)/*, Timestamp.valueOf(dataInicio), dataFim*/, rangeInicio, rangeFim);
 		
 //		Matcher matcher;
