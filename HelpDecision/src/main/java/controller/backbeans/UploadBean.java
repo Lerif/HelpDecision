@@ -10,10 +10,10 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-
 import javax.faces.model.SelectItem;
-import javax.faces.view.ViewScoped;
 import javax.servlet.http.Part;
+
+import org.primefaces.context.RequestContext;
 
 import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
@@ -53,6 +53,8 @@ public class UploadBean implements Serializable {
 
 	public void upload() throws IOException {
 
+		RequestContext requestContext = RequestContext.getCurrentInstance();
+
 		long time = System.currentTimeMillis();
 		Date date = new Date(time);
 
@@ -82,32 +84,48 @@ public class UploadBean implements Serializable {
 			chamadaMetodos = servicoFachada.lerArquivoLog(arq.getAbsolutePath());
 
 			try {
-				servicoFachada.inserirNovoArquivo(chamadaMetodos, arquivoLog, Integer.parseInt(itemSelecionado));
+				if (servicoFachada.inserirNovoArquivo(chamadaMetodos, arquivoLog, Integer.parseInt(itemSelecionado)) != null) {
+					requestContext.execute("alertUploadRealizadoComSucesso()");
+				} else {
+					requestContext.execute("alertUploadNaoRealizadoArquivoJaExiste()");
+				}
 			} catch (NumberFormatException e) {
+				requestContext.execute("alertUploadNaoRealizadoErro()");
 				System.out.println("[UploadBean] Erro: " + e);
 			} catch (SQLException e) {
+				requestContext.execute("alertUploadNaoRealizadoErro()");
 				System.out.println("[UploadBean] Erro: " + e);
 			}
 		}
 	}
 
 	public void cadastrarServidor() throws SQLException {
-		this.setServidorCadastrado(servicoFachada.cadastrarServidor(0, getNomeServidor()));
-		System.out.println(getServidorCadastrado());
+		RequestContext requestContext = RequestContext.getCurrentInstance();
 
-		servicoFachada.cadastrarServidor(0, getNomeServidor());
+		if (servicoFachada.cadastrarServidor(0, getNomeServidor())) {
+			requestContext.execute("alertServidorCadastrado()");
+		} else {
+			requestContext.execute("alertNaoServidorCadastrado()");
+		}
+
 	}
 
-//	public String deleteAction(ArquivoLog arquivoLog) throws SQLException {
-//		servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLog);
-//		//servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLog);
-//		return null;
-//	}
+	// public String deleteAction(ArquivoLog arquivoLog) throws SQLException {
+	// servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLog);
+	// //servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLog);
+	// return null;
+	// }
 
 	public String deleteActionArquivoLogServidor(ChamadaMetodoArquivoLogServidor arquivoLogServidor)
 			throws SQLException {
-		servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLogServidor.getArquivoLog());
-		//servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLogServidor.getArquivoLog());
+		RequestContext requestContext = RequestContext.getCurrentInstance();
+		if(servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLogServidor.getArquivoLog())){
+			requestContext.execute("alertDeleteComSucesso()");
+		}
+		else{
+			requestContext.execute("alertErroAoDeletar()");
+		}
+		// servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLogServidor.getArquivoLog());
 		return null;
 	}
 
