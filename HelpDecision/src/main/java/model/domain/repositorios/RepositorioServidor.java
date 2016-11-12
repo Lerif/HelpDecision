@@ -48,7 +48,7 @@ public class RepositorioServidor {
 				return false;
 			}
 		} catch (Exception e) {
-			return null;
+			return false;
 		}
 	}
 

@@ -3,6 +3,7 @@ package model.domain.servicos;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,57 +27,81 @@ public class ServicoFachada {
 	private ServicoDashboard servicoDashboard = ServicoDashboard.novo();
 	private Leitor leitor = new Leitor();
 
-
 	public ServicoFachada() {
 
 	}
 
-	public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo, ArquivoLog arquivoLog, Servidor servidor)
-			throws SQLException {
-		// Faz insert na tb_chamada_metodo
-		// Faz insert na tb_arquivo
-		// Recuperar o id_servidor a partir do seu nome
-		// Agrega listChamadaMetodo, ArquivoLog e Servidor
-		return servicoAgregador.inserirAgregador(servicoAgregador.agregar(
-				servicoChamadaMetodo.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo),
-				servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog), servicoServidor.recuperarIdServidor(servidor)));
-	}
-	
+	// public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo,
+	// ArquivoLog arquivoLog, Servidor servidor)
+	// throws SQLException {
+	// // Faz insert na tb_chamada_metodo
+	// // Faz insert na tb_arquivo
+	// // Recuperar o id_servidor a partir do seu nome
+	// // Agrega listChamadaMetodo, ArquivoLog e Servidor
+	//
+	//// return servicoAgregador.inserirAgregador(servicoAgregador.agregar(
+	//// servicoChamadaMetodo.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo),
+	//// servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog),
+	// servicoServidor.buscarPorId(idSservidor)));
+	//
+	//
+	// }
+
 	public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo, ArquivoLog arquivoLog, int idSservidor)
 			throws SQLException {
-		return servicoAgregador.inserirAgregador(servicoAgregador.agregar(
-				servicoChamadaMetodo.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo),
-				servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog), servicoServidor.buscarPorId(idSservidor)));
+		List<ChamadaMetodo> _listaChamadaMetodo = servicoChamadaMetodo
+				.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo);
+		if (_listaChamadaMetodo.size() != 0) {
+			ArquivoLog _arquivoLog = servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog);
+			Servidor _servidor = servicoServidor.buscarPorId(idSservidor);
+			return servicoAgregador
+					.inserirAgregador(servicoAgregador.agregar(_listaChamadaMetodo, _arquivoLog, _servidor));
+		} else {
+			return null;
+		}
 	}
 
+	public List<LogDashboard> solicitarFiltroDashBoard(int servidor/*, Timestamp dataInicio, Timestamp dataFim*/, long duracaoInicial, long duracaoFinal) throws SQLException{
+		return servicoDashboard.filtrarDashboard(servidor/*, dataInicio, dataFim*/, duracaoInicial, duracaoFinal);
+	}
 	// M�TODOS REFERENTE AO SERVICO CHAMADA METODO
-	
-	public List<ChamadaMetodo> buscarPorDuracao(long inicio, long fim){
+
+	public List<ChamadaMetodo> buscarPorDuracao(long inicio, long fim) {
 		return servicoChamadaMetodo.buscarPorDuracao(inicio, fim);
 	}
-	
-	public List<ChamadaMetodo> buscarPorData(Date inicio, Date fim){
+
+	public List<ChamadaMetodo> buscarPorData(Date inicio, Date fim) {
 		return servicoChamadaMetodo.buscarPorData(inicio, fim);
 	}
-	
-	public List<ChamadaMetodo> buscarPorServidor(String nomeDoServidor){
+
+	public List<ChamadaMetodo> buscarPorServidor(String nomeDoServidor) {
 		return servicoChamadaMetodo.buscarPorServido(nomeDoServidor);
 	}
-	
+
 	public ArquivoLog solicitarCriacaoArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload,
 			String descricao) {
 		return servicoArquivoLog.criarArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
 	}
 
-	public Boolean solicitarFlagDeArquivoDeletado(ArquivoLog arquivoLog){
+	public Boolean solicitarFlagDeArquivoDeletado(ArquivoLog arquivoLog) {
 		return servicoArquivoLog.solicitarFlagArquivoExcluido(arquivoLog);
 	}
+
 	public List<ArquivoLog> solicitarTodosArquivoLogDB() throws SQLException {
 		return servicoArquivoLog.solicitarListaDeArquivoLogCadastradoDB();
 	}
 
 	public Boolean cadastrarServidor(int idServidor, String nomeServidor) throws SQLException {
 		return servicoServidor.cadastrarServidorDB(solicitarNovoServidor(idServidor, nomeServidor));
+	}
+
+		public Boolean imprimeSeServidorFoiCadastrado(Servidor servidor) {
+		try {
+			return servicoServidor.verificarServidorExiste(servidor);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	public void solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(ArquivoLog arquivoLog) throws SQLException {
@@ -90,40 +115,38 @@ public class ServicoFachada {
 	public List<Servidor> solicitarTodosServidoresDB() throws SQLException {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
 	}
-	
+
 	// METODOS REFERENTE AO AGREGADOR
-	public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long duracaoInicio, long duracaoFim, Date dataInicio,
-			Date dataFim){
-		return servicoAgregador.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
-	}
-	
+//	public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long duracaoInicio, long duracaoFim, Date dataInicio,
+//			Date dataFim) {
+//		return servicoAgregador.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
+//	}
+
 	public List<ChamadaMetodoArquivoLogServidor> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
 		return servicoAgregador.solicitarListaDeArquivoLogEServidorCadastradoDB();
 	}
-	
+
 	// METODOS REFERENTE AO SERVICO DESCOMPACTADOR
-	public List<File> extrairTarGz (File arquivoTarGz, File localDestino){
-		
+	public List<File> extrairTarGz(File arquivoTarGz, File localDestino) {
+
 		try {
 			return servicoDescompactador.extrairTarGz(arquivoTarGz, localDestino);
 		} catch (IOException | ArchiveException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ArrayList<File>();
 	}
-	
+
 	// METODO REFERENTE AO SERVICO DASHBOARD
-	public List<LogDashboard> gerarLogDashboardInicial (){
+	public List<LogDashboard> gerarLogDashboardInicial() {
 		return servicoDashboard.gerarLogDashboardInicial();
 	}
-	
+
 	// METODO REFERENTE AO LEITOR
-	public List<ChamadaMetodo> lerArquivoLog(String arquivo){
+	public List<ChamadaMetodo> lerArquivoLog(String arquivo) {
 		try {
 			return leitor.ler(arquivo);
 		} catch (IOException | ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return new ArrayList<ChamadaMetodo>();
@@ -146,4 +169,3 @@ public class ServicoFachada {
 	}
 
 }
-
