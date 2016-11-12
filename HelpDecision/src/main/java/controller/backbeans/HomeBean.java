@@ -22,7 +22,7 @@ public class HomeBean {
 	protected static final String NOME_DO_PROJETO = "HelpDecision";
 	private ServicoFachada servicoFachada;
 	private List<SelectItem> comboServidores;
-	private Servidor servidorSelecionado;
+	private String servidorSelecionado;
 	private List<LogDashboard> gerarLogDashboardInicial;
 	private long rangeInicio;
 	private long rangeFim;
@@ -40,7 +40,8 @@ public class HomeBean {
 		System.out.print("DataInicio: " + this.dataInicio);
 		System.out.println("	DataFim: " + this.dataFim);
 		System.out.print("rangeInicio: " + this.rangeInicio);
-		System.out.print("	rangeFim: " + this.rangeFim);
+		System.out.println("	rangeFim: " + this.rangeFim);
+		System.out.println("Servidor: " + servidorSelecionado);
 	}
 	
 	public List<SelectItem> getComboServidores() throws SQLException {
@@ -60,11 +61,11 @@ public class HomeBean {
 		return comboServidores;
 	}
 
-	public Servidor getServidorSelecionado() {
+	public String getServidorSelecionado() {
 		return servidorSelecionado;
 	}
 
-	public void setServidorSelecionado(Servidor servidorSelecionado) {
+	public void setServidorSelecionado(String servidorSelecionado) {
 		this.servidorSelecionado = servidorSelecionado;
 	}
 	
