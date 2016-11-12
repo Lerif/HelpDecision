@@ -3,7 +3,8 @@
     >
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -38,6 +39,9 @@
 	<!--ALERTFY-->
 	<script src="../dist/js/alertify.min.js"></script>
 	<link rel="stylesheet" href="../css/alertify.min.css" />
+
+	<script src="../dist/js/alertify/alertify.js"></script>
+	<link rel="stylesheet" href="../css/alertify/alertify.css" />
 
 	<title>Home | Help Decision</title>
 </h:head>
@@ -81,22 +85,22 @@
 			<h:form id="formLogin" class="form-inline">
 
 				<div class="form-group">
-					<h:selectOneMenu value="#{uploadBean.itemSelecionado}"
+					<h:selectOneMenu value="#{homeBean.servidorSelecionado}"
 						class="btn btn-default">
 						<f:selectItem itemLabel="Selecione um Servidor" />
-						<f:selectItems value="#{uploadBean.comboServidores}" />
+						<f:selectItems value="#{homeBean.comboServidores}" />
 					</h:selectOneMenu>
 				</div>
 
 				<div class="form-group">
-					<label>Data Início e Fim:</label> <input type="text"
+					<label>Data Início e Fim:</label> <input id="datas" type="text"
 						name="daterange" value="01/01/2016 1:30 PM - 01/01/2016 2:00 PM" />
 				</div>
 
 				<div class="form-group">
 					<label>Range(ms):</label>
-					<textarea class="form-control" rows="1" cols="8" id="min"
-						title=" Min"></textarea>
+					<h:inputText value="#{homeBean.rangeInicio}" class="form-control"
+						rows="1" cols="8" id="min" title=" Min"></h:inputText>
 				</div>
 
 				<div class="form-group">
@@ -104,14 +108,15 @@
 				</div>
 
 				<div class="form-group">
-					<textarea class="form-control" rows="1" cols="8" id="max"
-						title="Max"></textarea>
+					<h:inputText value="#{homeBean.rangeFim}" class="form-control"
+						rows="1" cols="8" id="max" title="Max"></h:inputText>
 				</div>
 
 				<div class="form-group">
+
 					<h:commandButton type="submit"
 						class="btn btn-success btn-login-submit btn-md" value="Filtrar"
-						onclick="teste();" />
+						action="#{homeBean.filtrar()}" />
 				</div>
 
 			</h:form>
@@ -204,6 +209,83 @@
 								</div>
 							</h:column>
 						</h:dataTable>
+					</h:form>
+					<h:form>
+						<p:dataTable class="table table-bordred table-striped"
+							id="chamadaMetodo" value="#{homeBean.gerarLogDashboardInicial}"
+							var="log">
+							<p:column sortBy="#{log.nomeMetodo}">
+								<f:facet name="header">
+									<h:outputText value="Nome" />
+								</f:facet>
+								<h:outputText value="#{log.nomeMetodo}" />
+							</p:column>
+
+							<p:column sortBy="#{log.quantidadeDessaChamada}">
+								<f:facet name="header">
+									<h:outputText value="Quantidade de Chamadas" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.quantidadeDessaChamada}" />
+								</div>
+							</p:column>
+
+							<p:column sortBy="#{log.porcentagemTotal}">
+								<f:facet name="header">
+									<h:outputText value="% De Quantidade de Chamadas" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.porcentagemTotal}">
+										<f:convertNumber pattern="#0.00" />
+									</h:outputText>
+								</div>
+							</p:column>
+
+							<p:column sortBy="#{log.tempoTotal}">
+								<f:facet name="header">
+									<h:outputText value="Tempo Total" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.tempoTotal}" />
+								</div>
+							</p:column>
+
+							<p:column sortBy="#{log.tempoMedio}">
+								<f:facet name="header">
+									<h:outputText value="Tempo Medio" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.tempoMedio}" />
+								</div>
+							</p:column>
+
+							<p:column sortBy="#{log.tempoMaior}">
+								<f:facet name="header">
+									<h:outputText value="Maior Tempo" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.tempoMaior}" />
+								</div>
+							</p:column>
+
+							<p:column sortBy="#{log.tempoMenor}">
+								<f:facet name="header">
+									<h:outputText value="Menor Tempo" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.tempoMenor}" />
+								</div>
+							</p:column>
+
+							<p:column sortBy="#{log.nomeServidor}">
+								<f:facet name="header">
+									<h:outputText value="Servidor" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.nomeServidor}" />
+								</div>
+							</p:column>
+						</p:dataTable>
 					</h:form>
 				</div>
 			</div>
@@ -311,6 +393,12 @@
 </div>
 
 <script>
+
+	function getData(){
+		alert(document.getElementById("datas").value);
+
+		}
+	
 	$(function() {
 		$('input[name="daterange"]').daterangepicker({
 			timePicker : true,
@@ -341,6 +429,14 @@
 		}
 		setTimeout(teste, delay)
 	}
+		//alert("Ronaldo");
+        	alertify.notify('Favor utilizar apenas numeros no range', 'error', 5, function(){  console.log('dismissed'); });
+			
+    	} else {
+	            alertify.notify('Ok', 'success', 5, function(){  console.log('dismissed'); });
+	    }
+	        //setTimeout(teste, delay)
+	    }
 
 	function showModal() {
 		$('#modal_detalhes_chamadas').modal('show');

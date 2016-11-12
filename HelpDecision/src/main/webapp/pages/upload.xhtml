@@ -3,23 +3,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:b="http://bootsfaces.net/ui">
 <h:head>
-	<link rel="icon" 
-      type="image/png" 
-      href="/images/favicon.png" />
+	<link rel="icon" type="image/png" href="/images/favicon.png" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css" type="text/css" media="all" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
-	<link rel="script" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css"
+		type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css"
+		type="text/css" media="all" />
+	<link rel="script" href="../css/bootstrap/bootstrap-theme.css"
+		type="text/css" media="all" />
 	<script src="../dist/js/nprogress.js"></script>
-	<script src="../dist/js/alertify.min.js"></script>
-	<link rel="stylesheet" href="../css/alertify.min.css" />
 	<link rel="stylesheet" href="../css/themes/default.min.css" />
 	<link rel="stylesheet" href="../css/nprogress.css" type="text/css" />
 	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+	<!--ALERTFY-->
+	<script src="../dist/js/alertify/alertify.js"></script>
+	<link rel="stylesheet" href="../css/alertify/alertify.css" />
 
 	<title>Upload | Help Decision</title>
 </h:head>
@@ -45,8 +49,8 @@
 
 				<li data-toggle="modal" data-target="#modal_sobre"><a href="#">Sobre</a></li>
 				<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
-					<a href="home.xhtml"> 
-						<h:commandButton class="btn btn-warning pull-left btn-md m-t-md" value="Dashboard" />
+					<a href="home.xhtml"> <h:commandButton
+							class="btn btn-warning pull-left btn-md m-t-md" value="Dashboard" />
 					</a>
 				</div>
 			</ul>
@@ -60,7 +64,7 @@
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
-					<h:selectOneMenu value="#{uploadBean.itemSelecionado}"
+					<h:selectOneMenu id="comboServidores" value="#{uploadBean.itemSelecionado}"
 						class="btn btn-default">
 						<f:selectItem itemLabel="Selecione um Servidor" />
 						<f:selectItems value="#{uploadBean.comboServidores}" />
@@ -87,8 +91,9 @@
 				<br></br>
 				<div class="form-group">
 					<h:commandButton type="submit"
-						class="btn btn-success btn-login-submit btn-md m-t-md" onclick="NProgress.start();NProgress.done();"
-						value="Upload" action="#{uploadBean.upload}" />
+						class="btn btn-success btn-login-submit btn-md m-t-md"
+						onclick="NProgress.start();NProgress.done();" value="Upload"
+						action="#{uploadBean.upload}" />
 				</div>
 			</h:form>
 		</div>
@@ -131,9 +136,9 @@
 								</f:facet>
 								<h:outputText
 									value="#{arquivoLogComServidor.servidor.nomeServidor}" />
-							</h:column>							
+							</h:column>
 							<h:column>
-							
+
 								<f:facet name="header">Delete</f:facet>
 								<h:commandLink value="✗" styleClass="btn btn-danger"
 									action="#{uploadBean.deleteActionArquivoLogServidor(arquivoLogComServidor)}" />
@@ -145,42 +150,42 @@
 		</div>
 	</div>
 
+	<b:alert severity="success">
+		<strong>Well done!</strong> You successfully read this important alert message.</b:alert>
 
-<b:alert severity="success"><strong>Well done!</strong> You successfully read this important alert message.</b:alert>
 
 
-	
 </h:body>
 
 <!--  Modal excluir arquivo anterior  -->
-	<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-		aria-labelledby="edit" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-					</button>
-					<h4 class="modal-title custom_align" id="Heading">Excluir</h4>
+<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+	aria-labelledby="edit" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				</button>
+				<h4 class="modal-title custom_align" id="Heading">Excluir</h4>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger">
+					<span class="glyphicon glyphicon-warning-sign"></span> Você tem
+					certeza que deseja excluir este Registro?
 				</div>
-				<div class="modal-body">
-					<div class="alert alert-danger">
-						<span class="glyphicon glyphicon-warning-sign"></span> Você tem
-						certeza que deseja excluir este Registro?
-					</div>
-				</div>
-				<div class="modal-footer ">
-					<button type="button" class="btn btn-success">
-						<span class="glyphicon glyphicon-ok-sign"></span> Sim
-					</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">
-						<span class="glyphicon glyphicon-remove"></span> Não
-					</button>
-				</div>
+			</div>
+			<div class="modal-footer ">
+				<button type="button" class="btn btn-success">
+					<span class="glyphicon glyphicon-ok-sign"></span> Sim
+				</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">
+					<span class="glyphicon glyphicon-remove"></span> Não
+				</button>
 			</div>
 		</div>
 	</div>
+</div>
 
 <!-- Modal Cadastrar novo servidor -->
 <div id="cadastra_servidor" class="modal fade" role="dialog">
@@ -192,8 +197,8 @@
 					<h4 class="modal-title">Cadastrar Novo Servidor</h4>
 				</div>
 				<div class="modal-body">
-					<label for="variavelDeServidor">
-					<h:outputText id="servidorLabel" value="Nome do Servidor:" /></label>
+					<label for="variavelDeServidor"> <h:outputText
+							id="servidorLabel" value="Nome do Servidor:" /></label>
 					<h:inputText id="nomeServidor" value="#{uploadBean.nomeServidor}"
 						type="text" class="form-control" required="true"
 						requiredMessage="Por gentiliza, preencha um nome para o novo Servidor" />
@@ -202,12 +207,16 @@
 					</div>
 					<div class="form-group">
 						<div class="modal-footer">
+							
 							<h:commandButton
-								onclick="setTimeout(confirmarCadastroServidor(), delay)"
 								id="botaoConfirmar"
+								type="subit"
 								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
 								value="Confirmar" action="#{uploadBean.cadastrarServidor()}">
+								<!-- f:ajax event="action" render="@all"/> -->
+								
 							</h:commandButton>
+							
 						</div>
 					</div>
 				</div>
@@ -242,18 +251,34 @@
 </div>
 
 <script>
-    function confirmarCadastroServidor(boolean textoConfirmacaoServidor) {
-        var imprimirTextoConfirmacao
-        imprimirTextoConfirmacao = textoConfirmacaoServidor;
+	function alertServidorCadastrado(){
+		alertify.notify('Servidor cadastrado com sucesso!', 'success', 5, function(){  console.log('dismissed'); });
+	}
+	
+	function alertNaoServidorCadastrado(){
+		alertify.notify('Servidor já cadastrado!', 'error', 5, function(){  console.log('dismissed'); });
+	}
 
-        if (imprimirTextoConfirmacao) {
-            var notification = alertify.notify('Servidor cadastrado!', 'success', 5, function(){  console.log('dismissed'); });
-        } else {
-            var notification = alertify.notify('Servidor NÃO cadastrado!', 'error', 5, function(){  console.log('dismissed'); });
-        }
-        setTimeout(confirmarCadastroServidor, delay)
-    }
-    var delay = 200;
-    setTimeout(confirmarCadastroServidor, delay)
+	function alertUploadRealizadoComSucesso(){
+		alertify.notify('Upload realizado com sucesso!', 'success', 5, function(){  console.log('dismissed'); });
+		}
+
+	function alertUploadNaoRealizadoArquivoJaExiste(){
+		alertify.notify('Este arquivo já existe no banco de dados', 'error', 6, function(){  console.log('dismissed'); });
+		}
+	
+	function alertUploadNaoRealizadoErro(){
+		alertify.notify('Erro ao realizar upload, por favor tente novamente.', 'error', 6, function(){  console.log('dismissed'); });
+		
+		}
+
+	function alertDeleteComSucesso(){
+		alertify.notify('Arquivo excluido', 'success', 6, function(){  console.log('dismissed'); });
+		}
+	
+	function alertErroAoDeletar(){
+		alertify.notify('Erro ao deletar o arquivo, por favor tente novamente', 'error', 6, function(){  console.log('dismissed'); });
+		
+		}
 </script>
 </html>
