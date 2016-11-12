@@ -257,19 +257,21 @@
 	function teste1() {
 		alert(document.getElementById("min").value);
 	}
+	
+	function alertServidorNaoSelecionado(){
+		alertify.notify('Favor selecionar um servidor', 'error', 3, function(){  console.log('dismissed'); });
+	}
 
-	function teste() {
+	function alertLetras() {
 		var str = document.getElementById("min").value;
 		var res = /[^0-9]/.test(str);
 		var delay = 200;
 		if (res) {
-			//alert("Ronaldo");
         	alertify.notify('Favor utilizar apenas numeros no range', 'error', 5, function(){  console.log('dismissed'); });
 			
     	} else {
-	            alertify.notify('Ok', 'success', 5, function(){  console.log('dismissed'); });
+	        alertify.notify('Ok', 'success', 5, function(){  console.log('dismissed'); });
 	    }
-	        //setTimeout(teste, delay)
-	    }
+	}
 </script>
 </html>
