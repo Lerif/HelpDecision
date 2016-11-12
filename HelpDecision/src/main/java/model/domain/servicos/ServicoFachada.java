@@ -3,6 +3,7 @@ package model.domain.servicos;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,7 +61,10 @@ public class ServicoFachada {
 		}
 	}
 
-	// METODOS REFERENTE AO SERVICO CHAMADA METODO
+	public List<LogDashboard> solicitarFiltroDashBoard(int servidor/*, Timestamp dataInicio, Timestamp dataFim*/, long duracaoInicial, long duracaoFinal) throws SQLException{
+		return servicoDashboard.filtrarDashboard(servidor/*, dataInicio, dataFim*/, duracaoInicial, duracaoFinal);
+	}
+	// M�TODOS REFERENTE AO SERVICO CHAMADA METODO
 
 	public List<ChamadaMetodo> buscarPorDuracao(long inicio, long fim) {
 		return servicoChamadaMetodo.buscarPorDuracao(inicio, fim);
@@ -113,10 +117,10 @@ public class ServicoFachada {
 	}
 
 	// METODOS REFERENTE AO AGREGADOR
-	public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long duracaoInicio, long duracaoFim, Date dataInicio,
-			Date dataFim) {
-		return servicoAgregador.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
-	}
+//	public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long duracaoInicio, long duracaoFim, Date dataInicio,
+//			Date dataFim) {
+//		return servicoAgregador.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
+//	}
 
 	public List<ChamadaMetodoArquivoLogServidor> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
 		return servicoAgregador.solicitarListaDeArquivoLogEServidorCadastradoDB();
