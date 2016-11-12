@@ -8,10 +8,12 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.LogDashboard;
+import model.domain.entidades.LogDashboardDetalhado;
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
 
@@ -24,6 +26,7 @@ public class HomeBean {
 	private List<SelectItem> comboServidores;
 	private Servidor servidorSelecionado;
 	private List<LogDashboard> gerarLogDashboardInicial;
+	private List<LogDashboardDetalhado> gerarLogDashboardDetalhado;
 	private long rangeInicio;
 	private long rangeFim;
 	private String dataInicio;
@@ -41,6 +44,10 @@ public class HomeBean {
 		System.out.println("	DataFim: " + this.dataFim);
 		System.out.print("rangeInicio: " + this.rangeInicio);
 		System.out.print("	rangeFim: " + this.rangeFim);
+	}
+	
+	public void dashBoardModal(ActionEvent event){
+		System.out.println("Teste");
 	}
 	
 	public List<SelectItem> getComboServidores() throws SQLException {
@@ -77,6 +84,10 @@ public class HomeBean {
 	
 	public List<LogDashboard> getGerarLogDashboardInicial() {
 		return gerarLogDashboardInicial;
+	}
+	
+	public List<LogDashboardDetalhado> getGerarLogDashboardDetalhadoModal() {
+		return gerarLogDashboardDetalhado;
 	}
 
 	public long getRangeInicio() {
