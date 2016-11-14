@@ -8,37 +8,25 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-
-	<!--BOOTSTRAP -->
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-	<!--JQUERY-->
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-	<!--DATETIMEPICKER-->
-	<!-- Include Required Prerequisites -->
-	<script type="text/javascript"
-		src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-	<script type="text/javascript"
-		src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-	<link rel="stylesheet" type="text/css"
-		href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
-	<!-- Include Date Range Picker -->
-	<script type="text/javascript"
-		src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-	<link rel="stylesheet" type="text/css"
-		href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
-
-	<!--ALERTFY-->
-	<script src="../dist/js/alertify/alertify.js"></script>
+	<!--CSS -->
+	<link rel="stylesheet" href="../css/themes/default.min.css" />
+	<link rel="stylesheet" href="../css/nprogress.css" type="text/css" />
+	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css"
+		type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css"
+		type="text/css" media="all" />
+	<link rel="script" href="../css/bootstrap/bootstrap-theme.css"
+		type="text/css" media="all" />
 	<link rel="stylesheet" href="../css/alertify/alertify.css" />
+
+	<!-- JS -->
+	<h:outputScript
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" />
+	<h:outputScript src="http://getbootstrap.com/dist/js/bootstrap.min.js" />
+	<h:outputScript src="../dist/js/nprogress.js" />
+	<h:outputScript src="../dist/js/alertify/alertify.js" />
+
 
 	<title>Home | Help Decision</title>
 </h:head>
@@ -91,9 +79,9 @@
 
 				<div class="form-group">
 
-					<label>Data Início e Fim:</label> 					
-					<label>Data Início e Fim:</label> <input id="datas" type="text"
-						name="daterange" value="01/01/2016 1:30 PM - 01/01/2016 2:00 PM" />
+					<label>Data Início e Fim:</label> <label>Data Início e Fim:</label>
+					<input id="datas" type="text" name="daterange"
+						value="01/01/2016 1:30 PM - 01/01/2016 2:00 PM" />
 				</div>
 
 				<div class="form-group">
@@ -127,30 +115,34 @@
 
 			<div class="col-md-12">
 				<div class="table-responsive">
-					<h:form>
+					<h:form id="form_dash_datatable">
+
+						<p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true"
+							height="100">
+							<h:outputText value="This is a Modal Dialog." />
+						</p:dialog>
+
 						<p:dataTable class="table table-bordred table-striped"
 							id="chamadaMetodo" value="#{homeBean.gerarLogDashboardInicial}"
 							var="log">
-							<p:column sortBy="#{log.nomeMetodo}">
-								<f:facet name="header">
-									<h:outputText value="Nome" />
-								</f:facet>
-								<h:outputText value="#{log.nomeMetodo}" />
+
+							<p:column sortBy="#{log.nomeMetodo}" headerText="Nome">
+								<p:commandLink oncomplete="PF('rowDetailDialog').show();"
+									action="#{homeBean.showRowDetails}">
+									<f:setPropertyActionListener value="#{log}" target="#{homeBean.selectedRow}" />
+									<h:outputText value="#{log.nomeMetodo}" />
+								</p:commandLink>
 							</p:column>
 
-							<p:column sortBy="#{log.quantidadeDessaChamada}">
-								<f:facet name="header">
-									<h:outputText value="Quantidade de Chamadas" />
-								</f:facet>
+							<p:column sortBy="#{log.quantidadeDessaChamada}"
+								headerText="Quantidade de Chamadas">
 								<div align="center">
 									<h:outputText value="#{log.quantidadeDessaChamada}" />
 								</div>
 							</p:column>
 
-							<p:column sortBy="#{log.porcentagemTotal}">
-								<f:facet name="header">
-									<h:outputText value="% De Quantidade de Chamadas" />
-								</f:facet>
+							<p:column sortBy="#{log.porcentagemTotal}"
+								headerText="% De Quantidade de Chamadas">
 								<div align="center">
 									<h:outputText value="#{log.porcentagemTotal}">
 										<f:convertNumber pattern="#0.00" />
@@ -158,51 +150,43 @@
 								</div>
 							</p:column>
 
-							<p:column sortBy="#{log.tempoTotal}">
-								<f:facet name="header">
-									<h:outputText value="Tempo Total" />
-								</f:facet>
+							<p:column sortBy="#{log.tempoTotal}" headerText="Tempo Total">
 								<div align="center">
 									<h:outputText value="#{log.tempoTotal}" />
 								</div>
 							</p:column>
 
-							<p:column sortBy="#{log.tempoMedio}">
-								<f:facet name="header">
-									<h:outputText value="Tempo Medio" />
-								</f:facet>
+							<p:column sortBy="#{log.tempoMedio}" headerText="Tempo Medio">
 								<div align="center">
 									<h:outputText value="#{log.tempoMedio}" />
 								</div>
 							</p:column>
 
-							<p:column sortBy="#{log.tempoMaior}">
-								<f:facet name="header">
-									<h:outputText value="Maior Tempo" />
-								</f:facet>
+							<p:column sortBy="#{log.tempoMaior}" headerText="Maior Tempo">
 								<div align="center">
 									<h:outputText value="#{log.tempoMaior}" />
 								</div>
 							</p:column>
 
-							<p:column sortBy="#{log.tempoMenor}">
-								<f:facet name="header">
-									<h:outputText value="Menor Tempo" />
-								</f:facet>
+							<p:column sortBy="#{log.tempoMenor}" headerText="Menor Tempo">
 								<div align="center">
 									<h:outputText value="#{log.tempoMenor}" />
 								</div>
 							</p:column>
 
-							<p:column sortBy="#{log.nomeServidor}">
-								<f:facet name="header">
-									<h:outputText value="Servidor" />
-								</f:facet>
+							<p:column sortBy="#{log.nomeServidor}" headerText="Servidor">
 								<div align="center">
 									<h:outputText value="#{log.nomeServidor}" />
 								</div>
 							</p:column>
 						</p:dataTable>
+						
+						<p:dialog header="Metodo Detail" widgetVar="rowDetailDialog" modal="true"
+							showEffect="fade" hideEffect="fade" resizable="false">
+							<p:outputPanel id="rowDetail" style="text-align:center;">
+								<h:outputText value="Teste" />
+							</p:outputPanel>
+						</p:dialog>
 					</h:form>
 				</div>
 			</div>
@@ -210,6 +194,15 @@
 	</div>
 </h:body>
 
+<p:dialog id="myDialog" widgetVar="refaccionDialog"
+	header="Detalle Refaccion" resizable="false" width="300"
+	showEffect="explode" hideEffect="explode">
+	<h:panelGrid id="display" columns="2" cellpadding="4">
+		<h:outputText value="Info:" />
+		<!-- <h:outputText value="#{consultasBean.refaccionSeleccionada.equipo}" />  -->
+	</h:panelGrid>
+     //More things here...
+ </p:dialog>
 
 <!-- Modal Sobre-->
 <div class="modal fade" id="modal_sobre" tabindex="-1" role="dialog"
@@ -237,12 +230,11 @@
 </div>
 
 <script>
-
-	function getData(){
+	function getData() {
 		alert(document.getElementById("datas").value);
 
-		}
-	
+	}
+
 	$(function() {
 		$('input[name="daterange"]').daterangepicker({
 			timePicker : true,
@@ -257,9 +249,11 @@
 	function teste1() {
 		alert(document.getElementById("min").value);
 	}
-	
-	function alertServidorNaoSelecionado(){
-		alertify.notify('Favor selecionar um servidor', 'error', 3, function(){  console.log('dismissed'); });
+
+	function alertServidorNaoSelecionado() {
+		alertify.notify('Favor selecionar um servidor', 'error', 3, function() {
+			console.log('dismissed');
+		});
 	}
 
 	function alertLetras() {
@@ -267,11 +261,16 @@
 		var res = /[^0-9]/.test(str);
 		var delay = 200;
 		if (res) {
-        	alertify.notify('Favor utilizar apenas numeros no range', 'error', 5, function(){  console.log('dismissed'); });
-			
-    	} else {
-	        alertify.notify('Ok', 'success', 5, function(){  console.log('dismissed'); });
-	    }
+			alertify.notify('Favor utilizar apenas numeros no range', 'error',
+					5, function() {
+						console.log('dismissed');
+					});
+
+		} else {
+			alertify.notify('Ok', 'success', 5, function() {
+				console.log('dismissed');
+			});
+		}
 	}
 </script>
 </html>
