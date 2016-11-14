@@ -3,13 +3,13 @@ package controller.backbeans;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
 
+import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.LogDashboard;
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
@@ -25,6 +25,8 @@ public class HomeBean {
 	private List<LogDashboard> gerarLogDashboardInicial;
 	private long rangeInicio;
 	private long rangeFim;
+	private LogDashboard selectedRow;
+	private List<ChamadaMetodoArquivoLogServidor> agregador;
 
 	public HomeBean() {
 		servicoFachada = new ServicoFachada();
@@ -44,20 +46,7 @@ public class HomeBean {
 		
 		requestContext.execute("alertLetras");
 		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(Integer.parseInt(servidorSelecionado)/*, Timestamp.valueOf(dataInicio), dataFim*/, rangeInicio, rangeFim);
-		
-//		Matcher matcher;
-//		Pattern naoNumero = Pat	tern.compile(Regex.NAONUMERO.valor());
-//		if (naoNumero.matcher(String.valueOf(getRangeInicio())).find()
-//				&& naoNumero.matcher(String.valueOf(getRangeFim())).find()) {
-//
-//		} else {
-//			System.out.print("DataInicio: " + this.dataInicio);
-//			System.out.println("	DataFim: " + this.dataFim);
-//			System.out.print("rangeInicio: " + this.rangeInicio);
-//			System.out.print("	rangeFim: " + this.rangeFim);
-//		}
-//		System.out.println(String.valueOf(getRangeInicio()));
-//		System.out.println(String.valueOf(getRangeFim()));
+
 	}
 
 	public List<SelectItem> getComboServidores() throws SQLException {
@@ -85,12 +74,6 @@ public class HomeBean {
 		this.servidorSelecionado = servidorSelecionado;
 	}
 
-//	public List<ChamadaMetodo> getIntervaloDatasDuracoes(String nomeServidor, long duracaoInicio, long duracaoFim,
-//			Date dataInicio, Date dataFim) throws ParseException {
-//
-//		return servicoFachada.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
-//	}
-
 	public List<LogDashboard> getGerarLogDashboardInicial() {
 		return gerarLogDashboardInicial;
 	}
@@ -110,26 +93,19 @@ public class HomeBean {
 	public void setRangeFim(long rangeFim) {
 		this.rangeFim = rangeFim;
 	}
-
-//	public String getDataInicio() {
-//		return dataInicio;
-//	}
-//
-//	public void setDataInicio(String dataInicio) {
-//		this.dataInicio = dataInicio;
-//	}
-//
-//	public String getDataFim() {
-//		return dataFim;
-//	}
-//
-//	public void setDataFim(String dataFim) {
-//		this.dataFim = dataFim;
-//	}
-
 	public void setGerarLogDashboardInicial(List<LogDashboard> gerarLogDashboardInicial) {
 		this.gerarLogDashboardInicial = gerarLogDashboardInicial;
 	}
 	
+	public void showRowDetails(){
+		
+	}
 	
+	
+	public void setSelectedRow(LogDashboard selectedRow){
+		this.agregador = servicoFachada.buscarDashboardDetalhado(selectedRow.getNomeMetodo(), selectedRow.getNomeServidor());
+	}
+	
+	
+
 }

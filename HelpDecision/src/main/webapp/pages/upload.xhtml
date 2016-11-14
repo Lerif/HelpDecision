@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:p="http://primefaces.org/ui">
+
 <h:head>
-	<link rel="icon" type="image/png" href="/images/favicon.png" />
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css"
-		type="text/css" media="all" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css"
-		type="text/css" media="all" />
-	<link rel="script" href="../css/bootstrap/bootstrap-theme.css"
-		type="text/css" media="all" />
-	<script src="../dist/js/nprogress.js"></script>
+	
+	<!-- IMAGES -->
+	<link rel="icon" type="image/png" href="/images/favicon.png" />
+
+	<!-- CSS -->
 	<link rel="stylesheet" href="../css/themes/default.min.css" />
 	<link rel="stylesheet" href="../css/nprogress.css" type="text/css" />
 	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<!--ALERTFY-->
-	<script src="../dist/js/alertify/alertify.js"></script>
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css"
+		type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css"
+		type="text/css" media="all" />
+	<link rel="script" href="../css/bootstrap/bootstrap-theme.css"
+		type="text/css" media="all" />
 	<link rel="stylesheet" href="../css/alertify/alertify.css" />
+
+	<!-- JS -->
+	<h:outputScript
+		src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" />
+	<h:outputScript src="http://getbootstrap.com/dist/js/bootstrap.min.js" />
+	<h:outputScript src="../dist/js/nprogress.js" />
+	<h:outputScript src="../dist/js/alertify/alertify.js" />
 
 	<title>Upload | Help Decision</title>
 </h:head>
@@ -64,8 +71,8 @@
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
-					<h:selectOneMenu id="comboServidores" value="#{uploadBean.itemSelecionado}"
-						class="btn btn-default">
+					<h:selectOneMenu id="comboServidores"
+						value="#{uploadBean.itemSelecionado}" class="btn btn-default">
 						<f:selectItem itemLabel="Selecione um Servidor" />
 						<f:selectItems value="#{uploadBean.comboServidores}" />
 					</h:selectOneMenu>
@@ -202,16 +209,14 @@
 					</div>
 					<div class="form-group">
 						<div class="modal-footer">
-							
-							<h:commandButton
-								id="botaoConfirmar"
-								type="subit"
+
+							<h:commandButton id="botaoConfirmar" type="subit"
 								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
 								value="Confirmar" action="#{uploadBean.cadastrarServidor()}">
 								<!-- f:ajax event="action" render="@all"/> -->
-								
+
 							</h:commandButton>
-							
+
 						</div>
 					</div>
 				</div>
@@ -246,34 +251,53 @@
 </div>
 
 <script>
-	function alertServidorCadastrado(){
-		alertify.notify('Servidor cadastrado com sucesso!', 'success', 5, function(){  console.log('dismissed'); });
-	}
-	
-	function alertNaoServidorCadastrado(){
-		alertify.notify('Servidor já cadastrado!', 'error', 5, function(){  console.log('dismissed'); });
-	}
-
-	function alertUploadRealizadoComSucesso(){
-		alertify.notify('Upload realizado com sucesso!', 'success', 5, function(){  console.log('dismissed'); });
+	function alertServidorCadastrado() {
+		alertify.notify('Servidor cadastrado com sucesso!', 'success', 5,
+				function() {
+					console.log('dismissed');
+				});
 	}
 
-	function alertUploadNaoRealizadoArquivoJaExiste(){
-		alertify.notify('Este arquivo já existe no banco de dados', 'error', 6, function(){  console.log('dismissed'); });
-		}
-	
-	function alertUploadNaoRealizadoErro(){
-		alertify.notify('Erro ao realizar upload, por favor tente novamente.', 'error', 6, function(){  console.log('dismissed'); });
-		
-		}
+	function alertNaoServidorCadastrado() {
+		alertify.notify('Servidor já cadastrado!', 'error', 5, function() {
+			console.log('dismissed');
+		});
+	}
 
-	function alertDeleteComSucesso(){
-		alertify.notify('Arquivo excluido', 'success', 6, function(){  console.log('dismissed'); });
-		}
-	
-	function alertErroAoDeletar(){
-		alertify.notify('Erro ao deletar o arquivo, por favor tente novamente', 'error', 6, function(){  console.log('dismissed'); });
-		
-		}
+	function alertUploadRealizadoComSucesso() {
+		alertify.notify('Upload realizado com sucesso!', 'success', 5,
+				function() {
+					console.log('dismissed');
+				});
+	}
+
+	function alertUploadNaoRealizadoArquivoJaExiste() {
+		alertify.notify('Este arquivo já existe no banco de dados', 'error', 6,
+				function() {
+					console.log('dismissed');
+				});
+	}
+
+	function alertUploadNaoRealizadoErro() {
+		alertify.notify('Erro ao realizar upload, por favor tente novamente.',
+				'error', 6, function() {
+					console.log('dismissed');
+				});
+
+	}
+
+	function alertDeleteComSucesso() {
+		alertify.notify('Arquivo excluido', 'success', 6, function() {
+			console.log('dismissed');
+		});
+	}
+
+	function alertErroAoDeletar() {
+		alertify.notify('Erro ao deletar o arquivo, por favor tente novamente',
+				'error', 6, function() {
+					console.log('dismissed');
+				});
+
+	}
 </script>
 </html>

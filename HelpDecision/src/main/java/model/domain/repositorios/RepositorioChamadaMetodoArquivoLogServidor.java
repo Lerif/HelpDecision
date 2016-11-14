@@ -128,4 +128,11 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 		}
 		return arquivosLogAndSeridores;
 	}
+
+	public List<ChamadaMetodoArquivoLogServidor> findDetailsFromArquivoLogAndServidor(String nomeMetodo,
+			String nomeServidor) {
+
+		
+		return null;
+	}
 }

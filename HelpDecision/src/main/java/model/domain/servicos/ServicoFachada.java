@@ -31,21 +31,6 @@ public class ServicoFachada {
 
 	}
 
-	// public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo,
-	// ArquivoLog arquivoLog, Servidor servidor)
-	// throws SQLException {
-	// // Faz insert na tb_chamada_metodo
-	// // Faz insert na tb_arquivo
-	// // Recuperar o id_servidor a partir do seu nome
-	// // Agrega listChamadaMetodo, ArquivoLog e Servidor
-	//
-	//// return servicoAgregador.inserirAgregador(servicoAgregador.agregar(
-	//// servicoChamadaMetodo.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo),
-	//// servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog),
-	// servicoServidor.buscarPorId(idSservidor)));
-	//
-	//
-	// }
 
 	public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo, ArquivoLog arquivoLog, int idSservidor)
 			throws SQLException {
@@ -64,7 +49,6 @@ public class ServicoFachada {
 	public List<LogDashboard> solicitarFiltroDashBoard(int servidor/*, Timestamp dataInicio, Timestamp dataFim*/, long duracaoInicial, long duracaoFinal) throws SQLException{
 		return servicoDashboard.filtrarDashboard(servidor/*, dataInicio, dataFim*/, duracaoInicial, duracaoFinal);
 	}
-	// M�TODOS REFERENTE AO SERVICO CHAMADA METODO
 
 	public List<ChamadaMetodo> buscarPorDuracao(long inicio, long fim) {
 		return servicoChamadaMetodo.buscarPorDuracao(inicio, fim);
@@ -116,17 +100,11 @@ public class ServicoFachada {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
 	}
 
-	// METODOS REFERENTE AO AGREGADOR
-//	public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long duracaoInicio, long duracaoFim, Date dataInicio,
-//			Date dataFim) {
-//		return servicoAgregador.filtrarPorTudo(nomeServidor, duracaoInicio, duracaoFim, dataInicio, dataFim);
-//	}
 
 	public List<ChamadaMetodoArquivoLogServidor> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
 		return servicoAgregador.solicitarListaDeArquivoLogEServidorCadastradoDB();
 	}
 
-	// METODOS REFERENTE AO SERVICO DESCOMPACTADOR
 	public List<File> extrairTarGz(File arquivoTarGz, File localDestino) {
 
 		try {
@@ -137,12 +115,10 @@ public class ServicoFachada {
 		return new ArrayList<File>();
 	}
 
-	// METODO REFERENTE AO SERVICO DASHBOARD
 	public List<LogDashboard> gerarLogDashboardInicial() {
 		return servicoDashboard.gerarLogDashboardInicial();
 	}
 
-	// METODO REFERENTE AO LEITOR
 	public List<ChamadaMetodo> lerArquivoLog(String arquivo) {
 		try {
 			return leitor.ler(arquivo);
@@ -166,6 +142,14 @@ public class ServicoFachada {
 
 	public void setServicoAgregador(ChamadaMetodoArquivoLogServidorServico servicoAgregador) {
 		this.servicoAgregador = servicoAgregador;
+	}
+
+	public List<ChamadaMetodoArquivoLogServidor> buscarDashboardDetalhado(String nomeMetodo,
+			String nomeServidor) {
+		
+		return servicoAgregador.solicitarDetalhesFromMetodoAndServidor(nomeMetodo, nomeServidor);
+
+		
 	}
 
 }
