@@ -8,10 +8,17 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+	<!-- JS -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<h:outputScript
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" />
+	<script src="../dist/js/nprogress.js"></script>
+	<script src="../dist/js/alertify/alertify.js"></script>
+
 	<!--CSS -->
 	<link rel="stylesheet" href="../css/themes/default.min.css" />
 	<link rel="stylesheet" href="../css/nprogress.css" type="text/css" />
-	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
 	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css"
 		type="text/css" media="all" />
 	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css"
@@ -19,15 +26,8 @@
 	<link rel="script" href="../css/bootstrap/bootstrap-theme.css"
 		type="text/css" media="all" />
 	<link rel="stylesheet" href="../css/alertify/alertify.css" />
-
-	<!-- JS -->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<h:outputScript
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"/>
-	<script src="../dist/js/nprogress.js"></script>
-	<script src="../dist/js/alertify/alertify.js" ></script>
-
+	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
+	<link rel="stylesheet" href="../css/teste.css" type="text/css" />
 
 	<title>Home | Help Decision</title>
 </h:head>
@@ -65,59 +65,66 @@
 		</div>
 	</nav>
 
+
 	<h3 class="text-primary text-center">Dashboard</h3>
-	<div class="container" style="text-align: center">
-		<div class="login-box well">
-			<h:form id="formLogin" class="form-inline">
+	<h:form id="formLogin" class="form-inline">
+		<div class="container" style="text-align: center">
+			<div class="login-box well">
+				<div class="row">
 
-				<div class="form-group">
-					<h:selectOneMenu value="#{homeBean.servidorSelecionado}"
-						class="btn btn-default">
-						<f:selectItem itemLabel="Selecione um Servidor" />
-						<f:selectItems value="#{homeBean.comboServidores}" />
-					</h:selectOneMenu>
+					<div class="form-group col-md-4">
+						<h:selectOneMenu value="#{homeBean.servidorSelecionado}"
+							class="btn btn-default">
+							<f:selectItem itemLabel="Selecione um Servidor" />
+							<f:selectItems value="#{homeBean.comboServidores}" />
+						</h:selectOneMenu>
+					</div>
+					<div class="form-group col-md-4">
+						<h:panelGrid columns="2" cellpadding="5">
+							<p:outputLabel for="datetime1" value="Data Início:" />
+							<p:calendar id="datetime1" value="#{homeBean.dateInicio}"
+								pattern="MM/dd/yyyy HH:mm:ss" />
+						</h:panelGrid>
+					</div>
+
+					<div class="form-group col-md-4">
+						<h:panelGrid columns="2" cellpadding="5">
+							<p:outputLabel for="datetime2" value="Data Fim:" />
+							<p:calendar id="datetime2" value="#{homeBean.dateFim}"
+								pattern="MM/dd/yyyy HH:mm:ss" />
+						</h:panelGrid>
+					</div>
+					<p:dialog modal="true" resizable="false" header="Values"
+						widgetVar="dlg" showEffect="fold">
+						<p:panelGrid id="display" columns="2" columnClasses="label,value">
+						</p:panelGrid>
+					</p:dialog>
+
 				</div>
+				<div class="row top-buffer form-group">
 
-				<div class="form-group">
+					<p:outputLabel for="rangeInicio" value="Range (ms):" />
+					<div class="col-md-7 input-group">
+						<p:inputText id="rangeInicio" class="form-control"
+							placeholder="Ínicio" value="#{homeBean.rangeInicio}" />
+						<span class="input-group-addon">-</span>
+						<p:inputText id="rangeFim" class="form-control" placeholder="Fim"
+							value="#{homeBean.rangeFim}" />
+					</div>
 
-					<label>Data Início e Fim:</label> <label>Data Início e Fim:</label>
-					<input id="datas" type="text" name="daterange"
-						value="01/01/2016 1:30 PM - 01/01/2016 2:00 PM" />
+					<div class="col-md-2 input-group">
+						<h:commandButton type="submit"
+							class="btn btn-success btn-login-submit btn-md pull-right"
+							value="Filtrar" action="#{homeBean.filtrar()}" />
+					</div>
+
 				</div>
-
-				<div class="form-group">
-					<label>Range(ms):</label>
-					<h:inputText value="#{homeBean.rangeInicio}" class="form-control"
-						rows="1" cols="8" id="min" title=" Min"></h:inputText>
-				</div>
-
-				<div class="form-group">
-					<h5>&lt;-&gt;</h5>
-				</div>
-
-				<div class="form-group">
-					<h:inputText value="#{homeBean.rangeFim}" class="form-control"
-						rows="1" cols="8" id="max" title="Max"></h:inputText>
-				</div>
-
-				<div class="form-group">
-
-					<h:commandButton type="submit"
-						class="btn btn-success btn-login-submit btn-md" value="Filtrar"
-						action="#{homeBean.filtrar()}" />
-				</div>
-
-			</h:form>
+			</div>
 		</div>
-	</div>
-	<div class="container">
-		<div class="row">
-
-
-			<div class="col-md-12">
-				<div class="table-responsive">
-					<h:form id="form_dash_datatable">
-
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-responsive">
 						<p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true"
 							height="100">
 							<h:outputText value="This is a Modal Dialog." />
@@ -130,7 +137,8 @@
 							<p:column sortBy="#{log.nomeMetodo}" headerText="Nome">
 								<p:commandLink oncomplete="PF('rowDetailDialog').show();"
 									action="#{homeBean.showRowDetails}">
-									<f:setPropertyActionListener value="#{log}" target="#{homeBean.selectedRow}" />
+									<f:setPropertyActionListener value="#{log}"
+										target="#{homeBean.selectedRow}" />
 									<h:outputText value="#{log.nomeMetodo}" />
 								</p:commandLink>
 							</p:column>
@@ -181,18 +189,19 @@
 								</div>
 							</p:column>
 						</p:dataTable>
-						
-						<p:dialog header="Metodo Detail" widgetVar="rowDetailDialog" modal="true"
-							showEffect="fade" hideEffect="fade" resizable="false">
+
+						<p:dialog header="Metodo Detail" widgetVar="rowDetailDialog"
+							modal="true" showEffect="fade" hideEffect="fade"
+							resizable="false">
 							<p:outputPanel id="rowDetail" style="text-align:center;">
 								<h:outputText value="Teste" />
 							</p:outputPanel>
 						</p:dialog>
-					</h:form>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</h:form>
 </h:body>
 
 <p:dialog id="myDialog" widgetVar="refaccionDialog"
@@ -234,21 +243,6 @@
 	function getData() {
 		alert(document.getElementById("datas").value);
 
-	}
-
-	$(function() {
-		$('input[name="daterange"]').daterangepicker({
-			timePicker : true,
-			timePicker24Hour : true,
-			timePickerSeconds : true,
-			locale : {
-				format : 'DD/MM/YYYY hh:mm:ss'
-			}
-		});
-	});
-
-	function teste1() {
-		alert(document.getElementById("min").value);
 	}
 
 	function alertServidorNaoSelecionado() {

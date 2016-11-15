@@ -23,7 +23,7 @@ public class ServicoDashboard {
 		return repositorioLogDashboard.buscarDashboardDoBanco();
 	}
 	
-	public List<LogDashboard> filtrarDashboard(int servidor/*, Timestamp dataInicio, Timestamp dataFim*/, long duracaoInicial, long duracaoFinal) throws SQLException{
-		return repositorioLogDashboard.filtrarPorTudo(servidor/*, dataInicio, dataFim*/, duracaoInicial, duracaoFinal);
+	public List<LogDashboard> filtrarDashboard(int servidor, Timestamp dataInicio, Timestamp dataFim, long duracaoInicial, long duracaoFinal) throws SQLException{
+		return repositorioLogDashboard.filtrarPorTudo(servidor, dataInicio, dataFim, duracaoInicial, duracaoFinal);
 	}
 }

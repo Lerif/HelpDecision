@@ -127,7 +127,7 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 	}
 
 	public List<ChamadaMetodoArquivoLogServidor> findDetailsFromArquivoLogAndServidor(String nomeMetodo,
-			String nomeServidor, Timestamp dataInicio, Timestamp dataFim) {
+			String idServidor, Timestamp dataInicio, Timestamp dataFim) {
 
 		List<ChamadaMetodoArquivoLogServidor> agregadores;
 		Servidor servidor;

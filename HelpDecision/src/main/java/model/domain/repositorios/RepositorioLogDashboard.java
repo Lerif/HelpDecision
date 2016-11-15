@@ -1,21 +1,15 @@
 package model.domain.repositorios;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
-import model.domain.entidades.ArquivoLog;
-import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.LogDashboard;
-import model.domain.entidades.Servidor;
-import model.domain.fabricas.FabricaChamadaMetodo;
 import model.domain.fabricas.FabricaDashboard;
 
 public class RepositorioLogDashboard {
@@ -32,13 +26,9 @@ public class RepositorioLogDashboard {
 
 	public List<LogDashboard> buscarDashboardDoBanco() {
 
-		String sql = "select nome_metodo, count(*) as quantidade_chamada, sum(duracao) as tempo_total, "
-				+ "avg(duracao) as tempo_medio, max(duracao) as tempo_maior, min(duracao) as tempo_menor " + "from "
-				+ TABELA_CHAMADA_METODO + " group by 1 " + "order by tempo_maior desc";
-
-		sql = "select nome_metodo, count(*) as quantidade_chamada, sum(duracao) as tempo_total, "
-				+ "avg(duracao) as tempo_medio, max(duracao) as tempo_maior, min(duracao) as tempo_menor, ser.nome_servidor "
-				+ "from tb_chamada_metodo met join tb_chamada_metodo_arquivo_servidor mas on "
+		final String sql = "select nome_metodo, count(*) as quantidade_chamada, sum(duracao) as tempo_total, "
+				+ "avg(duracao) as tempo_medio, max(duracao) as tempo_maior, min(duracao) as tempo_menor, ser.id_servidor, "
+				+ "ser.nome_servidor from tb_chamada_metodo met join tb_chamada_metodo_arquivo_servidor mas on "
 				+ "met.id_chamada_metodo = mas.id_chamada_metodo "
 				+ "join tb_servidor ser on ser.id_servidor = mas.id_servidor "
 				+ "join tb_arquivo ar on mas.id_arquivo = ar.id_arquivo " + "where (ar.arquivo_excluido != true) "
@@ -66,22 +56,38 @@ public class RepositorioLogDashboard {
 		return repositorioLogDashboard;
 	}
 
-	public List<LogDashboard> filtrarPorTudo(int servidor/*, Timestamp dataInicio, Timestamp dataFim*/,
-			long duracaoInicio, long duracaoFim) throws SQLException {
+	public List<LogDashboard> filtrarPorTudo(int servidor, Timestamp dataInicio, Timestamp dataFim, long duracaoInicio,
+			long duracaoFim) throws SQLException {
 		List<LogDashboard> resultado = new ArrayList<LogDashboard>();
 
-		String sqlCodigo = "select nome_metodo, count(*) as quantidade_chamada, sum(duracao) as tempo_total, "
-				+ "avg(duracao) as tempo_medio, max(duracao) as tempo_maior, min(duracao) as tempo_menor, ser.nome_servidor "
-				+ "from tb_chamada_metodo met join tb_chamada_metodo_arquivo_servidor mas on "
-				+ "met.id_chamada_metodo = mas.id_chamada_metodo "
-				+ "join tb_servidor ser on ser.id_servidor = mas.id_servidor "
-				+ "join tb_arquivo ar on mas.id_arquivo = ar.id_arquivo " + "where (ar.arquivo_excluido != true) "
-				+ "and ser.id_servidor =  " + servidor + "  " + "and (met.duracao >= " + duracaoInicio
-				+ " and met.duracao <= " + duracaoFim + ") " + "group by 1, 7 order by tempo_maior desc";
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT nome_metodo, count(*) AS quantidade_chamada, ");
+		sql.append("sum(duracao) AS tempo_total, ");
+		sql.append("avg(duracao) AS tempo_medio, ");
+		sql.append("max(duracao) AS tempo_maior, ");
+		sql.append("min(duracao) AS tempo_menor, ");
+		sql.append("ser.nome_servidor ");
+		sql.append("FROM tb_chamada_metodo met ");
+		sql.append("JOIN tb_chamada_metodo_arquivo_servidor mas ON met.id_chamada_metodo = mas.id_chamada_metodo ");
+		sql.append("JOIN tb_servidor ser ON ser.id_servidor = mas.id_servidor ");
+		sql.append("JOIN tb_arquivo ar ON mas.id_arquivo = ar.id_arquivo ");
+		sql.append("WHERE (ar.arquivo_excluido != TRUE) ");
+		sql.append("AND ser.id_servidor = ? ");
+		sql.append("AND (met.duracao >= ? ");
+		sql.append("AND met.duracao <= ?) ");
+		sql.append("AND (met.data_inicio, met.data_fim) OVERLAPS ( ?,?) ");
+		sql.append("GROUP BY 1, 7 ");
+		sql.append("ORDER BY tempo_maior DESC");
 
-		Statement stm = (Statement) conexao.createStatement();
+		PreparedStatement preparedStatement = conexao.prepareStatement(sql.toString());
+		preparedStatement.setInt(1, servidor);
+		preparedStatement.setLong(2, duracaoInicio);
+		preparedStatement.setLong(3, duracaoFim);
+		preparedStatement.setTimestamp(4, dataInicio);
+		preparedStatement.setTimestamp(5, dataFim);
+
 		try {
-			ResultSet retornoSelect = stm.executeQuery(sqlCodigo);
+			ResultSet retornoSelect = preparedStatement.executeQuery();
 			while (retornoSelect.next()) {
 				resultado.add(FabricaDashboard.novoDashboard(retornoSelect.getString("nome_metodo"),
 						retornoSelect.getInt("quantidade_chamada"), 0, retornoSelect.getLong("tempo_total"),
