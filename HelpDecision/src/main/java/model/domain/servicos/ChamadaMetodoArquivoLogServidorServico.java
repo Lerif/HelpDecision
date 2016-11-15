@@ -52,10 +52,10 @@ public class ChamadaMetodoArquivoLogServidorServico {
 		return repositorioAgregador.findArquivoLogAndServidor();
 	}
 
-	public List<ChamadaMetodoArquivoLogServidor> solicitarDetalhesFromMetodoAndServidor(String nomeMetodo,
+	public void solicitarDetalhesFromMetodoAndServidor(String nomeMetodo,
 			String nomeServidor) {
 		// TODO Auto-generated method stub
-		return repositorioAgregador.findDetailsFromArquivoLogAndServidor(nomeMetodo, nomeServidor);
+		//return repositorioAgregador.findDetailsFromArquivoLogAndServidor(nomeMetodo, nomeServidor);
 	}
 
 }

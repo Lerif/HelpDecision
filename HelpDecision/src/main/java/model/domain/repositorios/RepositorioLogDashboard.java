@@ -99,34 +99,6 @@ public class RepositorioLogDashboard {
 		}
 		return resultado;
 
-		// if (!servidor.getNomeServidor().equals("Selecione um Servidor")) {
-		// sqlCodigo = "SELECT * FROM tb_chamada_metodo_arquivo_servidor "
-		// + "inner join tb_servidor on tb_chamada_metodo_arquivo.id_servidor =
-		// tb_servidor.id_servidor"
-		// + "inner join tb_chamada_metodo on
-		// tb_chamada_metodo_arquivo.id_chamada_metodo =
-		// tb_chamada_metodo.id_chamada_metodo"
-		// + "where tb_servidor.nome_servidor = ' " + servidor.getNomeServidor()
-		// + " ' "
-		// + "and (tb_chamada_metodo.duracao >= " + duracaoInicio + "and
-		// tb_chamada_metodo.duracao <= "
-		// + duracaoFim + ") " + "and (tb_chamada_metodo.data_inicio >= ' " +
-		// dataInicio + "' " + "and '"
-		// + dataFim + "' <= tb_chamada_metodo.data_fim)";
-		//
-		// } else {
-		// sqlCodigo = "SELECT * FROM tb_chamada_metodo_arquivo_servidor "
-		// + "inner join tb_servidor on tb_chamada_metodo_arquivo.id_servidor =
-		// tb_servidor.id_servidor"
-		// + "inner join tb_chamada_metodo on
-		// tb_chamada_metodo_arquivo.id_chamada_metodo =
-		// tb_chamada_metodo.id_chamada_metodo"
-		// + "where" + "and (tb_chamada_metodo.duracao >= " + duracaoInicio
-		// + "and tb_chamada_metodo.duracao <= " + duracaoFim + ") "
-		// + "and (tb_chamada_metodo.data_inicio >= ' " + dataInicio + "' " +
-		// "and '" + dataFim
-		// + "' <= tb_chamada_metodo.data_fim)";
-		// }
 	}
 
 	public int getTotalChamadas() {

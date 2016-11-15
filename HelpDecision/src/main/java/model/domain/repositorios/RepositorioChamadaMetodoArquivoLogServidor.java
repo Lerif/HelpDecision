@@ -14,7 +14,6 @@ import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
 import model.domain.fabricas.FabricaArquivoLog;
-import model.domain.fabricas.FabricaChamadaMetodo;
 import model.domain.fabricas.FabricaChamadaMetodoArquivoLogServidor;
 import model.domain.fabricas.FabricaServidor;
 
@@ -43,8 +42,6 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 			return false;
 		}
 	}
-
-
 
 	public void removeAgregadorThreeByIdArquivoLog(int i) throws SQLException {
 
@@ -130,9 +127,26 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 	}
 
 	public List<ChamadaMetodoArquivoLogServidor> findDetailsFromArquivoLogAndServidor(String nomeMetodo,
-			String nomeServidor) {
+			String nomeServidor, Timestamp dataInicio, Timestamp dataFim) {
 
+		List<ChamadaMetodoArquivoLogServidor> agregadores;
+		Servidor servidor;
+		ArquivoLog arquivoLog;
+		ChamadaMetodo chamadasMetodo;
+
+		StringBuilder query = new StringBuilder();
+		query.append("chamada_metodo.nome_metodo, chamada_metodo.duracao, chamada_metodo.data_inicio, ");
+		query.append("chamada_metodo.data_fim, chamada_metodo.id_elemento, chamada_metodo.tipo_elemento, chamada_metodo.id_chamada_metodo, ");
+		query.append("chamada_metodo.tipo_elemento, servidor.id_servidor, servidor.nome_servidor, arquivo.id_arquivo, arquivo.nome_arquivo, ");
+		query.append("arquivo.descricao, arquivo.arquivo_excluido, arquivo.data_upload ");
+		query.append("FROM tb_chamada_metodo_arquivo_servidor agregador ");
+		query.append("JOIN tb_chamada_metodo chamada_metodo ON agregador.id_chamada_metodo = chamada_metodo.id_chamada_metodo" );
+		query.append("JOIN tb_arquivo arquivo ON agregador.id_arquivo = arquivo.id_arquivo ");
+		query.append("JOIN tb_servidor servidor ON agregador.id_servidor = servidor.id_servidor ");
+		query.append("WHERE chamada_metodo.nome_metodo = :nomemetodo AND servidor.nome_servidor = :nomeservidor ");
 		
+
 		return null;
 	}
+
 }
