@@ -31,7 +31,6 @@ public class ServicoFachada {
 
 	}
 
-
 	public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo, ArquivoLog arquivoLog, int idSservidor)
 			throws SQLException {
 		List<ChamadaMetodo> _listaChamadaMetodo = servicoChamadaMetodo
@@ -46,7 +45,8 @@ public class ServicoFachada {
 		}
 	}
 
-	public List<LogDashboard> solicitarFiltroDashBoard(int servidor, Timestamp dataInicio, Timestamp dataFim, long duracaoInicial, long duracaoFinal) throws SQLException{
+	public List<LogDashboard> solicitarFiltroDashBoard(int servidor, Timestamp dataInicio, Timestamp dataFim,
+			long duracaoInicial, long duracaoFinal) throws SQLException {
 		return servicoDashboard.filtrarDashboard(servidor, dataInicio, dataFim, duracaoInicial, duracaoFinal);
 	}
 
@@ -79,7 +79,7 @@ public class ServicoFachada {
 		return servicoServidor.cadastrarServidorDB(solicitarNovoServidor(idServidor, nomeServidor));
 	}
 
-		public Boolean imprimeSeServidorFoiCadastrado(Servidor servidor) {
+	public Boolean imprimeSeServidorFoiCadastrado(Servidor servidor) {
 		try {
 			return servicoServidor.verificarServidorExiste(servidor);
 		} catch (SQLException e) {
@@ -99,7 +99,6 @@ public class ServicoFachada {
 	public List<Servidor> solicitarTodosServidoresDB() throws SQLException {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
 	}
-
 
 	public List<ChamadaMetodoArquivoLogServidor> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
 		return servicoAgregador.solicitarListaDeArquivoLogEServidorCadastradoDB();
@@ -144,12 +143,26 @@ public class ServicoFachada {
 		this.servicoAgregador = servicoAgregador;
 	}
 
-	public List<ChamadaMetodoArquivoLogServidor> buscarDashboardDetalhado(String nomeMetodo,
-			int idServidor) {
-		
-		//return servicoAgregador.solicitarDetalhesFromMetodoAndServidor(nomeMetodo, nomeServidor);
+	public List<ChamadaMetodoArquivoLogServidor> buscarDashboardDetalhado(String nomeMetodo, int idServidor) {
+
+		// return
+		// servicoAgregador.solicitarDetalhesFromMetodoAndServidor(nomeMetodo,
+		// idServidor);
 		return new ArrayList<ChamadaMetodoArquivoLogServidor>();
-		
+
+	}
+
+	public List<ChamadaMetodo> buscarDashboardDetalhado(String nomeMetodo, int idServidor,
+			Date dateInicio, Date dateFim, long rangeInicio, long rangeFim) {
+
+		try {
+			return servicoAgregador.solicitarDetalhesFromMetodoAndServidor(nomeMetodo, idServidor, dateInicio, dateFim,
+					rangeInicio, rangeFim);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

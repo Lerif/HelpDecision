@@ -1,7 +1,6 @@
 package controller.backbeans;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,10 +10,9 @@ import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
 
-import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
+import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.LogDashboard;
 import model.domain.entidades.Servidor;
-import model.domain.servicos.ChamadaMetodoArquivoLogServidorServico;
 import model.domain.servicos.ServicoFachada;
 import model.domain.util.CalendarioUtil;
 
@@ -30,7 +28,7 @@ public class HomeBean {
 	private long rangeInicio;
 	private long rangeFim;
 	private LogDashboard logDashBoard;
-	private List<ChamadaMetodoArquivoLogServidor> logDashboardMetodoDetails;
+	private List<ChamadaMetodo> metodoDetails;
 	private Date dateInicio;
 	private Date dateFim;
 
@@ -40,18 +38,20 @@ public class HomeBean {
 	}
 
 	public void filtrar() throws SQLException {
-		
+
 		RequestContext requestContext = RequestContext.getCurrentInstance();
-		
-		try{
+
+		try {
 			Integer.parseInt(servidorSelecionado);
-		}catch(NumberFormatException e){
+		} catch (NumberFormatException e) {
 			requestContext.execute("alertServidorNaoSelecionado()");
 			return;
 		}
-		
+
 		requestContext.execute("alertLetras");
-		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(Integer.parseInt(servidorSelecionado),CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim), rangeInicio, rangeFim);
+		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(Integer.parseInt(servidorSelecionado),
+				CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim),
+				rangeInicio, rangeFim);
 
 	}
 
@@ -99,38 +99,49 @@ public class HomeBean {
 	public void setRangeFim(long rangeFim) {
 		this.rangeFim = rangeFim;
 	}
+
 	public void setGerarLogDashboardInicial(List<LogDashboard> gerarLogDashboardInicial) {
 		this.gerarLogDashboardInicial = gerarLogDashboardInicial;
 	}
-	
-	
-	
+
 	public Date getDateInicio() {
-        return dateInicio;
-    }
- 
-    public void setDateInicio(Date dateInicio) {
-        this.dateInicio = dateInicio;
-    }
-    
-    public Date getDateFim() {
-        return dateFim;
-    }
- 
-    public void setDateFim(Date dateFim) {
-        this.dateFim = dateFim;
-    }
-    
+		return dateInicio;
+	}
+
+	public void setDateInicio(Date dateInicio) {
+		this.dateInicio = dateInicio;
+	}
+
+	public Date getDateFim() {
+		return dateFim;
+	}
+
+	public void setDateFim(Date dateFim) {
+		this.dateFim = dateFim;
+	}
+
 	public void setLogDashBoard(LogDashboard logDashBoard) {
 		this.logDashBoard = logDashBoard;
 	}
+
+	public void metodoDetails() {
+
+		this.setMetodoDetails(servicoFachada.buscarDashboardDetalhado(this.logDashBoard.getNomeMetodo(),
+				this.logDashBoard.getIdServidor(), this.dateInicio,
+				this.dateFim, this.rangeInicio, this.rangeFim));
+
+	}
+
+	public List<ChamadaMetodo> getMetodoDetails() {
+		return metodoDetails;
+	}
 	
-	public void metodoDetails(){
-		
-		this.logDashboardMetodoDetails = servicoFachada.buscarDashboardDetalhado(this.logDashBoard.getNomeMetodo(), this.logDashBoard.getIdServidor());
+	public void teste(){
 		
 	}
 
-
+	public void setMetodoDetails(List<ChamadaMetodo> logDashboardMetodoDetails) {
+		this.metodoDetails = logDashboardMetodoDetails;
+	}
 
 }

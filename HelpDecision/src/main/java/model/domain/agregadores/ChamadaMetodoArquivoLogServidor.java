@@ -22,7 +22,7 @@ public class ChamadaMetodoArquivoLogServidor {
 	@Column(name = "id")
 	private int id;
 	@Column(name = "id_chamada_metodo")
-	private List<ChamadaMetodo> chamadaMetodo;
+	private List<ChamadaMetodo> chamadasMetodos;
 	@Column(name = "id_arquivo")
 	private ArquivoLog arquivoLog;
 	private Servidor servidor;
@@ -30,22 +30,22 @@ public class ChamadaMetodoArquivoLogServidor {
 	public ChamadaMetodoArquivoLogServidor() {
 	}
 
-	private ChamadaMetodoArquivoLogServidor(List<ChamadaMetodo> chamadaMetodo, ArquivoLog arquivoLog, Servidor servidor) {
-		this.chamadaMetodo = chamadaMetodo;
+	private ChamadaMetodoArquivoLogServidor(List<ChamadaMetodo> chamadasMetodos, ArquivoLog arquivoLog, Servidor servidor) {
+		this.chamadasMetodos = chamadasMetodos;
 		this.arquivoLog = arquivoLog;
 		this.servidor = servidor;
 	}
 
-	public static ChamadaMetodoArquivoLogServidor nova(List<ChamadaMetodo> chamadaMetodo, ArquivoLog arquivoLog, Servidor servidor) {
-		return new ChamadaMetodoArquivoLogServidor(chamadaMetodo, arquivoLog, servidor);
+	public static ChamadaMetodoArquivoLogServidor nova(List<ChamadaMetodo> chamadasMetodos, ArquivoLog arquivoLog, Servidor servidor) {
+		return new ChamadaMetodoArquivoLogServidor(chamadasMetodos, arquivoLog, servidor);
 	}
 
-	public List<ChamadaMetodo> getChamadaMetodo() {
-		return chamadaMetodo;
+	public List<ChamadaMetodo> getChamadasMetodos() {
+		return chamadasMetodos;
 	}
 
 	public void setChamadaMetodo(List<ChamadaMetodo> chamadaMetodo) {
-		this.chamadaMetodo = chamadaMetodo;
+		this.chamadasMetodos = chamadaMetodo;
 	}
 
 	public ArquivoLog getArquivoLog() {

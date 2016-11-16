@@ -12,9 +12,12 @@ import java.util.List;
 import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
+import model.domain.entidades.LogDashboard;
 import model.domain.entidades.Servidor;
 import model.domain.fabricas.FabricaArquivoLog;
+import model.domain.fabricas.FabricaChamadaMetodo;
 import model.domain.fabricas.FabricaChamadaMetodoArquivoLogServidor;
+import model.domain.fabricas.FabricaDashboard;
 import model.domain.fabricas.FabricaServidor;
 
 public class RepositorioChamadaMetodoArquivoLogServidor {
@@ -27,7 +30,7 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 
 	public Boolean insert(ChamadaMetodoArquivoLogServidor agregador) {
 		try {
-			for (ChamadaMetodo chamadaMetodo : agregador.getChamadaMetodo()) {
+			for (ChamadaMetodo chamadaMetodo : agregador.getChamadasMetodos()) {
 				String sql = "INSERT INTO tb_chamada_metodo_arquivo_servidor "
 						+ "(id_chamada_metodo, id_arquivo, id_servidor) " + "VALUES (?, ?, ?)";
 				PreparedStatement pst = conexao.prepareStatement(sql);
@@ -126,27 +129,64 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 		return arquivosLogAndSeridores;
 	}
 
-	public List<ChamadaMetodoArquivoLogServidor> findDetailsFromArquivoLogAndServidor(String nomeMetodo,
-			String idServidor, Timestamp dataInicio, Timestamp dataFim) {
+	public List<ChamadaMetodo> findDetailsFromArquivoLogAndServidor(String nomeMetodo, int idServidor,
+			Timestamp dataInicio, Timestamp dataFim, long rangeInicio, long rangeFim) throws SQLException {
 
-		List<ChamadaMetodoArquivoLogServidor> agregadores;
-		Servidor servidor;
-		ArquivoLog arquivoLog;
-		ChamadaMetodo chamadasMetodo;
+		ChamadaMetodoArquivoLogServidor resultado = null;
+		List<ChamadaMetodo> chamadasMetodos = new ArrayList<ChamadaMetodo>();
 
-		StringBuilder query = new StringBuilder();
-		query.append("chamada_metodo.nome_metodo, chamada_metodo.duracao, chamada_metodo.data_inicio, ");
-		query.append("chamada_metodo.data_fim, chamada_metodo.id_elemento, chamada_metodo.tipo_elemento, chamada_metodo.id_chamada_metodo, ");
-		query.append("chamada_metodo.tipo_elemento, servidor.id_servidor, servidor.nome_servidor, arquivo.id_arquivo, arquivo.nome_arquivo, ");
-		query.append("arquivo.descricao, arquivo.arquivo_excluido, arquivo.data_upload ");
-		query.append("FROM tb_chamada_metodo_arquivo_servidor agregador ");
-		query.append("JOIN tb_chamada_metodo chamada_metodo ON agregador.id_chamada_metodo = chamada_metodo.id_chamada_metodo" );
-		query.append("JOIN tb_arquivo arquivo ON agregador.id_arquivo = arquivo.id_arquivo ");
-		query.append("JOIN tb_servidor servidor ON agregador.id_servidor = servidor.id_servidor ");
-		query.append("WHERE chamada_metodo.nome_metodo = :nomemetodo AND servidor.nome_servidor = :nomeservidor ");
-		
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT chamada_metodo.nome_metodo, ");
+		sql.append("chamada_metodo.duracao, ");
+		sql.append("chamada_metodo.data_inicio, ");
+		sql.append("chamada_metodo.data_fim, ");
+		sql.append("chamada_metodo.id_elemento, ");
+		sql.append("chamada_metodo.tipo_elemento, ");
+		sql.append("chamada_metodo.id_chamada_metodo, ");
+		sql.append("chamada_metodo.tipo_elemento ");
+		// sql.append("servidor.id_servidor, ");
+		// sql.append("servidor.nome_servidor, ");
+		// sql.append("arquivo.id_arquivo, ");
+		// sql.append("arquivo.nome_arquivo, ");
+		// sql.append("arquivo.descricao, ");
+		// sql.append("arquivo.arquivo_excluido,");
+		// sql.append("arquivo.data_upload ");
+		sql.append("FROM tb_chamada_metodo_arquivo_servidor agregador ");
+		sql.append(
+				"JOIN tb_chamada_metodo chamada_metodo ON agregador.id_chamada_metodo = chamada_metodo.id_chamada_metodo ");
+		sql.append("JOIN tb_arquivo arquivo ON agregador.id_arquivo = arquivo.id_arquivo ");
+		sql.append("JOIN tb_servidor servidor ON agregador.id_servidor = servidor.id_servidor ");
+		sql.append("WHERE chamada_metodo.nome_metodo = ? ");
+		sql.append("AND servidor.id_servidor = ? ");
+		sql.append("AND (chamada_metodo.data_inicio, ");
+		sql.append("chamada_metodo.data_fim) OVERLAPS (?,?) ");
+		sql.append("AND arquivo.arquivo_excluido = false ");
+		sql.append("AND chamada_metodo.duracao BETWEEN ? and ? ");
+		sql.append("ORDER BY chamada_metodo.duracao DESC LIMIT 10 ");
 
-		return null;
+		PreparedStatement preparedStatement = conexao.prepareStatement(sql.toString());
+		preparedStatement.setString(1, nomeMetodo);
+		preparedStatement.setInt(2, idServidor);
+		preparedStatement.setTimestamp(3, dataInicio);
+		preparedStatement.setTimestamp(4, dataFim);
+		preparedStatement.setLong(5, rangeInicio);
+		preparedStatement.setLong(6, rangeFim);
+
+		try {
+			ResultSet retornoSelect = preparedStatement.executeQuery();
+			while (retornoSelect.next()) {
+
+				chamadasMetodos
+						.add(FabricaChamadaMetodo.nova().NovaChamadaMetodo(retornoSelect.getInt("id_chamada_metodo"),
+								retornoSelect.getString("nome_metodo"), retornoSelect.getTimestamp("data_inicio"),
+								retornoSelect.getTimestamp("data_fim"), retornoSelect.getString("id_elemento"),
+								retornoSelect.getString("tipo_elemento"), retornoSelect.getLong("duracao")));
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return chamadasMetodos;
 	}
 
 }

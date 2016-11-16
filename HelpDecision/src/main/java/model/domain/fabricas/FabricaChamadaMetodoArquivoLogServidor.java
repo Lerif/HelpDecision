@@ -16,9 +16,9 @@ public class FabricaChamadaMetodoArquivoLogServidor {
 		return new FabricaChamadaMetodoArquivoLogServidor();
 	}
 
-	public ChamadaMetodoArquivoLogServidor novaChamadaMetodoArquivoLogServidor(List<ChamadaMetodo> chamadaMetodo,
+	public ChamadaMetodoArquivoLogServidor novaChamadaMetodoArquivoLogServidor(List<ChamadaMetodo> chamadasMetodos,
 			ArquivoLog arquivoLog, Servidor servidor) {
-		return ChamadaMetodoArquivoLogServidor.nova(chamadaMetodo, arquivoLog, servidor);
+		return ChamadaMetodoArquivoLogServidor.nova(chamadasMetodos, arquivoLog, servidor);
 	}
 
 }

@@ -135,9 +135,9 @@
 							var="log">
 
 							<p:column sortBy="#{log.nomeMetodo}" headerText="Nome">
-								<p:commandLink oncomplete="PF('rowDetailDialog').show();" action="#{homeBean.metodoDetails}">
+								<p:commandLink oncomplete="PF('rowDetailDialog').show();" action="#{homeBean.metodoDetails()}">
 									<f:setPropertyActionListener value="#{log}"
-										target="#{homeBean.selectedMetodo}" />
+										target="#{homeBean.logDashBoard}" />
 									<h:outputText value="#{log.nomeMetodo}" />
 								</p:commandLink>
 							</p:column>
@@ -206,11 +206,43 @@
 <p:dialog id="myDialog" widgetVar="refaccionDialog"
 	header="Detalle Refaccion" resizable="false" width="300"
 	showEffect="explode" hideEffect="explode">
-	<h:panelGrid id="display" columns="2" cellpadding="4">
-		<h:outputText value="Info:" />
-		<!-- <h:outputText value="#{consultasBean.refaccionSeleccionada.equipo}" />  -->
-	</h:panelGrid>
-     //More things here...
+	
+	<h:form>
+	<p:dataTable class="table table-bordred table-striped"
+							id="chamadaMetodoDetail" value="#{homeBean.teste()}"
+							var="metodo">
+
+							<p:column sortBy="#{metodo.nomeMetodo}" headerText="Nome">
+								<div align="center">
+									<h:outputText value="#{metodo.nomeMetodo}" />
+								</div>
+							</p:column>
+
+							<p:column sortBy="#{metodo.nomeMetodo}" headerText="Tempo Total">
+								<div align="center">
+									<h:outputText value="#{metodo.nomeMetodo}" />
+								</div>
+							</p:column>
+
+							<p:column sortBy="#{metodo.nomeMetodo}" headerText="Tempo Medio">
+								<div align="center">
+									<h:outputText value="#{metodo.nomeMetodo}" />
+								</div>
+							</p:column>
+
+							<p:column sortBy="#{metodo.nomeMetodo}" headerText="Maior Tempo">
+								<div align="center">
+									<h:outputText value="#{metodo.nomeMetodo}" />
+								</div>
+							</p:column>
+
+							<p:column sortBy="#{metodo.nomeMetodo}" headerText="Menor Tempo">
+								<div align="center">
+									<h:outputText value="#{metodo.nomeMetodo}" />
+								</div>
+							</p:column>
+						</p:dataTable>
+	</h:form>
  </p:dialog>
 
 <!-- Modal Sobre-->
