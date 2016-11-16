@@ -135,10 +135,9 @@
 							var="log">
 
 							<p:column sortBy="#{log.nomeMetodo}" headerText="Nome">
-								<p:commandLink oncomplete="PF('rowDetailDialog').show();"
-									action="#{homeBean.showRowDetails}">
+								<p:commandLink oncomplete="PF('rowDetailDialog').show();" action="#{homeBean.metodoDetails}">
 									<f:setPropertyActionListener value="#{log}"
-										target="#{homeBean.selectedRow}" />
+										target="#{homeBean.selectedMetodo}" />
 									<h:outputText value="#{log.nomeMetodo}" />
 								</p:commandLink>
 							</p:column>

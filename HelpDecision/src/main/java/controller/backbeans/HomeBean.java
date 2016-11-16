@@ -14,6 +14,7 @@ import org.primefaces.context.RequestContext;
 import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.LogDashboard;
 import model.domain.entidades.Servidor;
+import model.domain.servicos.ChamadaMetodoArquivoLogServidorServico;
 import model.domain.servicos.ServicoFachada;
 import model.domain.util.CalendarioUtil;
 
@@ -28,8 +29,8 @@ public class HomeBean {
 	private List<LogDashboard> gerarLogDashboardInicial;
 	private long rangeInicio;
 	private long rangeFim;
-	private LogDashboard selectedRow;
-	private List<ChamadaMetodoArquivoLogServidor> agregador;
+	private LogDashboard logDashBoard;
+	private List<ChamadaMetodoArquivoLogServidor> logDashboardMetodoDetails;
 	private Date dateInicio;
 	private Date dateFim;
 
@@ -41,9 +42,6 @@ public class HomeBean {
 	public void filtrar() throws SQLException {
 		
 		RequestContext requestContext = RequestContext.getCurrentInstance();
-		
-		Timestamp teste = CalendarioUtil.dateParaSqlTimestamp(this.dateInicio);
-		
 		
 		try{
 			Integer.parseInt(servidorSelecionado);
@@ -105,9 +103,7 @@ public class HomeBean {
 		this.gerarLogDashboardInicial = gerarLogDashboardInicial;
 	}
 	
-	public void setSelectedRow(LogDashboard selectedRow){
-		this.agregador = servicoFachada.buscarDashboardDetalhado(selectedRow.getNomeMetodo(), selectedRow.getNomeServidor());
-	}
+	
 	
 	public Date getDateInicio() {
         return dateInicio;
@@ -124,6 +120,17 @@ public class HomeBean {
     public void setDateFim(Date dateFim) {
         this.dateFim = dateFim;
     }
+    
+	public void setLogDashBoard(LogDashboard logDashBoard) {
+		this.logDashBoard = logDashBoard;
+	}
 	
+	public void metodoDetails(){
+		
+		this.logDashboardMetodoDetails = servicoFachada.buscarDashboardDetalhado(this.logDashBoard.getNomeMetodo(), this.logDashBoard.getIdServidor());
+		
+	}
+
+
 
 }

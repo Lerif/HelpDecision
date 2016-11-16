@@ -145,7 +145,7 @@ public class ServicoFachada {
 	}
 
 	public List<ChamadaMetodoArquivoLogServidor> buscarDashboardDetalhado(String nomeMetodo,
-			String nomeServidor) {
+			int idServidor) {
 		
 		//return servicoAgregador.solicitarDetalhesFromMetodoAndServidor(nomeMetodo, nomeServidor);
 		return new ArrayList<ChamadaMetodoArquivoLogServidor>();

@@ -41,7 +41,7 @@ public class RepositorioLogDashboard {
 				repositorioLogDashboard.add(FabricaDashboard.novoDashboard(retornoSelect.getString("nome_metodo"),
 						retornoSelect.getInt("quantidade_chamada"), 0, retornoSelect.getLong("tempo_total"),
 						retornoSelect.getFloat("tempo_medio"), retornoSelect.getLong("tempo_menor"),
-						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor")));
+						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor"), retornoSelect.getInt("id_servidor")));
 				totalChamadas += retornoSelect.getInt("quantidade_chamada");
 			}
 
@@ -62,10 +62,11 @@ public class RepositorioLogDashboard {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT nome_metodo, count(*) AS quantidade_chamada, ");
-		sql.append("sum(duracao) AS tempo_total, ");
-		sql.append("avg(duracao) AS tempo_medio, ");
-		sql.append("max(duracao) AS tempo_maior, ");
-		sql.append("min(duracao) AS tempo_menor, ");
+		sql.append("SUM(duracao) AS tempo_total, ");
+		sql.append("AVG(duracao) AS tempo_medio, ");
+		sql.append("MAX(duracao) AS tempo_maior, ");
+		sql.append("MIN(duracao) AS tempo_menor, ");
+		sql.append("ser.id_servidor, ");
 		sql.append("ser.nome_servidor ");
 		sql.append("FROM tb_chamada_metodo met ");
 		sql.append("JOIN tb_chamada_metodo_arquivo_servidor mas ON met.id_chamada_metodo = mas.id_chamada_metodo ");
@@ -92,7 +93,8 @@ public class RepositorioLogDashboard {
 				resultado.add(FabricaDashboard.novoDashboard(retornoSelect.getString("nome_metodo"),
 						retornoSelect.getInt("quantidade_chamada"), 0, retornoSelect.getLong("tempo_total"),
 						retornoSelect.getFloat("tempo_medio"), retornoSelect.getLong("tempo_menor"),
-						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor")));
+						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor"),
+						retornoSelect.getInt("id_servidor")));
 				totalChamadas += retornoSelect.getInt("quantidade_chamada");
 			}
 
