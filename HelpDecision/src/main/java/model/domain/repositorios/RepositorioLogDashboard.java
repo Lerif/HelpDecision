@@ -117,10 +117,9 @@ public class RepositorioLogDashboard {
 					hm.put(retornoSelect.getString("nome_servidor"), retornoSelect.getInt("quantidade_chamada"));
 
 			}
-
 			System.out.println("atualizou no filtro");
 			printHM(hm);
-			
+
 			for (LogDashboard ld : resultado) {
 				ld.setQuantidadeChamadasTotal(hm.get(ld.getNomeServidor()));
 				System.out.println("valor antigo: " + totalChamadas);
@@ -132,7 +131,6 @@ public class RepositorioLogDashboard {
 			// TODO: handle exception
 		}
 		return resultado;
-
 	}
 
 	public int getTotalChamadas() {

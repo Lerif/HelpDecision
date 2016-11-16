@@ -1,7 +1,6 @@
 package controller.backbeans;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +14,6 @@ import org.primefaces.context.RequestContext;
 import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.LogDashboard;
 import model.domain.entidades.Servidor;
-import model.domain.servicos.ChamadaMetodoArquivoLogServidorServico;
 import model.domain.servicos.ServicoFachada;
 import model.domain.util.CalendarioUtil;
 
@@ -42,17 +40,33 @@ public class HomeBean {
 
 	public void filtrar() throws SQLException {
 		
+		int servidorId;
 		RequestContext requestContext = RequestContext.getCurrentInstance();
 		
+		if((dateInicio == null) || (dateFim == null)){
+			requestContext.execute("alertDataFormatoInvalido()");
+			return;
+		}
+		
+		if(rangeInicio > rangeFim){
+			requestContext.execute("alertRageInvalido()");
+			return;
+		}
+		
+		if(dateInicio.after(dateFim)){
+			requestContext.execute("alertDataInvalido()");
+			return;
+		}
+		
 		try{
-			Integer.parseInt(servidorSelecionado);
+			servidorId = Integer.parseInt(servidorSelecionado);
 		}catch(NumberFormatException e){
 			requestContext.execute("alertServidorNaoSelecionado()");
 			return;
 		}
 		
 		requestContext.execute("alertLetras");
-		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(Integer.parseInt(servidorSelecionado),CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim), rangeInicio, rangeFim);
+		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(servidorId,CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim), rangeInicio, rangeFim);
 
 	}
 
@@ -68,7 +82,6 @@ public class HomeBean {
 		for (Servidor servidor : servidores) {
 			SelectItem item = new SelectItem(servidor.getIdServidor(), servidor.getNomeServidor());
 			this.comboServidores.add(item);
-
 		}
 		return comboServidores;
 	}
@@ -100,11 +113,10 @@ public class HomeBean {
 	public void setRangeFim(long rangeFim) {
 		this.rangeFim = rangeFim;
 	}
+
 	public void setGerarLogDashboardInicial(List<LogDashboard> gerarLogDashboardInicial) {
 		this.gerarLogDashboardInicial = gerarLogDashboardInicial;
 	}
-	
-	
 	
 	public Date getDateInicio() {
         return dateInicio;
@@ -131,7 +143,4 @@ public class HomeBean {
 		this.logDashboardMetodoDetails = servicoFachada.buscarDashboardDetalhado(this.logDashBoard.getNomeMetodo(), this.logDashBoard.getIdServidor());
 		
 	}
-
-
-
 }
