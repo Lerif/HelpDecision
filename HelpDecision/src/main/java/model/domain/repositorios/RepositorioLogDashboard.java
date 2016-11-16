@@ -66,8 +66,7 @@ public class RepositorioLogDashboard {
 		return repositorioLogDashboard;
 	}
 
-	public List<LogDashboard> filtrarPorTudo(int servidor/*, Timestamp dataInicio, Timestamp dataFim*/,
-			long duracaoInicio, long duracaoFim) throws SQLException {
+	public List<LogDashboard> filtrarPorTudo(int servidor, long duracaoInicio, long duracaoFim) throws SQLException {
 		List<LogDashboard> resultado = new ArrayList<LogDashboard>();
 
 		String sqlCodigo = "select nome_metodo, count(*) as quantidade_chamada, sum(duracao) as tempo_total, "
@@ -90,7 +89,7 @@ public class RepositorioLogDashboard {
 				totalChamadas += retornoSelect.getInt("quantidade_chamada");
 			}
 
-			for (LogDashboard ld : repositorioLogDashboard) {
+			for (LogDashboard ld : resultado) {
 				ld.setQuantidadeChamadasTotal(totalChamadas);
 				ld.setPorcentagemTotal(((ld.getQuantidadeDessaChamada() * 100.0f) / totalChamadas));
 			}
@@ -98,35 +97,45 @@ public class RepositorioLogDashboard {
 			// TODO: handle exception
 		}
 		return resultado;
+	}
+	
+	public List<LogDashboard> filtrarPorTudo(int servidor, Timestamp dataInicio, Timestamp dataFim,
+			long duracaoInicio, long duracaoFim) throws SQLException {
+		List<LogDashboard> resultado = new ArrayList<LogDashboard>();
 
-		// if (!servidor.getNomeServidor().equals("Selecione um Servidor")) {
-		// sqlCodigo = "SELECT * FROM tb_chamada_metodo_arquivo_servidor "
-		// + "inner join tb_servidor on tb_chamada_metodo_arquivo.id_servidor =
-		// tb_servidor.id_servidor"
-		// + "inner join tb_chamada_metodo on
-		// tb_chamada_metodo_arquivo.id_chamada_metodo =
-		// tb_chamada_metodo.id_chamada_metodo"
-		// + "where tb_servidor.nome_servidor = ' " + servidor.getNomeServidor()
-		// + " ' "
-		// + "and (tb_chamada_metodo.duracao >= " + duracaoInicio + "and
-		// tb_chamada_metodo.duracao <= "
-		// + duracaoFim + ") " + "and (tb_chamada_metodo.data_inicio >= ' " +
-		// dataInicio + "' " + "and '"
-		// + dataFim + "' <= tb_chamada_metodo.data_fim)";
-		//
-		// } else {
-		// sqlCodigo = "SELECT * FROM tb_chamada_metodo_arquivo_servidor "
-		// + "inner join tb_servidor on tb_chamada_metodo_arquivo.id_servidor =
-		// tb_servidor.id_servidor"
-		// + "inner join tb_chamada_metodo on
-		// tb_chamada_metodo_arquivo.id_chamada_metodo =
-		// tb_chamada_metodo.id_chamada_metodo"
-		// + "where" + "and (tb_chamada_metodo.duracao >= " + duracaoInicio
-		// + "and tb_chamada_metodo.duracao <= " + duracaoFim + ") "
-		// + "and (tb_chamada_metodo.data_inicio >= ' " + dataInicio + "' " +
-		// "and '" + dataFim
-		// + "' <= tb_chamada_metodo.data_fim)";
-		// }
+		String sqlCodigo = "select nome_metodo, count(*) as quantidade_chamada, sum(duracao) as tempo_total, "
+				+ "avg(duracao) as tempo_medio, max(duracao) as tempo_maior, min(duracao) as tempo_menor, ser.nome_servidor "
+				+ "from tb_chamada_metodo met join tb_chamada_metodo_arquivo_servidor mas on "
+				+ "met.id_chamada_metodo = mas.id_chamada_metodo "
+				+ "join tb_servidor ser on ser.id_servidor = mas.id_servidor "
+				+ "join tb_arquivo ar on mas.id_arquivo = ar.id_arquivo " + "where (ar.arquivo_excluido != true) "
+				+ "and ser.id_servidor =  " + servidor + "  " + "and (met.duracao >= " + duracaoInicio
+				+ " and met.duracao <= " + duracaoFim + ") "
+				+ "and (met.data_inicio >= ' " + dataInicio+ " ' and met.data_fim <= ' " + dataFim
+				+ " ') group by 1, 7 order by tempo_maior desc";
+
+		System.out.println("dataInicio " + dataInicio);
+		System.out.println("dataFim " + dataFim);
+		
+		Statement stm = (Statement) conexao.createStatement();
+		try {
+			ResultSet retornoSelect = stm.executeQuery(sqlCodigo);
+			while (retornoSelect.next()) {
+				resultado.add(FabricaDashboard.novoDashboard(retornoSelect.getString("nome_metodo"),
+						retornoSelect.getInt("quantidade_chamada"), 0, retornoSelect.getLong("tempo_total"),
+						retornoSelect.getFloat("tempo_medio"), retornoSelect.getLong("tempo_menor"),
+						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor")));
+				totalChamadas += retornoSelect.getInt("quantidade_chamada");
+			}
+
+			for (LogDashboard ld : resultado) {
+				ld.setQuantidadeChamadasTotal(totalChamadas);
+				ld.setPorcentagemTotal(((ld.getQuantidadeDessaChamada() * 100.0f) / totalChamadas));
+			}
+		} catch (Exception e) {
+			System.out.println("Error[psql]: " + e );
+		}
+		return resultado;
 	}
 
 	public int getTotalChamadas() {

@@ -1,7 +1,9 @@
 package controller.backbeans;
 
+import java.security.Timestamp;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -13,6 +15,7 @@ import org.primefaces.context.RequestContext;
 import model.domain.entidades.LogDashboard;
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
+import model.domain.util.CalendarioUtil;
 
 @ManagedBean(eager = true)
 @RequestScoped
@@ -25,6 +28,8 @@ public class HomeBean {
 	private List<LogDashboard> gerarLogDashboardInicial;
 	private long rangeInicio;
 	private long rangeFim;
+	private Date dataInicio;
+	private Date dataFim;
 
 	public HomeBean() {
 		servicoFachada = new ServicoFachada();
@@ -33,31 +38,27 @@ public class HomeBean {
 
 	public void filtrar() throws SQLException {
 		
+		int servidorId;
+		
+		System.out.println("data Inicio: " + dataInicio);
+		System.out.println("data Fim: " + dataFim);
+		
 		RequestContext requestContext = RequestContext.getCurrentInstance();
 		
 		try{
-			Integer.parseInt(servidorSelecionado);
+			servidorId = Integer.parseInt(servidorSelecionado);
 		}catch(NumberFormatException e){
 			requestContext.execute("alertServidorNaoSelecionado()");
 			return;
 		}
 		
-		requestContext.execute("alertLetras");
-		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(Integer.parseInt(servidorSelecionado)/*, Timestamp.valueOf(dataInicio), dataFim*/, rangeInicio, rangeFim);
+		if((dataInicio == null) || (dataFim == null)){
+			requestContext.execute("alertDataFormatoInvalido()");
+		}
 		
-//		Matcher matcher;
-//		Pattern naoNumero = Pat	tern.compile(Regex.NAONUMERO.valor());
-//		if (naoNumero.matcher(String.valueOf(getRangeInicio())).find()
-//				&& naoNumero.matcher(String.valueOf(getRangeFim())).find()) {
-//
-//		} else {
-//			System.out.print("DataInicio: " + this.dataInicio);
-//			System.out.println("	DataFim: " + this.dataFim);
-//			System.out.print("rangeInicio: " + this.rangeInicio);
-//			System.out.print("	rangeFim: " + this.rangeFim);
-//		}
-//		System.out.println(String.valueOf(getRangeInicio()));
-//		System.out.println(String.valueOf(getRangeFim()));
+		requestContext.execute("alertLetras");
+		//gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(servidorId/*, Timestamp.valueOf(dataInicio), dataFim*/, rangeInicio, rangeFim);
+		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(servidorId, CalendarioUtil.dateParaSqlTimestamp(dataInicio), CalendarioUtil.dateParaSqlTimestamp(dataFim), rangeInicio, rangeFim);
 	}
 
 	public List<SelectItem> getComboServidores() throws SQLException {
@@ -72,7 +73,6 @@ public class HomeBean {
 		for (Servidor servidor : servidores) {
 			SelectItem item = new SelectItem(servidor.getIdServidor(), servidor.getNomeServidor());
 			this.comboServidores.add(item);
-
 		}
 		return comboServidores;
 	}
@@ -111,21 +111,21 @@ public class HomeBean {
 		this.rangeFim = rangeFim;
 	}
 
-//	public String getDataInicio() {
-//		return dataInicio;
-//	}
-//
-//	public void setDataInicio(String dataInicio) {
-//		this.dataInicio = dataInicio;
-//	}
-//
-//	public String getDataFim() {
-//		return dataFim;
-//	}
-//
-//	public void setDataFim(String dataFim) {
-//		this.dataFim = dataFim;
-//	}
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
+	}
 
 	public void setGerarLogDashboardInicial(List<LogDashboard> gerarLogDashboardInicial) {
 		this.gerarLogDashboardInicial = gerarLogDashboardInicial;

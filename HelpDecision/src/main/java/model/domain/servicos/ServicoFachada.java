@@ -64,6 +64,11 @@ public class ServicoFachada {
 	public List<LogDashboard> solicitarFiltroDashBoard(int servidor/*, Timestamp dataInicio, Timestamp dataFim*/, long duracaoInicial, long duracaoFinal) throws SQLException{
 		return servicoDashboard.filtrarDashboard(servidor/*, dataInicio, dataFim*/, duracaoInicial, duracaoFinal);
 	}
+	
+	public List<LogDashboard> solicitarFiltroDashBoard(int servidor, Timestamp dataInicio, Timestamp dataFim, long duracaoInicial, long duracaoFinal) throws SQLException{
+		return servicoDashboard.filtrarDashboard(servidor, dataInicio, dataFim, duracaoInicial, duracaoFinal);
+	}
+	
 	// M�TODOS REFERENTE AO SERVICO CHAMADA METODO
 
 	public List<ChamadaMetodo> buscarPorDuracao(long inicio, long fim) {
