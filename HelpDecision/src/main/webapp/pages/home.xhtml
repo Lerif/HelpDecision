@@ -135,7 +135,8 @@
 							var="log">
 
 							<p:column sortBy="#{log.nomeMetodo}" headerText="Nome">
-								<p:commandLink oncomplete="PF('rowDetailDialog').show();" action="#{homeBean.metodoDetails}">
+								<p:commandLink oncomplete="PF('rowDetailDialog').show();"
+									action="#{homeBean.metodoDetails}">
 									<f:setPropertyActionListener value="#{log}"
 										target="#{homeBean.selectedMetodo}" />
 									<h:outputText value="#{log.nomeMetodo}" />
@@ -166,7 +167,9 @@
 
 							<p:column sortBy="#{log.tempoMedio}" headerText="Tempo Medio">
 								<div align="center">
-									<h:outputText value="#{log.tempoMedio}" />
+									<h:outputText value="#{log.tempoMedio}">
+										<f:convertNumber pattern="#0.00" />
+									</h:outputText>
 								</div>
 							</p:column>
 

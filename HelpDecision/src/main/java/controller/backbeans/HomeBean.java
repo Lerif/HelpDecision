@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
@@ -19,7 +20,7 @@ import model.domain.servicos.ServicoFachada;
 import model.domain.util.CalendarioUtil;
 
 @ManagedBean(eager = true)
-@RequestScoped
+@SessionScoped
 public class HomeBean {
 
 	protected static final String NOME_DO_PROJETO = "HelpDecision";
