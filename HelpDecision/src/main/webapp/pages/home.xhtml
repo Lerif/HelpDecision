@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -61,10 +62,8 @@
 					</li>
 				</ul>
 			</div>
-
 		</div>
 	</nav>
-
 
 	<h3 class="text-primary text-center">Dashboard</h3>
 	<h:form id="formLogin" class="form-inline">
@@ -84,6 +83,7 @@
 							<p:outputLabel for="datetime1" value="Data Início:" />
 							<p:calendar id="datetime1" value="#{homeBean.dateInicio}"
 								pattern="MM/dd/yyyy HH:mm:ss" />
+							<h:message for="datetime1" style="color:red" />
 						</h:panelGrid>
 					</div>
 
@@ -92,6 +92,7 @@
 							<p:outputLabel for="datetime2" value="Data Fim:" />
 							<p:calendar id="datetime2" value="#{homeBean.dateFim}"
 								pattern="MM/dd/yyyy HH:mm:ss" />
+							<h:message for="datetime2" style="color:red" />
 						</h:panelGrid>
 					</div>
 					<p:dialog modal="true" resizable="false" header="Values"
@@ -129,7 +130,6 @@
 							height="100">
 							<h:outputText value="This is a Modal Dialog." />
 						</p:dialog>
-
 						<p:dataTable class="table table-bordred table-striped"
 							id="chamadaMetodo" value="#{homeBean.gerarLogDashboardInicial}"
 							var="log">
@@ -241,13 +241,18 @@
 <script>
 	function getData() {
 		alert(document.getElementById("datas").value);
-
 	}
-
-	function alertServidorNaoSelecionado() {
-		alertify.notify('Favor selecionar um servidor', 'error', 3, function() {
-			console.log('dismissed');
-		});
+	
+	function alertServidorNaoSelecionado(){
+		alertify.notify('Por favor selecionar um servidor', 'error', 3, function(){  console.log('dismissed'); });
+	}
+	
+	function alertDataFormatoInvalido(){
+		alertify.notify('Por favor inserir data no formato yyyy/MM/dd HH:mm:ss\n(Ex: 2016/11/15 16:11:25', 'error', 7, function(){  console.log('dismissed'); });
+	}
+	
+	function alertRageInvalido(){
+		alertify.notify('Por favor inserir range incial menor do que range final', 'error', 5, function(){  console.log('dismissed'); });
 	}
 
 	function alertLetras() {

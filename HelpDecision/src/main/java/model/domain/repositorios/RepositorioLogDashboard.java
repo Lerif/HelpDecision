@@ -98,7 +98,7 @@ public class RepositorioLogDashboard {
 				totalChamadas += retornoSelect.getInt("quantidade_chamada");
 			}
 
-			for (LogDashboard ld : repositorioLogDashboard) {
+			for (LogDashboard ld : resultado) {
 				ld.setQuantidadeChamadasTotal(totalChamadas);
 				ld.setPorcentagemTotal(((ld.getQuantidadeDessaChamada() * 100.0f) / totalChamadas));
 			}
@@ -106,7 +106,6 @@ public class RepositorioLogDashboard {
 			// TODO: handle exception
 		}
 		return resultado;
-
 	}
 
 	public int getTotalChamadas() {
