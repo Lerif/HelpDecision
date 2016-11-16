@@ -143,15 +143,6 @@ public class ServicoFachada {
 		this.servicoAgregador = servicoAgregador;
 	}
 
-	public List<ChamadaMetodoArquivoLogServidor> buscarDashboardDetalhado(String nomeMetodo, int idServidor) {
-
-		// return
-		// servicoAgregador.solicitarDetalhesFromMetodoAndServidor(nomeMetodo,
-		// idServidor);
-		return new ArrayList<ChamadaMetodoArquivoLogServidor>();
-
-	}
-
 	public List<ChamadaMetodo> buscarDashboardDetalhado(String nomeMetodo, int idServidor,
 			Date dateInicio, Date dateFim, long rangeInicio, long rangeFim) {
 

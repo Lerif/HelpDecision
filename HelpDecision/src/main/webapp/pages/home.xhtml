@@ -61,10 +61,8 @@
 					</li>
 				</ul>
 			</div>
-
 		</div>
 	</nav>
-
 
 	<h3 class="text-primary text-center">Dashboard</h3>
 	<h:form id="formLogin" class="form-inline">
@@ -84,6 +82,7 @@
 							<p:outputLabel for="datetime1" value="Data Início:" />
 							<p:calendar id="datetime1" value="#{homeBean.dateInicio}"
 								pattern="MM/dd/yyyy HH:mm:ss" />
+							<h:message for="datetime1" style="color:red" />
 						</h:panelGrid>
 					</div>
 
@@ -92,6 +91,7 @@
 							<p:outputLabel for="datetime2" value="Data Fim:" />
 							<p:calendar id="datetime2" value="#{homeBean.dateFim}"
 								pattern="MM/dd/yyyy HH:mm:ss" />
+							<h:message for="datetime2" style="color:red" />
 						</h:panelGrid>
 					</div>
 					<p:dialog modal="true" resizable="false" header="Values"
@@ -129,7 +129,6 @@
 							height="100">
 							<h:outputText value="This is a Modal Dialog." />
 						</p:dialog>
-
 						<p:dataTable class="table table-bordred table-striped"
 							id="chamadaMetodo" value="#{homeBean.gerarLogDashboardInicial}"
 							var="log">
@@ -166,7 +165,9 @@
 
 							<p:column sortBy="#{log.tempoMedio}" headerText="Tempo Medio">
 								<div align="center">
-									<h:outputText value="#{log.tempoMedio}" />
+									<h:outputText value="#{log.tempoMedio}">
+										<f:convertNumber pattern="#0.00" />
+									</h:outputText>
 								</div>
 							</p:column>
 
@@ -273,13 +274,22 @@
 <script>
 	function getData() {
 		alert(document.getElementById("datas").value);
-
 	}
-
-	function alertServidorNaoSelecionado() {
-		alertify.notify('Favor selecionar um servidor', 'error', 3, function() {
-			console.log('dismissed');
-		});
+	
+	function alertServidorNaoSelecionado(){
+		alertify.notify('Por favor selecionar um servidor', 'error', 3, function(){  console.log('dismissed'); });
+	}
+	
+	function alertDataFormatoInvalido(){
+		alertify.notify('Por favor inserir data no formato yyyy/MM/dd HH:mm:ss\n(Ex: 2016/11/15 16:11:25', 'error', 7, function(){  console.log('dismissed'); });
+	}
+	
+	function alertRageInvalido(){
+		alertify.notify('Por favor inserir range incial menor do que range final', 'error', 5, function(){  console.log('dismissed'); });
+	}
+	
+	function alertDataInvalido(){
+		alertify.notify('Por favor inserir data inicial anterior à data final', 'error', 5, function(){  console.log('dismissed'); });
 	}
 
 	function alertLetras() {

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
@@ -17,7 +18,7 @@ import model.domain.servicos.ServicoFachada;
 import model.domain.util.CalendarioUtil;
 
 @ManagedBean(eager = true)
-@RequestScoped
+@SessionScoped
 public class HomeBean {
 
 	protected static final String NOME_DO_PROJETO = "HelpDecision";
@@ -39,10 +40,26 @@ public class HomeBean {
 
 	public void filtrar() throws SQLException {
 
+		int servidorId;
 		RequestContext requestContext = RequestContext.getCurrentInstance();
-
-		try {
-			Integer.parseInt(servidorSelecionado);
+		
+		if((dateInicio == null) || (dateFim == null)){
+			requestContext.execute("alertDataFormatoInvalido()");
+			return;
+		}
+		
+		if(rangeInicio > rangeFim){
+			requestContext.execute("alertRageInvalido()");
+			return;
+		}
+		
+		if(dateInicio.after(dateFim)){
+			requestContext.execute("alertDataInvalido()");
+			return;
+		}
+		
+		try{
+			servidorId = Integer.parseInt(servidorSelecionado);
 		} catch (NumberFormatException e) {
 			requestContext.execute("alertServidorNaoSelecionado()");
 			return;
@@ -52,7 +69,7 @@ public class HomeBean {
 		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(Integer.parseInt(servidorSelecionado),
 				CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim),
 				rangeInicio, rangeFim);
-
+		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(servidorId,CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim), rangeInicio, rangeFim);
 	}
 
 	public List<SelectItem> getComboServidores() throws SQLException {
@@ -67,7 +84,6 @@ public class HomeBean {
 		for (Servidor servidor : servidores) {
 			SelectItem item = new SelectItem(servidor.getIdServidor(), servidor.getNomeServidor());
 			this.comboServidores.add(item);
-
 		}
 		return comboServidores;
 	}
@@ -104,6 +120,7 @@ public class HomeBean {
 		this.gerarLogDashboardInicial = gerarLogDashboardInicial;
 	}
 
+	
 	public Date getDateInicio() {
 		return dateInicio;
 	}
