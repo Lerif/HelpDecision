@@ -16,6 +16,7 @@
 	<link rel="stylesheet" type="text/css"
 		href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 	<link rel="stylesheet" href="../css/alertify/alertify.css" />
+	<link rel="stylesheet" href="../css/nprogress.css" />
 	
 	<!--JS-->
 	<h:outputScript
@@ -29,9 +30,10 @@
 	<script type="text/javascript"
 		src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 	<script src="../dist/js/alertify/alertify.js"></script>
+	<script src="../dist/js/nprogress.js"></script>
 	
 
-	<title>Home | Help Decision</title>
+	<title>Upload | Help Decision</title>
 
 </h:head>
 
@@ -99,7 +101,7 @@
 				<div class="form-group">
 					<h:commandButton type="submit"
 						class="btn btn-success btn-login-submit btn-md m-t-md"
-						onclick="NProgress.start();NProgress.done();" value="Upload"
+						onclick="NProgress.start()" oncomplete="NProgress.done()" value="Upload"
 						action="#{uploadBean.upload}" />
 				</div>
 			</h:form>
