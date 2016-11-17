@@ -65,7 +65,7 @@
 	</nav>
 
 	<h3 class="text-primary text-center">Dashboard</h3>
-	<h:form id="formLogin" class="form-inline">
+	<h:form id="form1" class="form-inline">
 		<div class="container" style="text-align: center">
 			<div class="login-box well">
 				<div class="row">
@@ -121,24 +121,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="table-responsive">
-						<p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true"
-							height="100">
-							<h:outputText value="This is a Modal Dialog." />
-						</p:dialog>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="table-responsive">
+					<h:form id="form2">
 						<p:dataTable class="table table-bordred table-striped"
-							id="chamadaMetodo" value="#{homeBean.gerarLogDashboardInicial}"
-							var="log">
+							value="#{homeBean.gerarLogDashboardInicial}" var="log">
 
 							<p:column sortBy="#{log.nomeMetodo}" headerText="Nome">
-								<p:commandLink oncomplete="PF('rowDetailDialog').show();" action="#{homeBean.metodoDetails()}">
+								<p:commandLink update=":form1:form2:rowDetail"
+									oncomplete="PF('rowDetailDialog').show();">
 									<f:setPropertyActionListener value="#{log}"
-										target="#{homeBean.logDashBoard}" />
+										target="#{homeBean.buscarDashboardDetalhado}" />
 									<h:outputText value="#{log.nomeMetodo}" />
+
 								</p:commandLink>
+
 							</p:column>
 
 							<p:column sortBy="#{log.quantidadeDessaChamada}"
@@ -189,62 +188,52 @@
 								</div>
 							</p:column>
 						</p:dataTable>
-
-						<p:dialog header="Metodo Detail" widgetVar="rowDetailDialog"
-							modal="true" showEffect="fade" hideEffect="fade"
-							resizable="false">
+						<p:dialog header="Top 10 - Detalhado" widgetVar="rowDetailDialog"
+							modal="true" width="600" showEffect="fade" hideEffect="fade"
+							resizable="true">
 							<p:outputPanel id="rowDetail" style="text-align:center;">
-								<h:outputText value="Teste" />
+								<p:dataTable class="table table-bordred table-striped"
+									id="chamadaMetodoDetail" value="#{homeBean.metodoDetails}"
+									var="metodo">
+
+									<p:column headerText="Nome">
+										<div align="center">
+											<h:outputText value="#{metodo.nomeMetodo}" />
+										</div>
+									</p:column>
+
+									<p:column headerText="ID Elemento">
+										<div align="center">
+											<h:outputText value="#{metodo.idElemento}" />
+										</div>
+									</p:column>
+
+									<p:column headerText="Tipo Elemento">
+										<div align="center">
+											<h:outputText value="#{metodo.tipoElemento}" />
+										</div>
+									</p:column>
+
+									<p:column headerText="Duração">
+										<div align="center">
+											<h:outputText value="#{metodo.duracao}" />
+										</div>
+									</p:column>
+								</p:dataTable>
 							</p:outputPanel>
 						</p:dialog>
-					</div>
+					</h:form>
 				</div>
 			</div>
 		</div>
-	</h:form>
+	</div>
+</h:form>
 </h:body>
 
 <p:dialog id="myDialog" widgetVar="refaccionDialog"
 	header="Detalle Refaccion" resizable="false" width="300"
 	showEffect="explode" hideEffect="explode">
-	
-	<h:form>
-	<p:dataTable class="table table-bordred table-striped"
-							id="chamadaMetodoDetail" value="#{homeBean.teste()}"
-							var="metodo">
-
-							<p:column sortBy="#{metodo.nomeMetodo}" headerText="Nome">
-								<div align="center">
-									<h:outputText value="#{metodo.nomeMetodo}" />
-								</div>
-							</p:column>
-
-							<p:column sortBy="#{metodo.nomeMetodo}" headerText="Tempo Total">
-								<div align="center">
-									<h:outputText value="#{metodo.nomeMetodo}" />
-								</div>
-							</p:column>
-
-							<p:column sortBy="#{metodo.nomeMetodo}" headerText="Tempo Medio">
-								<div align="center">
-									<h:outputText value="#{metodo.nomeMetodo}" />
-								</div>
-							</p:column>
-
-							<p:column sortBy="#{metodo.nomeMetodo}" headerText="Maior Tempo">
-								<div align="center">
-									<h:outputText value="#{metodo.nomeMetodo}" />
-								</div>
-							</p:column>
-
-							<p:column sortBy="#{metodo.nomeMetodo}" headerText="Menor Tempo">
-								<div align="center">
-									<h:outputText value="#{metodo.nomeMetodo}" />
-								</div>
-							</p:column>
-						</p:dataTable>
-	</h:form>
- </p:dialog>
+</p:dialog>
 
 <!-- Modal Sobre-->
 <div class="modal fade" id="modal_sobre" tabindex="-1" role="dialog"
@@ -275,21 +264,36 @@
 	function getData() {
 		alert(document.getElementById("datas").value);
 	}
-	
-	function alertServidorNaoSelecionado(){
-		alertify.notify('Por favor selecionar um servidor', 'error', 3, function(){  console.log('dismissed'); });
+
+	function alertServidorNaoSelecionado() {
+		alertify.notify('Por favor selecionar um servidor', 'error', 3,
+				function() {
+					console.log('dismissed');
+				});
 	}
-	
-	function alertDataFormatoInvalido(){
-		alertify.notify('Por favor inserir data no formato yyyy/MM/dd HH:mm:ss\n(Ex: 2016/11/15 16:11:25', 'error', 7, function(){  console.log('dismissed'); });
+
+	function alertDataFormatoInvalido() {
+		alertify
+				.notify(
+						'Por favor inserir data no formato yyyy/MM/dd HH:mm:ss\n(Ex: 2016/11/15 16:11:25',
+						'error', 7, function() {
+							console.log('dismissed');
+						});
 	}
-	
-	function alertRageInvalido(){
-		alertify.notify('Por favor inserir range incial menor do que range final', 'error', 5, function(){  console.log('dismissed'); });
+
+	function alertRageInvalido() {
+		alertify.notify(
+				'Por favor inserir range incial menor do que range final',
+				'error', 5, function() {
+					console.log('dismissed');
+				});
 	}
-	
-	function alertDataInvalido(){
-		alertify.notify('Por favor inserir data inicial anterior à data final', 'error', 5, function(){  console.log('dismissed'); });
+
+	function alertDataInvalido() {
+		alertify.notify('Por favor inserir data inicial anterior à data final',
+				'error', 5, function() {
+					console.log('dismissed');
+				});
 	}
 
 	function alertLetras() {

@@ -130,7 +130,7 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 	}
 
 	public List<ChamadaMetodo> findDetailsFromArquivoLogAndServidor(String nomeMetodo, int idServidor,
-			Timestamp dataInicio, Timestamp dataFim, long rangeInicio, long rangeFim) throws SQLException {
+			Timestamp dataInicio, Timestamp dataFim, Long rangeInicio, Long rangeFim) throws SQLException {
 
 		ChamadaMetodoArquivoLogServidor resultado = null;
 		List<ChamadaMetodo> chamadasMetodos = new ArrayList<ChamadaMetodo>();
@@ -144,34 +144,40 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 		sql.append("chamada_metodo.tipo_elemento, ");
 		sql.append("chamada_metodo.id_chamada_metodo, ");
 		sql.append("chamada_metodo.tipo_elemento ");
-		// sql.append("servidor.id_servidor, ");
-		// sql.append("servidor.nome_servidor, ");
-		// sql.append("arquivo.id_arquivo, ");
-		// sql.append("arquivo.nome_arquivo, ");
-		// sql.append("arquivo.descricao, ");
-		// sql.append("arquivo.arquivo_excluido,");
-		// sql.append("arquivo.data_upload ");
 		sql.append("FROM tb_chamada_metodo_arquivo_servidor agregador ");
 		sql.append(
 				"JOIN tb_chamada_metodo chamada_metodo ON agregador.id_chamada_metodo = chamada_metodo.id_chamada_metodo ");
 		sql.append("JOIN tb_arquivo arquivo ON agregador.id_arquivo = arquivo.id_arquivo ");
 		sql.append("JOIN tb_servidor servidor ON agregador.id_servidor = servidor.id_servidor ");
-		sql.append("WHERE chamada_metodo.nome_metodo = ? ");
+		sql.append("WHERE ");
+		sql.append("chamada_metodo.nome_metodo = ? ");
 		sql.append("AND servidor.id_servidor = ? ");
-		sql.append("AND (chamada_metodo.data_inicio, ");
-		sql.append("chamada_metodo.data_fim) OVERLAPS (?,?) ");
 		sql.append("AND arquivo.arquivo_excluido = false ");
-		sql.append("AND chamada_metodo.duracao BETWEEN ? and ? ");
+
+		if (dataInicio != null && dataFim != null) {
+			sql.append("AND (chamada_metodo.data_inicio, ");
+			sql.append("chamada_metodo.data_fim) OVERLAPS (?,?) ");
+		}
+		if (rangeInicio != null && rangeFim != null) {
+			sql.append("AND chamada_metodo.duracao BETWEEN ? and ? ");
+		}
+		sql.append("GROUP BY 5, 6, 7 ");
 		sql.append("ORDER BY chamada_metodo.duracao DESC LIMIT 10 ");
 
 		PreparedStatement preparedStatement = conexao.prepareStatement(sql.toString());
 		preparedStatement.setString(1, nomeMetodo);
 		preparedStatement.setInt(2, idServidor);
-		preparedStatement.setTimestamp(3, dataInicio);
-		preparedStatement.setTimestamp(4, dataFim);
-		preparedStatement.setLong(5, rangeInicio);
-		preparedStatement.setLong(6, rangeFim);
 
+		if (dataInicio != null && dataFim != null) {
+
+			preparedStatement.setTimestamp(3, dataInicio);
+			preparedStatement.setTimestamp(4, dataFim);
+		}
+
+		if (rangeInicio != null && rangeFim != null) {
+			preparedStatement.setLong(5, rangeInicio);
+			preparedStatement.setLong(6, rangeFim);
+		}
 		try {
 			ResultSet retornoSelect = preparedStatement.executeQuery();
 			while (retornoSelect.next()) {

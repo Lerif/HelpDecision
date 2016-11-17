@@ -99,7 +99,7 @@ public class ServicoFachada {
 	public List<Servidor> solicitarTodosServidoresDB() throws SQLException {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
 	}
-
+	
 	public List<ChamadaMetodoArquivoLogServidor> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
 		return servicoAgregador.solicitarListaDeArquivoLogEServidorCadastradoDB();
 	}
@@ -147,8 +147,11 @@ public class ServicoFachada {
 			Date dateInicio, Date dateFim, long rangeInicio, long rangeFim) {
 
 		try {
-			return servicoAgregador.solicitarDetalhesFromMetodoAndServidor(nomeMetodo, idServidor, dateInicio, dateFim,
+			
+			List<ChamadaMetodo> teste = servicoAgregador.solicitarDetalhesFromMetodoAndServidor(nomeMetodo, idServidor, dateInicio, dateFim,
 					rangeInicio, rangeFim);
+			
+			return teste;
 		} catch (SQLException e) {
 			
 			e.printStackTrace();

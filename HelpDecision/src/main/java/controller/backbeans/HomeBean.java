@@ -7,6 +7,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
@@ -18,7 +19,7 @@ import model.domain.servicos.ServicoFachada;
 import model.domain.util.CalendarioUtil;
 
 @ManagedBean(eager = true)
-@SessionScoped
+@RequestScoped
 public class HomeBean {
 
 	protected static final String NOME_DO_PROJETO = "HelpDecision";
@@ -42,23 +43,23 @@ public class HomeBean {
 
 		int servidorId;
 		RequestContext requestContext = RequestContext.getCurrentInstance();
-		
-		if((dateInicio == null) || (dateFim == null)){
+
+		if ((dateInicio == null) || (dateFim == null)) {
 			requestContext.execute("alertDataFormatoInvalido()");
 			return;
 		}
-		
-		if(rangeInicio > rangeFim){
+
+		if (rangeInicio > rangeFim) {
 			requestContext.execute("alertRageInvalido()");
 			return;
 		}
-		
-		if(dateInicio.after(dateFim)){
+
+		if (dateInicio.after(dateFim)) {
 			requestContext.execute("alertDataInvalido()");
 			return;
 		}
-		
-		try{
+
+		try {
 			servidorId = Integer.parseInt(servidorSelecionado);
 		} catch (NumberFormatException e) {
 			requestContext.execute("alertServidorNaoSelecionado()");
@@ -69,7 +70,9 @@ public class HomeBean {
 		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(Integer.parseInt(servidorSelecionado),
 				CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim),
 				rangeInicio, rangeFim);
-		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(servidorId,CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim), rangeInicio, rangeFim);
+		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(servidorId,
+				CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim),
+				rangeInicio, rangeFim);
 	}
 
 	public List<SelectItem> getComboServidores() throws SQLException {
@@ -120,7 +123,6 @@ public class HomeBean {
 		this.gerarLogDashboardInicial = gerarLogDashboardInicial;
 	}
 
-	
 	public Date getDateInicio() {
 		return dateInicio;
 	}
@@ -140,25 +142,17 @@ public class HomeBean {
 	public void setLogDashBoard(LogDashboard logDashBoard) {
 		this.logDashBoard = logDashBoard;
 	}
-
-	public void metodoDetails() {
-
-		this.setMetodoDetails(servicoFachada.buscarDashboardDetalhado(this.logDashBoard.getNomeMetodo(),
-				this.logDashBoard.getIdServidor(), this.dateInicio,
-				this.dateFim, this.rangeInicio, this.rangeFim));
-
+	
+	public void setBuscarDashboardDetalhado(LogDashboard logDashBoard){
+		this.metodoDetails = servicoFachada.buscarDashboardDetalhado(logDashBoard.getNomeMetodo(),
+				logDashBoard.getIdServidor(), this.dateInicio, this.dateFim, this.rangeInicio, this.rangeFim);
 	}
 
 	public List<ChamadaMetodo> getMetodoDetails() {
 		return metodoDetails;
+
 	}
 	
-	public void teste(){
-		
-	}
-
-	public void setMetodoDetails(List<ChamadaMetodo> logDashboardMetodoDetails) {
-		this.metodoDetails = logDashboardMetodoDetails;
-	}
+	
 
 }
