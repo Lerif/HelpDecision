@@ -6,14 +6,14 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
 
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.LogDashboard;
+import model.domain.entidades.LogDashboardDetalhado;
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
 import model.domain.util.CalendarioUtil;
@@ -27,6 +27,7 @@ public class HomeBean {
 	private List<SelectItem> comboServidores;
 	private String servidorSelecionado;
 	private List<LogDashboard> gerarLogDashboardInicial;
+	private List<LogDashboardDetalhado> gerarLogDashboardDetalhado;
 	private long rangeInicio;
 	private long rangeFim;
 	private LogDashboard logDashBoard;
@@ -75,6 +76,10 @@ public class HomeBean {
 				rangeInicio, rangeFim);
 	}
 
+	public void dashBoardModal(ActionEvent event){
+		System.out.println("Teste");
+	}
+	
 	public List<SelectItem> getComboServidores() throws SQLException {
 		this.comboServidores = new ArrayList<SelectItem>();
 		List<Servidor> servidores = null;
@@ -101,6 +106,10 @@ public class HomeBean {
 
 	public List<LogDashboard> getGerarLogDashboardInicial() {
 		return gerarLogDashboardInicial;
+	}
+	
+	public List<LogDashboardDetalhado> getGerarLogDashboardDetalhadoModal() {
+		return gerarLogDashboardDetalhado;
 	}
 
 	public long getRangeInicio() {

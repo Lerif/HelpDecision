@@ -25,6 +25,30 @@
 		type="text/css" media="all" />
 	<link rel="script" href="../css/bootstrap/bootstrap-theme.css"
 		type="text/css" media="all" />
+	<!--JQUERY-->
+	<script
+		src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<!--DATETIMEPICKER-->
+	<!-- Include Required Prerequisites -->
+	<script type="text/javascript"
+		src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+	<!-- Include Date Range Picker -->
+	<script type="text/javascript"
+		src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+
+	<!--ALERTFY-->
+	<script src="../dist/js/alertify.min.js"></script>
+	<link rel="stylesheet" href="../css/alertify.min.css" />
+
+	<script src="../dist/js/alertify/alertify.js"></script>
 	<link rel="stylesheet" href="../css/alertify/alertify.css" />
 	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
 	<link rel="stylesheet" href="../css/teste.css" type="text/css" />
@@ -126,6 +150,88 @@
 			<div class="col-md-12">
 				<div class="table-responsive">
 					<h:form id="form2">
+						<h:dataTable class="table table-bordred table-striped"
+							id="chamadaMetodo" value="#{homeBean.gerarLogDashboardInicial}"
+							var="log">
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Nome" />
+								</f:facet>
+								<h:commandLink
+								actionListener="#{homeBean.dashBoardModal}" onclick="showModal()">
+									<h:outputText value="#{log.nomeMetodo}" />
+								</h:commandLink>
+							</h:column>
+
+							<h:column>
+
+								<f:facet name="header">
+									<h:outputText value="Quantidade de Chamadas" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.quantidadeDessaChamada}" />
+								</div>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="% De Quantidade de Chamadas" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.porcentagemTotal}">
+										<f:convertNumber pattern="#0.00" />
+									</h:outputText>
+								</div>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Tempo Total" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.tempoTotal}" />
+								</div>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Tempo Medio" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.tempoMedio}" />
+								</div>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Maior Tempo" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.tempoMaior}" />
+								</div>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Menor Tempo" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.tempoMenor}" />
+								</div>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Servidor" />
+								</f:facet>
+								<div align="center">
+									<h:outputText value="#{log.nomeServidor}" />
+								</div>
+							</h:column>
+						</h:dataTable>
+					</h:form>
+					<h:form>
 						<p:dataTable class="table table-bordred table-striped"
 							value="#{homeBean.gerarLogDashboardInicial}" var="log">
 
@@ -260,6 +366,79 @@
 	</div>
 </div>
 
+<!-- Modal Detalhes Chamadas-->
+<div class="modal fade" id="modal_detalhes_chamadas" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="modalSobre">Detalhes</h4>
+			</div>
+
+			<div class="modal-body">
+				<h:form>
+					<h:dataTable class="table table-bordred table-striped"
+						id="chamadaMetodo" value="#{homeBean.gerarLogDashboardInicial}"
+						var="log">
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Nome" />
+							</f:facet>
+								<h:outputText value="#{log.nomeMetodo}" />
+						</h:column>
+
+						<h:column>
+
+							<f:facet name="header">
+								<h:outputText value="Quantidade de Chamadas" />
+							</f:facet>
+							<div align="center">
+								<h:outputText value="#{log.quantidadeDessaChamada}" />
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="% De Quantidade de Chamadas" />
+							</f:facet>
+							<div align="center">
+								<h:outputText value="#{log.porcentagemTotal}">
+									<f:convertNumber pattern="#0.00" />
+								</h:outputText>
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Tempo Total" />
+							</f:facet>
+							<div align="center">
+								<h:outputText value="#{log.tempoTotal}" />
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Tempo Medio" />
+							</f:facet>
+							<div align="center">
+								<h:outputText value="#{log.tempoMedio}" />
+							</div>
+						</h:column>
+					</h:dataTable>
+				</h:form>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+
 <script>
 	function getData() {
 		alert(document.getElementById("datas").value);
@@ -312,5 +491,32 @@
 			});
 		}
 	}
+			alertify.notify('ok', 'error', 5, function() {
+				console.log('dismissed');
+			});
+		} else {
+			alertify.notify('!ok', 'success', 5, function() {
+				console.log('dismissed');
+			});
+		}
+		setTimeout(teste, delay)
+	}
+		//alert("Ronaldo");
+        	alertify.notify('Favor utilizar apenas numeros no range', 'error', 5, function(){  console.log('dismissed'); });
+			
+    	} else {
+	            alertify.notify('Ok', 'success', 5, function(){  console.log('dismissed'); });
+	    }
+	        //setTimeout(teste, delay)
+	    }
+
+	function showModal() {
+		$('#modal_detalhes_chamadas').modal('show');
+	}
+	
+	function openDialog() {
+	    $("#dialog_p").dialog('open');
+	    console.log('modal called');
+	};
 </script>
 </html>
