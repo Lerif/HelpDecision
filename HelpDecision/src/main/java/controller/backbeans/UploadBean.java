@@ -133,16 +133,6 @@ public class UploadBean implements Serializable {
 		return null;
 	}
 
-	public List<ArquivoLog> getListaArquivoLog() {
-
-		try {
-			return servicoFachada.solicitarTodosArquivoLogDB();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	public String buscarNomeDoArquivo(Part part) {
 
 		String nomeArquivo;

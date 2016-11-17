@@ -71,10 +71,6 @@ public class ServicoFachada {
 		return servicoArquivoLog.solicitarFlagArquivoExcluido(arquivoLog);
 	}
 
-	public List<ArquivoLog> solicitarTodosArquivoLogDB() throws SQLException {
-		return servicoArquivoLog.solicitarListaDeArquivoLogCadastradoDB();
-	}
-
 	public Boolean cadastrarServidor(int idServidor, String nomeServidor) throws SQLException {
 		return servicoServidor.cadastrarServidorDB(solicitarNovoServidor(idServidor, nomeServidor));
 	}

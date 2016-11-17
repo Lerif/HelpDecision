@@ -27,10 +27,6 @@ public class ArquivoLogServico {
 	public ArquivoLog criarArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload, String descricao, Servidor servidor) {
 		return FabricaArquivoLog.nova().novoArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao, servidor);
 	}
-
-	public List<ArquivoLog> solicitarListaDeArquivoLogCadastradoDB() throws SQLException {
-		return repositorioArquivoLog.findAll();
-	}
 	
 	public Boolean solicitarFlagArquivoExcluido(ArquivoLog arquivoLog){
 		return repositorioArquivoLog.flegarArquivoExcluido(arquivoLog);

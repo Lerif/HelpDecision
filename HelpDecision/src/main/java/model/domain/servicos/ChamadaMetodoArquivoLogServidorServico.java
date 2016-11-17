@@ -51,10 +51,6 @@ public class ChamadaMetodoArquivoLogServidorServico {
 		repositorioAgregador.removeAgregadorThreeByIdArquivoLog(idArquivoLog);
 	}
 
-	public List<ArquivoLog> solicitarListaDeArquivoLogEServidorCadastradoDB() throws SQLException {
-		return repositorioAgregador.findArquivoLogAndServidor();
-	}
-
 	public List<ChamadaMetodo> solicitarDetalhesFromMetodoAndServidor(String nomeMetodo,
 			int idServidor, Date dateInicio, Date dateFim, long rangeInicio, long rangeFim) throws SQLException {
 
