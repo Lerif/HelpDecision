@@ -33,13 +33,14 @@ public class ChamadaMetodo {
 	private String idElemento;
 	@Column(name = "tipo_elemento")
 	private String tipoElemento;
-
+	private ArquivoLog arquivo;
+	
 	public ChamadaMetodo() {
 
 	}
 
 	private ChamadaMetodo(int idChamadaMetodo, String nomeMetodo, Date dataInicio, Date dataFim, String idElemento,
-			String tipoElemento, long duracao) {
+			String tipoElemento, long duracao, ArquivoLog arquivoLog) {
 		setIdChamadaMetodo(idChamadaMetodo);
 		setNomeMetodo(nomeMetodo);
 		setDataInicio(CalendarioUtil.dateParaSqlTimestamp(dataInicio));
@@ -47,11 +48,12 @@ public class ChamadaMetodo {
 		setIdElemento(idElemento);
 		setTipoElemento(tipoElemento);
 		setDuracao(duracao);
+		setArquivo(arquivoLog);
 	}
 
 	public static ChamadaMetodo nova(int idChamadaMetodo, String nomeMetodo, Date dataInicio, Date dataFim,
-			String idElemento, String tipoElemento, long duracao) {
-		return new ChamadaMetodo(idChamadaMetodo, nomeMetodo, dataInicio, dataFim, idElemento, tipoElemento, duracao);
+			String idElemento, String tipoElemento, long duracao, ArquivoLog arquivoLog) {
+		return new ChamadaMetodo(idChamadaMetodo, nomeMetodo, dataInicio, dataFim, idElemento, tipoElemento, duracao, arquivoLog);
 	}
 
 	public String getNomeMetodo() {
@@ -112,4 +114,11 @@ public class ChamadaMetodo {
 		this.idChamadaMetodo = idChamadaMetodo;
 	}
 
+	public ArquivoLog getArquivo() {
+		return arquivo;
+	}
+
+	public void setArquivo(ArquivoLog arquivo) {
+		this.arquivo = arquivo;
+	}
 }

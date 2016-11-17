@@ -2,6 +2,7 @@ package model.domain.fabricas;
 
 import java.util.Date;
 
+import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 
 public class FabricaChamadaMetodo {
@@ -15,7 +16,7 @@ public class FabricaChamadaMetodo {
 	}
 
 	public ChamadaMetodo NovaChamadaMetodo(int idChamadaMetodo, String nomeMetodo, Date dataInicio, Date dataFim, String idElemento,
-			String tipoElemento, long duracao) {
-		return ChamadaMetodo.nova(idChamadaMetodo, nomeMetodo, dataInicio, dataFim, idElemento, tipoElemento, duracao);
+			String tipoElemento, long duracao, ArquivoLog arquivoLog) {
+		return ChamadaMetodo.nova(idChamadaMetodo, nomeMetodo, dataInicio, dataFim, idElemento, tipoElemento, duracao, arquivoLog);
 	}
 }

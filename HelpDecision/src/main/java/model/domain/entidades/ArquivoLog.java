@@ -23,20 +23,23 @@ public class ArquivoLog {
 	private Date dataUpload;
 	@Column(name = "descricao")
 	private String descricao;
-
+	
+	private Servidor servidor;
+	
 	public ArquivoLog() {
 
 	}
 
-	private ArquivoLog(int idArquivo, String nomeArquivo, Date dataUpload, String descricao) {
+	private ArquivoLog(int idArquivo, String nomeArquivo, Date dataUpload, String descricao, Servidor servidor) {
 		this.idArquivo = idArquivo;
 		this.nomeArquivo = nomeArquivo;
 		this.dataUpload = dataUpload;
 		this.descricao = descricao;
+		this.servidor = servidor;
 	}
 
-	public static ArquivoLog novo(int idArquivo, String nomeArquivo, Date dataUpload, String descricao) {
-		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
+	public static ArquivoLog novo(int idArquivo, String nomeArquivo, Date dataUpload, String descricao, Servidor servidor) {
+		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao, servidor);
 	}
 
 	public String getNomeArquivo() {
@@ -70,4 +73,13 @@ public class ArquivoLog {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+	public Servidor getServidor() {
+		return servidor;
+	}
+
+	public void setServidor(Servidor servidor) {
+		this.servidor = servidor;
+	}
+	
 }

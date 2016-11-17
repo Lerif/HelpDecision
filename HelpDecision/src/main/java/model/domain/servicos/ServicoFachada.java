@@ -100,7 +100,7 @@ public class ServicoFachada {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
 	}
 	
-	public List<ChamadaMetodoArquivoLogServidor> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
+	public List<ArquivoLog> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
 		return servicoAgregador.solicitarListaDeArquivoLogEServidorCadastradoDB();
 	}
 

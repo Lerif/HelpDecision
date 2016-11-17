@@ -51,7 +51,7 @@ public class ChamadaMetodoArquivoLogServidorServico {
 		repositorioAgregador.removeAgregadorThreeByIdArquivoLog(idArquivoLog);
 	}
 
-	public List<ChamadaMetodoArquivoLogServidor> solicitarListaDeArquivoLogEServidorCadastradoDB() throws SQLException {
+	public List<ArquivoLog> solicitarListaDeArquivoLogEServidorCadastradoDB() throws SQLException {
 		return repositorioAgregador.findArquivoLogAndServidor();
 	}
 

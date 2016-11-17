@@ -41,7 +41,7 @@ public class UploadBean implements Serializable {
 	private Servidor servidorSelecionado;
 	private List<SelectItem> comboServidores;
 	private ArquivoLog arquivoLog;
-	private ChamadaMetodoArquivoLogServidor agregador;
+	//private ChamadaMetodoArquivoLogServidor agregador;
 	private String nomeServidor;
 	private String itemSelecionado;
 	private String comentarioArquivo;
@@ -107,7 +107,7 @@ public class UploadBean implements Serializable {
 		} else {
 			requestContext.execute("alertNaoServidorCadastrado()");
 		}
-	}
+	} 
 
 
 	public String deleteActionArquivoLogServidor(ChamadaMetodoArquivoLogServidor arquivoLogServidor)
@@ -123,7 +123,7 @@ public class UploadBean implements Serializable {
 		return null;
 	}
 
-	public List<ChamadaMetodoArquivoLogServidor> getListaArquivoLogComServidor() {
+	public List<ArquivoLog> getListaArquivoLogComServidor() {
 
 		try {
 			return servicoFachada.solicitarTodosArquivoLogEServidoresDB();
