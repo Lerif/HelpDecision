@@ -1,8 +1,7 @@
 package model.domain.entidades;
 
-public class LogDashboard {
+public class Dashboard {
 
-	private String nomeMetodo;
 	private int quantidadeDessaChamada;
 	private float porcentagemTotal;
 	private long tempoTotal;
@@ -10,13 +9,9 @@ public class LogDashboard {
 	private long tempoMenor;
 	private long tempoMaior;
 	private int quantidadeChamadasTotal;
-	private String nomeServidor;
-	private int idServidor;
 
-	private LogDashboard(String nomeMetodo, int quantidadeChamadas, float porcentagemTotal, long tempoTotal,
-			float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal, String nomeServidor,
-			int idServidor) {
-		this.nomeMetodo = nomeMetodo;
+	private Dashboard(int quantidadeChamadas, float porcentagemTotal, long tempoTotal, float tempoMedio,
+			long tempoMenor, long tempoMaior, int quantidadeChamadasTotal) {
 		this.quantidadeDessaChamada = quantidadeChamadas;
 		this.porcentagemTotal = porcentagemTotal;
 		this.tempoTotal = tempoTotal;
@@ -24,23 +19,12 @@ public class LogDashboard {
 		this.tempoMenor = tempoMenor;
 		this.tempoMaior = tempoMaior;
 		this.quantidadeChamadasTotal = quantidadeChamadasTotal;
-		this.nomeServidor = nomeServidor;
-		this.setIdServidor(idServidor);
 	}
 
-	public static LogDashboard novo(String nomeMetodo, int quantidadeChamadas, float porcentagemTotal, long tempoTotal,
-			float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal, String nomeServidor,
-			int idServidor) {
-		return new LogDashboard(nomeMetodo, quantidadeChamadas, porcentagemTotal, tempoTotal, tempoMedio, tempoMenor,
-				tempoMaior, quantidadeChamadasTotal, nomeServidor, idServidor);
-	}
-
-	public String getNomeMetodo() {
-		return nomeMetodo;
-	}
-
-	public void setNomeMetodo(String nomeMetodo) {
-		this.nomeMetodo = nomeMetodo;
+	public static Dashboard novo(int quantidadeChamadas, float porcentagemTotal, long tempoTotal,
+			float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal) {
+		return new Dashboard(quantidadeChamadas, porcentagemTotal, tempoTotal, tempoMedio, tempoMenor, tempoMaior,
+				quantidadeChamadasTotal);
 	}
 
 	public float getPorcentagemTotal() {
@@ -98,21 +82,4 @@ public class LogDashboard {
 	public void setQuantidadeChamadasTotal(int quantidadeChamadasTotal) {
 		this.quantidadeChamadasTotal = quantidadeChamadasTotal;
 	}
-
-	public String getNomeServidor() {
-		return nomeServidor;
-	}
-
-	public void setNomeServidor(String nomeServidor) {
-		this.nomeServidor = nomeServidor;
-	}
-
-	public int getIdServidor() {
-		return idServidor;
-	}
-
-	public void setIdServidor(int idServidor) {
-		this.idServidor = idServidor;
-	}
-
 }

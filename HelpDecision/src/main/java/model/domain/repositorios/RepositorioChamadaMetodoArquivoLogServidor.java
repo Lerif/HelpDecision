@@ -12,7 +12,7 @@ import java.util.List;
 import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
-import model.domain.entidades.LogDashboard;
+import model.domain.entidades.Dashboard;
 import model.domain.entidades.Servidor;
 import model.domain.fabricas.FabricaArquivoLog;
 import model.domain.fabricas.FabricaChamadaMetodo;

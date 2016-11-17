@@ -14,7 +14,7 @@ import org.apache.commons.compress.archivers.ArchiveException;
 import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
-import model.domain.entidades.LogDashboard;
+import model.domain.entidades.Dashboard;
 import model.domain.entidades.Servidor;
 
 public class ServicoFachada {
@@ -45,7 +45,7 @@ public class ServicoFachada {
 		}
 	}
 
-	public List<LogDashboard> solicitarFiltroDashBoard(int servidor, Timestamp dataInicio, Timestamp dataFim,
+	public List<Dashboard> solicitarFiltroDashBoard(int servidor, Timestamp dataInicio, Timestamp dataFim,
 			long duracaoInicial, long duracaoFinal) throws SQLException {
 		return servicoDashboard.filtrarDashboard(servidor, dataInicio, dataFim, duracaoInicial, duracaoFinal);
 	}
@@ -114,7 +114,7 @@ public class ServicoFachada {
 		return new ArrayList<File>();
 	}
 
-	public List<LogDashboard> gerarLogDashboardInicial() {
+	public List<Dashboard> gerarLogDashboardInicial() {
 		return servicoDashboard.gerarLogDashboardInicial();
 	}
 

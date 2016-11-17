@@ -5,12 +5,12 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
-import model.domain.entidades.LogDashboard;
-import model.domain.repositorios.RepositorioLogDashboard;
+import model.domain.entidades.Dashboard;
+import model.domain.repositorios.RepositorioDashboard;
 
 public class ServicoDashboard {
 	
-	private RepositorioLogDashboard repositorioLogDashboard = new RepositorioLogDashboard();
+	private RepositorioDashboard repositorioLogDashboard = new RepositorioDashboard();
 	
 	private ServicoDashboard(){
 	}
@@ -19,11 +19,11 @@ public class ServicoDashboard {
 		return new ServicoDashboard();
 	}
 	
-	public List<LogDashboard> gerarLogDashboardInicial(){		
+	public List<Dashboard> gerarLogDashboardInicial(){		
 		return repositorioLogDashboard.buscarDashboardDoBanco();
 	}
 	
-	public List<LogDashboard> filtrarDashboard(int servidor, Timestamp dataInicio, Timestamp dataFim, long duracaoInicial, long duracaoFinal) throws SQLException{
+	public List<Dashboard> filtrarDashboard(int servidor, Timestamp dataInicio, Timestamp dataFim, long duracaoInicial, long duracaoFinal) throws SQLException{
 		return repositorioLogDashboard.filtrarPorTudo(servidor, dataInicio, dataFim, duracaoInicial, duracaoFinal);
 	}
 }
