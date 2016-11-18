@@ -21,10 +21,14 @@ public class RepositorioArquivoLog {
 	}
 
 	public ArquivoLog insert(ArquivoLog arquivoLog) {
-		String sql = "INSERT INTO tb_arquivo " + "(nome_arquivo, data_upload, descricao, arquivo_excluido) "
-				+ "VALUES (?, ?, ?, ?)";
+		
+		final StringBuilder sql = new StringBuilder();
+		sql.append("INSERT INTO tb_arquivo ");
+		sql.append("(nome_arquivo, data_upload, descricao, arquivo_excluido) ");
+		sql.append("VALUES (?, ?, ?, ?)");
+		
 		try {
-			PreparedStatement pst = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pst = conexao.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, arquivoLog.getNomeArquivo());
 			pst.setTimestamp(2, CalendarioUtil.dateParaSqlTimestamp(arquivoLog.getDataUpload()));
 			pst.setString(3, arquivoLog.getDescricao());

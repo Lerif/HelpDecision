@@ -1,5 +1,6 @@
 package model.domain.entidades;
 
+import java.io.File;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,13 +17,15 @@ public class ArquivoLog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_arquivo")
-	private int idArquivo;
+	private Integer idArquivo;
 	@Column(name = "nome_arquivo")
 	private String nomeArquivo;
 	@Column(name = "data_upload")
 	private Date dataUpload;
 	@Column(name = "descricao")
 	private String descricao;
+	@Column(name = "caminho_arquivo")
+	private String caminhoDoArquivo;
 	
 	private Servidor servidor;
 	
@@ -30,16 +33,21 @@ public class ArquivoLog {
 
 	}
 
-	private ArquivoLog(int idArquivo, String nomeArquivo, Date dataUpload, String descricao, Servidor servidor) {
+	private ArquivoLog(Integer idArquivo, String nomeArquivo, Date dataUpload, String descricao, Servidor servidor, String caminhoDoArquivo) {
 		this.idArquivo = idArquivo;
 		this.nomeArquivo = nomeArquivo;
 		this.dataUpload = dataUpload;
 		this.descricao = descricao;
 		this.servidor = servidor;
+		this.caminhoDoArquivo = caminhoDoArquivo;
 	}
-
-	public static ArquivoLog novo(int idArquivo, String nomeArquivo, Date dataUpload, String descricao, Servidor servidor) {
-		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao, servidor);
+	
+	public static ArquivoLog novo(File file, Date dataUpload, String descricao, Servidor servidor) {
+		return novo(null, file, dataUpload, descricao, servidor);
+	}
+	
+	public static ArquivoLog novo(Integer idArquivo, File file, Date dataUpload, String descricao, Servidor servidor) {
+		return new ArquivoLog(idArquivo, file.getName(), dataUpload, descricao, servidor, file.getAbsolutePath());
 	}
 
 	public String getNomeArquivo() {

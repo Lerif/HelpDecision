@@ -15,7 +15,6 @@ import javax.servlet.http.Part;
 
 import org.primefaces.context.RequestContext;
 
-import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
@@ -41,10 +40,10 @@ public class UploadBean implements Serializable {
 	private Servidor servidorSelecionado;
 	private List<SelectItem> comboServidores;
 	private ArquivoLog arquivoLog;
-	//private ChamadaMetodoArquivoLogServidor agregador;
+	// private ChamadaMetodoArquivoLogServidor agregador;
 	private String nomeServidor;
 	private String itemSelecionado;
-	private String comentarioArquivo;
+	private String descricaoArquivo;
 	private Boolean servidorCadastrado;
 
 	public UploadBean() {
@@ -53,14 +52,8 @@ public class UploadBean implements Serializable {
 
 	public void upload() throws IOException {
 
-		RequestContext requestContext = RequestContext.getCurrentInstance();
-
-		long time = System.currentTimeMillis();
-		Date date = new Date(time);
-
-		List<File> arquivosExtraidos;
-		List<ChamadaMetodo> chamadaMetodos;
-		ArquivoLog arquivoLog;
+		final RequestContext requestContext = RequestContext.getCurrentInstance();
+		final Date dataTimeUpload = new Date(System.currentTimeMillis());
 
 		File dirUpload = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ);
 		File fileTarGz;
@@ -76,15 +69,12 @@ public class UploadBean implements Serializable {
 		fileTarGz = new File(
 				CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ + File.separator + buscarNomeDoArquivo(arquivo));
 
-		arquivosExtraidos = servicoFachada.extrairTarGz(fileTarGz, dirUpload);
-
-		for (File arq : arquivosExtraidos) {
-			arquivoLog = ArquivoLog.novo(1, arq.getName(), date, comentarioArquivo);
-
-			chamadaMetodos = servicoFachada.lerArquivoLog(arq.getAbsolutePath());
+		for (File file : servicoFachada.extrairArquivosTarGz(fileTarGz, dirUpload)) {
+			
+			final ArquivoLog arquivoLog = servicoFachada.inserirArquivoLog(ArquivoLog.novo(file, dataTimeUpload, this.descricaoArquivo, this.servidorSelecionado));
 
 			try {
-				if (servicoFachada.inserirNovoArquivo(chamadaMetodos, arquivoLog, Integer.parseInt(itemSelecionado)) != null) {
+				if (servicoFachada.inserirChamadaMetodoList(servicoFachada.lerArquivoLog(arquivoLog))) {
 					requestContext.execute("alertUploadRealizadoComSucesso()");
 				} else {
 					requestContext.execute("alertUploadNaoRealizadoArquivoJaExiste()");
@@ -107,21 +97,19 @@ public class UploadBean implements Serializable {
 		} else {
 			requestContext.execute("alertNaoServidorCadastrado()");
 		}
-	} 
-
-
-	public String deleteActionArquivoLogServidor(ChamadaMetodoArquivoLogServidor arquivoLogServidor)
-			throws SQLException {
-		RequestContext requestContext = RequestContext.getCurrentInstance();
-		if(servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLogServidor.getArquivoLog())){
-			requestContext.execute("alertDeleteComSucesso()");
-		}
-		else{
-			requestContext.execute("alertErroAoDeletar()");
-		}
-		// servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLogServidor.getArquivoLog());
-		return null;
 	}
+
+//	public String deleteActionArquivoLogServidor(ChamadaMetodoArquivoLogServidor arquivoLogServidor)
+//			throws SQLException {
+//		RequestContext requestContext = RequestContext.getCurrentInstance();
+//		if (servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLogServidor.getArquivoLog())) {
+//			requestContext.execute("alertDeleteComSucesso()");
+//		} else {
+//			requestContext.execute("alertErroAoDeletar()");
+//		}
+//		// servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLogServidor.getArquivoLog());
+//		return null;
+//	}
 
 	public List<ArquivoLog> getListaArquivoLogComServidor() {
 
@@ -203,11 +191,11 @@ public class UploadBean implements Serializable {
 	}
 
 	public String getComentarioArquivo() {
-		return comentarioArquivo;
+		return descricaoArquivo;
 	}
 
 	public void setComentarioArquivo(String comentarioArquivo) {
-		this.comentarioArquivo = comentarioArquivo;
+		this.descricaoArquivo = comentarioArquivo;
 	}
 
 	public Boolean getServidorCadastrado() {
@@ -222,11 +210,4 @@ public class UploadBean implements Serializable {
 		return arquivoLog;
 	}
 
-	public ChamadaMetodoArquivoLogServidor getAgregador() {
-		return agregador;
-	}
-
-	public void setAgregador(ChamadaMetodoArquivoLogServidor agregador) {
-		this.agregador = agregador;
-	}
 }
