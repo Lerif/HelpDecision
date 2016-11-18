@@ -11,7 +11,7 @@ import java.util.List;
 
 import org.apache.commons.compress.archivers.ArchiveException;
 
-import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
+//import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Dashboard;
@@ -22,7 +22,7 @@ public class ServicoFachada {
 	private ArquivoLogServico servicoArquivoLog = new ArquivoLogServico();
 	private ChamadaMetodoServico servicoChamadaMetodo = new ChamadaMetodoServico();
 	private ServidorServico servicoServidor = new ServidorServico();
-	private ChamadaMetodoArquivoLogServidorServico servicoAgregador = new ChamadaMetodoArquivoLogServidorServico();
+	//private ChamadaMetodoArquivoLogServidorServico servicoAgregador = new ChamadaMetodoArquivoLogServidorServico();
 	private ServicoDescompactador servicoDescompactador = ServicoDescompactador.novo();
 	private ServicoDashboard servicoDashboard = ServicoDashboard.novo();
 	private Leitor leitor = new Leitor();
@@ -101,7 +101,7 @@ public class ServicoFachada {
 	}
 	
 	public List<ArquivoLog> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
-		return servicoAgregador.solicitarListaDeArquivoLogEServidorCadastradoDB();
+		return servicoArquivoLog.solicitarListaDeArquivoLogEServidorCadastradoDB();
 	}
 
 	public List<File> extrairTarGz(File arquivoTarGz, File localDestino) {
