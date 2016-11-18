@@ -16,7 +16,6 @@ import javax.servlet.http.Part;
 import org.primefaces.context.RequestContext;
 
 import model.domain.entidades.ArquivoLog;
-import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
 import model.domain.fabricas.FabricaArquivoLog;
 import model.domain.servicos.ServicoFachada;
@@ -97,6 +96,18 @@ public class UploadBean implements Serializable {
 			requestContext.execute("alertServidorCadastrado()");
 		} else {
 			requestContext.execute("alertNaoServidorCadastrado()");
+		}
+	} 
+
+
+	public void deleteActionArquivoLogServidor(ArquivoLog arquivoLog)
+			throws SQLException {
+		RequestContext requestContext = RequestContext.getCurrentInstance();
+		if(servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLog)){
+			requestContext.execute("alertDeleteComSucesso()");
+		}
+		else{
+			requestContext.execute("alertErroAoDeletar()");
 		}
 	}
 

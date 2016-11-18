@@ -1,5 +1,6 @@
 package model.domain.servicos;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,8 +30,7 @@ public class ArquivoLogServico {
 		return repositorioArquivoLog.flegarArquivoExcluido(arquivoLog);
 	}
 
-	public List<ArquivoLog> solicitarListaDeArquivoLogCadastradoDB() {
-		return new ArrayList<ArquivoLog>();
+	public List<ArquivoLog> solicitarListaDeArquivoLogEServidorCadastradoDB() throws SQLException {
+		return repositorioArquivoLog.findAll();
 	}
-
 }

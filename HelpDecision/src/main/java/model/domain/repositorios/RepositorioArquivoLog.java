@@ -10,6 +10,7 @@ import java.util.List;
 
 import model.domain.entidades.ArquivoLog;
 import model.domain.fabricas.FabricaArquivoLog;
+import model.domain.fabricas.FabricaServidor;
 import model.domain.util.CalendarioUtil;
 
 public class RepositorioArquivoLog {
@@ -45,6 +46,27 @@ public class RepositorioArquivoLog {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	public List<ArquivoLog> findAll() throws SQLException {
+		List<ArquivoLog> arquivoLog = new ArrayList<ArquivoLog>();
+
+		String sql = "SELECT DISTINCT FROM tb_arquivo INNER JOIN tb_servidor "
+				+ "ON tb_arquivo.id_servidor = tb_servidor.id_servidor " + "WHERE tb_arquivo.arquivo_excluido = FALSE";
+
+		Statement stm = (Statement) conexao.createStatement();
+		try {
+			ResultSet retornoSelect = stm.executeQuery(sql);
+			while (retornoSelect.next()) {
+				arquivoLog.add(FabricaArquivoLog.nova().novoArquivoLog(retornoSelect.getInt("id_arquivo"),
+						retornoSelect.getString("nome_arquivo"), retornoSelect.getDate("data_upload"),
+						retornoSelect.getString("descricao"), FabricaServidor.novo().novoServidor(
+								retornoSelect.getInt("id_servidor"), retornoSelect.getString("nome_servidor"))));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return arquivoLog;
 	}
 
 	public void removeByID(int i) {

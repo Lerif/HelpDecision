@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
@@ -19,7 +17,7 @@ import model.domain.servicos.ServicoFachada;
 import model.domain.util.CalendarioUtil;
 
 @ManagedBean(eager = true)
-@RequestScoped
+@SessionScoped
 public class HomeBean {
 
 	protected static final String NOME_DO_PROJETO = "HelpDecision";
@@ -29,7 +27,6 @@ public class HomeBean {
 	private List<Dashboard> gerarLogDashboardInicial;
 	private long rangeInicio;
 	private long rangeFim;
-	private Dashboard logDashBoard;
 	private List<ChamadaMetodo> metodoDetails;
 	private Date dateInicio;
 	private Date dateFim;
@@ -136,11 +133,7 @@ public class HomeBean {
 		this.dateFim = dateFim;
 	}
 
-	public void setLogDashBoard(Dashboard logDashBoard) {
-		this.logDashBoard = logDashBoard;
-	}
-	
-	public void setBuscarDashboardDetalhado(Dashboard logDashBoard){
+	public void setBuscarDashboardDetalhado(Dashboard logDashBoard) {
 		this.metodoDetails = servicoFachada.buscarDashboardDetalhado(logDashBoard.getNomeMetodo(),
 				logDashBoard.getIdServidor(), this.dateInicio, this.dateFim, this.rangeInicio, this.rangeFim);
 	}
@@ -149,7 +142,4 @@ public class HomeBean {
 		return metodoDetails;
 
 	}
-	
-	
-
 }
