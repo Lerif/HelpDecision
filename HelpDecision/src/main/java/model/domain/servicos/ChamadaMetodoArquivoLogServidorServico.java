@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
@@ -24,16 +23,18 @@ public class ChamadaMetodoArquivoLogServidorServico {
 	public static ChamadaMetodoArquivoLogServidorServico novo() {
 		return new ChamadaMetodoArquivoLogServidorServico();
 	}
-
+	/*
 	public ChamadaMetodoArquivoLogServidor agregar(List<ChamadaMetodo> chamadasMetodos, ArquivoLog arquivoLog,
 			Servidor servidor) {
 		return FabricaChamadaMetodoArquivoLogServidor.nova().novaChamadaMetodoArquivoLogServidor(chamadasMetodos,
 				arquivoLog, servidor);
 	}
-
-	public Boolean inserirAgregador(ChamadaMetodoArquivoLogServidor agregador) {
+ 	*/
+	/*
+	 public Boolean inserirAgregador(ChamadaMetodoArquivoLogServidor agregador) {
 		return repositorioAgregador.insert(agregador);
 	}
+	*/
 
 	// public List<ChamadaMetodo> filtrarPorTudo(String nomeServidor, long
 	// duracaoInicio, long duracaoFim, Date dataInicio,
@@ -49,10 +50,6 @@ public class ChamadaMetodoArquivoLogServidorServico {
 	// }
 	public void removerAgregadorEmCascataByArquivoLogId(int idArquivoLog) throws SQLException {
 		repositorioAgregador.removeAgregadorThreeByIdArquivoLog(idArquivoLog);
-	}
-
-	public List<ArquivoLog> solicitarListaDeArquivoLogEServidorCadastradoDB() throws SQLException {
-		return repositorioAgregador.findArquivoLogAndServidor();
 	}
 
 	public List<ChamadaMetodo> solicitarDetalhesFromMetodoAndServidor(String nomeMetodo,

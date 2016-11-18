@@ -45,23 +45,6 @@ public class RepositorioArquivoLog {
 		}
 	}
 
-	public List<ArquivoLog> findAll() throws SQLException {
-		List<ArquivoLog> arquivosLog = new ArrayList<ArquivoLog>();
-		String sql = "SELECT * FROM tb_arquivo";
-		Statement stm = (Statement) conexao.createStatement();
-		try {
-			ResultSet retornoSelect = stm.executeQuery(sql);
-			while (retornoSelect.next()) {
-				arquivosLog.add(FabricaArquivoLog.nova().novoArquivoLog(retornoSelect.getInt("id_arquivo"),
-						retornoSelect.getString("nome_arquivo"), retornoSelect.getDate("data_upload"),
-						retornoSelect.getString("descricao")));
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return arquivosLog;
-	}
-
 	public void removeByID(int i) {
 
 		Connection dbConnection = new ConexaoDB().conectarDB();

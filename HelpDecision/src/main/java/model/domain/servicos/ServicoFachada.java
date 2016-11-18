@@ -84,9 +84,11 @@ public class ServicoFachada {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
 	}
 	
+	/*
 	public List<ArquivoLog> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
 		return servicoAgregador.solicitarListaDeArquivoLogEServidorCadastradoDB();
 	}
+	 */
 
 	public List<File> extrairArquivosTarGz(File arquivoTarGz, File localDestino) {
 

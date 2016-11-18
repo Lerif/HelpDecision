@@ -67,9 +67,6 @@ public class HomeBean {
 		}
 
 		requestContext.execute("alertLetras");
-		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(Integer.parseInt(servidorSelecionado),
-				CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim),
-				rangeInicio, rangeFim);
 		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(servidorId,
 				CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim),
 				rangeInicio, rangeFim);

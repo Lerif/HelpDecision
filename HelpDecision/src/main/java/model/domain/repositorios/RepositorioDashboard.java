@@ -50,10 +50,6 @@ public class RepositorioDashboard {
 					hm.put(retornoSelect.getString("nome_servidor"), retornoSelect.getInt("quantidade_chamada"));
 			}
 
-			System.out.println("atualizou na leitura do db");
-
-			printHM(hm);
-
 			for (Dashboard ld : repositorioLogDashboard) {
 				ld.setQuantidadeChamadasTotal(hm.get(ld.getNomeServidor()));
 				System.out.println("valor antigo: " + totalChamadas);
@@ -79,15 +75,12 @@ public class RepositorioDashboard {
 		sql.append("MIN(duracao) AS tempo_menor, ");
 		sql.append("ser.id_servidor, ");
 		sql.append("ser.nome_servidor ");
-		sql.append("FROM tb_chamada_metodo met ");
-		sql.append("JOIN tb_chamada_metodo_arquivo_servidor mas ON met.id_chamada_metodo = mas.id_chamada_metodo ");
-		sql.append("JOIN tb_servidor ser ON ser.id_servidor = mas.id_servidor ");
-		sql.append("JOIN tb_arquivo ar ON mas.id_arquivo = ar.id_arquivo ");
-		sql.append("WHERE (ar.arquivo_excluido != TRUE) ");
+		sql.append("FROM tb_chamada_metodo AS met ");
+		sql.append("JOIN tb_arquivo AS ar ON met.id_arquivo = ar.id_arquivo  ");
+		sql.append("JOIN tb_servidor AS ser ON ser.id_servidor = ar.id_servidor WHERE (ar.arquivo_excluido != TRUE) ");
 		sql.append("AND ser.id_servidor = ? ");
-		sql.append("AND (met.duracao >= ? ");
-		sql.append("AND met.duracao <= ?) ");
-		sql.append("AND (met.data_inicio, met.data_fim) OVERLAPS ( ?,?) ");
+		sql.append("AND (met.duracao >= ? AND met.duracao <= ?)");
+		sql.append("AND (met.data_inicio, met.data_fim) OVERLAPS (?,?)  ");
 		sql.append("GROUP BY 1, 7 ");
 		sql.append("ORDER BY tempo_maior DESC");
 
@@ -104,8 +97,7 @@ public class RepositorioDashboard {
 				resultado.add(FabricaDashboard.novoDashboard(retornoSelect.getString("nome_metodo"),
 						retornoSelect.getInt("quantidade_chamada"), 0, retornoSelect.getLong("tempo_total"),
 						retornoSelect.getFloat("tempo_medio"), retornoSelect.getLong("tempo_menor"),
-						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor"),
-						retornoSelect.getInt("id_servidor")));
+						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor")));
 				totalChamadas += retornoSelect.getInt("quantidade_chamada");
 
 				if (hm.containsKey(retornoSelect.getString("nome_servidor")))
@@ -115,14 +107,10 @@ public class RepositorioDashboard {
 					hm.put(retornoSelect.getString("nome_servidor"), retornoSelect.getInt("quantidade_chamada"));
 
 			}
-			System.out.println("atualizou no filtro");
-			printHM(hm);
 
 			for (Dashboard ld : resultado) {
 				ld.setQuantidadeChamadasTotal(hm.get(ld.getNomeServidor()));
-				System.out.println("valor antigo: " + totalChamadas);
 				ld.setPorcentagemTotal(((ld.getQuantidadeDessaChamada() * 100.0f) / ld.getQuantidadeChamadasTotal()));
-
 			}
 
 		} catch (Exception e) {
@@ -138,14 +126,4 @@ public class RepositorioDashboard {
 	public void setTotalChamadas(int totalChamadas) {
 		this.totalChamadas = totalChamadas;
 	}
-
-	public void printHM(HashMap<String, Integer> hm) {
-		for (String name : hm.keySet()) {
-			String key = name.toString();
-			Integer value = hm.get(key);
-			System.out.println(key + " " + value);
-
-		}
-	}
-
 }
