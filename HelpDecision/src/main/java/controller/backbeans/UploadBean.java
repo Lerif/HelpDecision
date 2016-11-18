@@ -16,7 +16,6 @@ import javax.servlet.http.Part;
 import org.primefaces.context.RequestContext;
 
 import model.domain.entidades.ArquivoLog;
-import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
 
@@ -50,7 +49,7 @@ public class UploadBean implements Serializable {
 		servicoFachada = new ServicoFachada();
 	}
 
-	public void upload() throws IOException {
+	public void upload() throws IOException, SQLException {
 
 		final RequestContext requestContext = RequestContext.getCurrentInstance();
 		final Date dataTimeUpload = new Date(System.currentTimeMillis());
@@ -80,9 +79,6 @@ public class UploadBean implements Serializable {
 					requestContext.execute("alertUploadNaoRealizadoArquivoJaExiste()");
 				}
 			} catch (NumberFormatException e) {
-				requestContext.execute("alertUploadNaoRealizadoErro()");
-				System.out.println("[UploadBean] Erro: " + e);
-			} catch (SQLException e) {
 				requestContext.execute("alertUploadNaoRealizadoErro()");
 				System.out.println("[UploadBean] Erro: " + e);
 			}

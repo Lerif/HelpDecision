@@ -64,19 +64,19 @@ public class RepositorioChamadaMetodo {
 
 					pst.addBatch();
 
-					if (++count % batchSize == 0){
+					if (++count % batchSize == 0) {
 						result = pst.executeBatch();
 						registrosPersistidos += result.length;
 						connection.commit();
 					}
-						
+
 				}
 			}
-			
+
 			result = pst.executeBatch(); // insere os registros restantes
 			registrosPersistidos += result.length;
 			connection.commit();
-			
+
 		} catch (SQLException se) {
 			se.printStackTrace();
 			connection.rollback();
@@ -93,7 +93,7 @@ public class RepositorioChamadaMetodo {
 				se.printStackTrace();
 			}
 		}
-		
+
 		return registrosPersistidos;
 	}
 
@@ -222,17 +222,6 @@ public class RepositorioChamadaMetodo {
 		return chamadasMetodo;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	catch (Exception e) {
-		System.err.println("[RepositorioChamadaMetodo] Erro: " + e);
-		
-	}
 	public void removeByID(Integer idChamadaMetodo) {
 
 		PreparedStatement preparedStatement = null;
