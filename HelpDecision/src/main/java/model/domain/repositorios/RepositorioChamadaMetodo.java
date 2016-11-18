@@ -40,7 +40,7 @@ public class RepositorioChamadaMetodo {
 		Connection connection = null;
 		PreparedStatement pst = null;
 
-		final int batchSize = 1000;
+		final int batchSize = 10000;
 		int count = 0;
 		int registrosPersistidos = 0;
 		int[] result;
