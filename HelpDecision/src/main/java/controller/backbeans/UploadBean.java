@@ -97,16 +97,13 @@ public class UploadBean implements Serializable {
 		} else {
 			requestContext.execute("alertNaoServidorCadastrado()");
 		}
-	} 
+	}
 
-
-	public void deleteActionArquivoLogServidor(ArquivoLog arquivoLog)
-			throws SQLException {
+	public void deleteActionArquivoLogServidor(ArquivoLog arquivoLog) throws SQLException {
 		RequestContext requestContext = RequestContext.getCurrentInstance();
-		if(servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLog)){
+		if (servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLog)) {
 			requestContext.execute("alertDeleteComSucesso()");
-		}
-		else{
+		} else {
 			requestContext.execute("alertErroAoDeletar()");
 		}
 	}

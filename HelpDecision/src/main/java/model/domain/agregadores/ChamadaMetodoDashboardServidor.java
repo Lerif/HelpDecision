@@ -9,9 +9,9 @@ public class ChamadaMetodoDashboardServidor {
 	ChamadaMetodo chamadaMetodo;
 	Servidor servidor;
 	Dashboard dashboard;
-	
+
 	public ChamadaMetodoDashboardServidor() {
-		
+
 	}
 
 }

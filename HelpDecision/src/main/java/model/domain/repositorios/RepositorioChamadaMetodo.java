@@ -11,9 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import model.domain.entidades.ChamadaMetodo;
-import model.domain.entidades.Servidor;
 import model.domain.fabricas.FabricaChamadaMetodo;
-import model.domain.util.CalendarioUtil;
 
 public class RepositorioChamadaMetodo {
 
@@ -54,25 +52,25 @@ public class RepositorioChamadaMetodo {
 
 			for (ChamadaMetodo chamadaMetodo : listaChamadaMetodo) {
 
-//				if (!verificarChamadaMetodoExiste(chamadaMetodo)) {
+				// if (!verificarChamadaMetodoExiste(chamadaMetodo)) {
 
-					pst.setString(1, chamadaMetodo.getNomeMetodo());
-					pst.setTimestamp(2, chamadaMetodo.getDataInicio());
-					pst.setTimestamp(3, chamadaMetodo.getDataFim());
-					pst.setLong(4, chamadaMetodo.getDuracao());
-					pst.setString(5, chamadaMetodo.getIdElemento());
-					pst.setString(6, chamadaMetodo.getTipoElemento());
-					pst.setInt(7, chamadaMetodo.getArquivo().getIdArquivo());
+				pst.setString(1, chamadaMetodo.getNomeMetodo());
+				pst.setTimestamp(2, chamadaMetodo.getDataInicio());
+				pst.setTimestamp(3, chamadaMetodo.getDataFim());
+				pst.setLong(4, chamadaMetodo.getDuracao());
+				pst.setString(5, chamadaMetodo.getIdElemento());
+				pst.setString(6, chamadaMetodo.getTipoElemento());
+				pst.setInt(7, chamadaMetodo.getArquivo().getIdArquivo());
 
-					pst.addBatch();
+				pst.addBatch();
 
-					if (++count % batchSize == 0) {
-						result = pst.executeBatch();
-						registrosPersistidos += result.length;
-						connection.commit();
-					}
-
+				if (++count % batchSize == 0) {
+					result = pst.executeBatch();
+					registrosPersistidos += result.length;
+					connection.commit();
 				}
+
+			}
 			result = pst.executeBatch(); // insere os registros restantes
 			registrosPersistidos += result.length;
 			connection.commit();
@@ -82,8 +80,8 @@ public class RepositorioChamadaMetodo {
 			connection.rollback();
 		} catch (Exception e) {
 			System.err.println("[RepositorioChamadaMetodo] Erro: " + e);
-			
-		}finally {
+
+		} finally {
 			try {
 				if (pst != null)
 					pst.close();
@@ -98,7 +96,6 @@ public class RepositorioChamadaMetodo {
 		}
 		return registrosPersistidos;
 	}
-
 
 	public Boolean verificarChamadaMetodoExiste(ChamadaMetodo chamadaMetodo) throws SQLException {
 		String sql;
@@ -254,8 +251,8 @@ public class RepositorioChamadaMetodo {
 
 	}
 
-	public List<ChamadaMetodo> buscarDetalhes(String nomeMetodo, int idServidor,
-			Timestamp dataInicio, Timestamp dataFim, Long rangeInicio, Long rangeFim) throws SQLException {
+	public List<ChamadaMetodo> buscarDetalhes(String nomeMetodo, int idServidor, Timestamp dataInicio,
+			Timestamp dataFim, Long rangeInicio, Long rangeFim) throws SQLException {
 
 		// ChamadaMetodoArquivoLogServidor resultado = null;
 		List<ChamadaMetodo> chamadasMetodos = new ArrayList<ChamadaMetodo>();

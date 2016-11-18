@@ -31,8 +31,7 @@ public class RepositorioServidor {
 			} catch (Exception e) {
 				return false;
 			}
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
@@ -97,5 +96,3 @@ public class RepositorioServidor {
 		return servidor;
 	}
 }
-
-

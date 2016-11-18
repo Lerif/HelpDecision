@@ -1,6 +1,5 @@
 package model.domain.entidades;
 
-import java.io.File;
 import java.util.Date;
 
 import javax.persistence.Column;

@@ -36,7 +36,7 @@ public class Dashboard {
 		this.quantidadeChamadasTotal = quantidadeChamadasTotal;
 		this.nomeServidor = nomeServidor;
 	}
-	
+
 	private Dashboard(String nomeMetodo, int quantidadeChamadas, float porcentagemTotal, long tempoTotal,
 			float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal, String nomeServidor,
 			int idServidor) {
@@ -63,9 +63,9 @@ public class Dashboard {
 		return new Dashboard(nomeMetodo, quantidadeChamadas, porcentagemTotal, tempoTotal, tempoMedio, tempoMenor,
 				tempoMaior, quantidadeChamadasTotal, nomeServidor);
 	}
-	
+
 	public static Dashboard novo(String nomeMetodo, int quantidadeChamadas, float porcentagemTotal, long tempoTotal,
-			float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal, String nomeServidor, 
+			float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal, String nomeServidor,
 			int idServidor) {
 		return new Dashboard(nomeMetodo, quantidadeChamadas, porcentagemTotal, tempoTotal, tempoMedio, tempoMenor,
 				tempoMaior, quantidadeChamadasTotal, nomeServidor, idServidor);

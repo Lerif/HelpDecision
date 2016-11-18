@@ -1,6 +1,5 @@
 package model.domain.entidades;
 
-
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -34,7 +33,7 @@ public class ChamadaMetodo {
 	@Column(name = "tipo_elemento")
 	private String tipoElemento;
 	private ArquivoLog arquivo;
-	
+
 	public ChamadaMetodo() {
 
 	}
@@ -50,7 +49,7 @@ public class ChamadaMetodo {
 		setDuracao(duracao);
 		setArquivo(arquivoLog);
 	}
-	
+
 	private ChamadaMetodo(int idChamadaMetodo, String nomeMetodo, Date dataInicio, Date dataFim, String idElemento,
 			String tipoElemento, long duracao) {
 		setIdChamadaMetodo(idChamadaMetodo);
@@ -64,9 +63,10 @@ public class ChamadaMetodo {
 
 	public static ChamadaMetodo nova(int idChamadaMetodo, String nomeMetodo, Date dataInicio, Date dataFim,
 			String idElemento, String tipoElemento, long duracao, ArquivoLog arquivoLog) {
-		return new ChamadaMetodo(idChamadaMetodo, nomeMetodo, dataInicio, dataFim, idElemento, tipoElemento, duracao, arquivoLog);
+		return new ChamadaMetodo(idChamadaMetodo, nomeMetodo, dataInicio, dataFim, idElemento, tipoElemento, duracao,
+				arquivoLog);
 	}
-	
+
 	public static ChamadaMetodo nova(int idChamadaMetodo, String nomeMetodo, Date dataInicio, Date dataFim,
 			String idElemento, String tipoElemento, long duracao) {
 		return new ChamadaMetodo(idChamadaMetodo, nomeMetodo, dataInicio, dataFim, idElemento, tipoElemento, duracao);
@@ -80,7 +80,6 @@ public class ChamadaMetodo {
 		this.nomeMetodo = nomeMetodo;
 	}
 
-
 	public Timestamp getDataInicio() {
 		return dataInicio;
 	}
@@ -90,12 +89,11 @@ public class ChamadaMetodo {
 	}
 
 	public void setDataInicio(Timestamp dataInicio) {
-		this.dataInicio =  dataInicio;
+		this.dataInicio = dataInicio;
 	}
 
-
 	public void setDataFim(Timestamp dataFim) {
-		this.dataFim =  dataFim;
+		this.dataFim = dataFim;
 	}
 
 	public String getIdElemento() {
