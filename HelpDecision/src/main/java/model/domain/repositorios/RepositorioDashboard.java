@@ -41,19 +41,24 @@ public class RepositorioDashboard {
 		// + "group by 1, 7 order by tempo_maior desc";
 
 		final String sql = "select nome_metodo, count(*) as quantidade_chamada, sum(duracao) as tempo_total, "
-				+ "avq(duracao) as tempo_medio, max(duracao) as tempo_maior, min(duracao) as tempo_menor, "
-				+ "ar.id_arquivo, ser.id_servidor from tb_chamada_metodo met join tb_arquivo ar on met.id_arquivo = ar.id_arquivo"
-				+ "join tb_servidor ser on ser.id_servidor = ar.id_servidor " + "where (ar.arquivo_excluido != true) "
-				+ "group by 1, 8 order by tempo_maior desc";
+				+ "avg(duracao) as tempo_medio, max(duracao) as tempo_maior, min(duracao) as tempo_menor, "
+				+ "ser.nome_servidor from tb_chamada_metodo "
+				+ "met join tb_arquivo ar on met.id_arquivo = ar.id_arquivo join "
+				+ "tb_servidor ser on ser.id_servidor = ar.id_servidor "
+				+ "where (ar.arquivo_excluido != true) group by 1, 7 order by tempo_maior desc";
 
 		try {
 			Statement stm = (Statement) conexao.createStatement();
 			ResultSet retornoSelect = stm.executeQuery(sql);
 			while (retornoSelect.next()) {
-				repositorioLogDashboard.add(FabricaDashboard.novoDashboard(retornoSelect.getInt("quantidade_chamada"),
-						0, retornoSelect.getLong("tempo_total"), retornoSelect.getFloat("tempo_medio"),
-						retornoSelect.getLong("tempo_menor"), retornoSelect.getLong("tempo_maior"), 1));
+				repositorioLogDashboard.add(FabricaDashboard.novoDashboard(retornoSelect.getString("nome_metodo"),
+						retornoSelect.getInt("quantidade_chamada"), (float) 0, retornoSelect.getLong("tempo_total"),
+						retornoSelect.getFloat("tempo_medio"), retornoSelect.getLong("tempo_menor"),
+						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor")));
+				
+				
 				totalChamadas += retornoSelect.getInt("quantidade_chamada");
+
 				if (hm.containsKey(retornoSelect.getString("nome_servidor")))
 					hm.put(retornoSelect.getString("nome_servidor"), hm.get(retornoSelect.getString("nome_servidor"))
 							+ retornoSelect.getInt("quantidade_chamada"));

@@ -16,6 +16,7 @@ import javax.servlet.http.Part;
 import org.primefaces.context.RequestContext;
 
 import model.domain.entidades.ArquivoLog;
+import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
 import model.domain.fabricas.FabricaArquivoLog;
 import model.domain.servicos.ServicoFachada;
@@ -76,8 +77,11 @@ public class UploadBean implements Serializable {
 					.inserirArquivoLog(FabricaArquivoLog.nova().novoArquivoLog(file.getName(), dataTimeUpload,
 							this.descricaoArquivo, servidorSelecionado, file.getAbsolutePath()));
 
+			List<ChamadaMetodo> chamadaMetodo = servicoFachada.lerArquivoLog(arquivoLog);
+			int linhasInseridas = servicoFachada.inserirChamadaMetodoList(chamadaMetodo);
 			try {
-				if (servicoFachada.inserirChamadaMetodoList(servicoFachada.lerArquivoLog(arquivoLog))) {
+				if (linhasInseridas == chamadaMetodo.size()) {
+					//requestContext.execute("alertUploadRealizadoComSucesso(" + linhasInseridas + ", " + chamadaMetodo.size() + ")");
 					requestContext.execute("alertUploadRealizadoComSucesso()");
 				} else {
 					requestContext.execute("alertUploadNaoRealizadoArquivoJaExiste()");
@@ -212,6 +216,10 @@ public class UploadBean implements Serializable {
 
 	public ArquivoLog getArquivoLog() {
 		return arquivoLog;
+	}
+
+	public void setArquivoLog(ArquivoLog arquivoLog) {
+		this.arquivoLog = arquivoLog;
 	}
 
 }

@@ -11,23 +11,10 @@ public class FabricaDashboard {
 		return new FabricaDashboard();
 	}
 
-	public static Dashboard novoDashboard(int quantidadeChamadas, float porcentagemTotal, long tempoTotal,
-			float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal) {
-		return Dashboard.novo(quantidadeChamadas, porcentagemTotal, tempoTotal, tempoMedio, tempoMenor, tempoMaior,
-				quantidadeChamadasTotal);
-	}
-
 	public static Dashboard novoDashboard(String nomeMetodo, int quantidadeChamadas, float porcentagemTotal,
 			long tempoTotal, float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal,
 			String nomeServidor) {
 		return Dashboard.novo(nomeMetodo, quantidadeChamadas, porcentagemTotal, tempoTotal, tempoMedio, tempoMenor,
 				tempoMaior, quantidadeChamadasTotal, nomeServidor);
-	}
-
-	public static Dashboard novoDashboard(String nomeMetodo, int quantidadeChamadas, float porcentagemTotal,
-			long tempoTotal, float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal,
-			String nomeServidor, int idServidor) {
-		return Dashboard.novo(nomeMetodo, quantidadeChamadas, porcentagemTotal, tempoTotal, tempoMedio, tempoMenor,
-				tempoMaior, quantidadeChamadasTotal, nomeServidor, idServidor);
 	}
 }

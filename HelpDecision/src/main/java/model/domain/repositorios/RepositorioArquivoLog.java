@@ -176,6 +176,7 @@ public class RepositorioArquivoLog {
 
 	public Boolean flegarArquivoExcluido(ArquivoLog arquivoLog) {
 		String sql = "UPDATE tb_arquivo SET arquivo_excluido = true WHERE id_arquivo = " + arquivoLog.getIdArquivo();
+		
 		try {
 			PreparedStatement pst = conexao.prepareStatement(sql);
 			pst.execute();
