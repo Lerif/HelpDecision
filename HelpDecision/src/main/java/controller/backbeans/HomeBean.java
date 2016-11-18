@@ -152,7 +152,4 @@ public class HomeBean {
 		return metodoDetails;
 
 	}
-	
-	
-
 }
