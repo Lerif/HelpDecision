@@ -32,8 +32,8 @@ public class ArquivoLog {
 
 	}
 
-	private ArquivoLog(Integer idArquivo, String nomeArquivo, Date dataUpload, String descricao, Servidor servidor,
-			String caminhoDoArquivo) {
+	private ArquivoLog(Integer idArquivo, String nomeArquivo, Date dataUpload, String descricao,
+			Servidor servidor, String caminhoDoArquivo) {
 		this.idArquivo = idArquivo;
 		this.nomeArquivo = nomeArquivo;
 		this.dataUpload = dataUpload;
@@ -47,9 +47,9 @@ public class ArquivoLog {
 		return novo(null, nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
 	}
 
-	public static ArquivoLog novo(Integer idArquivo, String nomeArquivo, Date dataUpload, String descricao,
-			Servidor servidor, String caminhoArquivo) {
-		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
+	public static ArquivoLog novo(Integer idArquivo, String nomeArquivo, Date dataUpload,
+			String descricao, Servidor servidor, String caminhoDoArquivo) {
+		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao, servidor, caminhoDoArquivo);
 	}
 
 	public String getNomeArquivo() {

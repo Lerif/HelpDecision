@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.domain.entidades.ArquivoLog;
+import model.domain.entidades.ChamadaMetodo;
 import model.domain.fabricas.FabricaArquivoLog;
 import model.domain.fabricas.FabricaServidor;
 import model.domain.util.CalendarioUtil;
@@ -21,6 +22,10 @@ public class RepositorioArquivoLog {
 		this.conexao = new ConexaoDB().conectarDB();
 	}
 
+	public Connection getConexao() {
+		return new ConexaoDB().conectarDB();
+	}
+
 	public ArquivoLog insert(ArquivoLog arquivoLog) {
 
 		final StringBuilder sql = new StringBuilder();
@@ -29,6 +34,9 @@ public class RepositorioArquivoLog {
 		sql.append("VALUES (?, ?, ?, ?, ?, ?)");
 
 		try {
+
+			limparCacheIfAlreadyExists(arquivoLog);
+
 			PreparedStatement pst = conexao.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, arquivoLog.getNomeArquivo());
 			pst.setTimestamp(2, CalendarioUtil.dateParaSqlTimestamp(arquivoLog.getDataUpload()));
@@ -46,6 +54,85 @@ public class RepositorioArquivoLog {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	private void limparCacheIfAlreadyExists(ArquivoLog arquivoLog) throws SQLException {
+
+		final Integer idArquivo = getIdArquivoLogIfAlreadyExists(arquivoLog);
+
+		if (idArquivo != null) {
+
+			limparCache(idArquivo);
+
+		}
+	}
+
+	private Integer getIdArquivoLogIfAlreadyExists(ArquivoLog arquivoLog) throws SQLException {
+
+		Connection dbConnection = new ConexaoDB().conectarDB();
+		PreparedStatement preparedStatement = null;
+
+		try {
+			preparedStatement = dbConnection.prepareStatement(
+					"SELECT arq.id_arquivo FROM tb_arquivo arq WHERE arq.nome_arquivo =  ? AND arq.id_servidor = ?");
+			preparedStatement.setString(1, arquivoLog.getNomeArquivo());
+			preparedStatement.setInt(2, arquivoLog.getServidor().getIdServidor());
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				return resultSet.getInt("id_arquivo");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			preparedStatement.close();
+			dbConnection.close();
+		}
+
+		return null;
+
+	}
+
+	private void limparCache(Integer idArquivo) throws SQLException {
+
+		Connection dbConnection = new ConexaoDB().conectarDB();
+		PreparedStatement preparedStatement = null;
+
+		try {
+			preparedStatement = dbConnection
+					.prepareStatement("DELETE FROM tb_chamada_metodo met WHERE met.id_arquivo = ?");
+			preparedStatement.setInt(1, idArquivo);
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			preparedStatement.close();
+			dbConnection.close();
+		}
+
+		limparCacheArquivo(idArquivo);
+
+	}
+
+	private void limparCacheArquivo(Integer arquivoLog) throws SQLException {
+
+		Connection dbConnection = new ConexaoDB().conectarDB();
+		PreparedStatement preparedStatement = null;
+
+		try {
+			preparedStatement = dbConnection.prepareStatement("DELETE FROM tb_arquivo arq WHERE arq.id_arquivo = ?");
+			preparedStatement.setInt(1, arquivoLog);
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			preparedStatement.close();
+			dbConnection.close();
+		}
+
 	}
 
 	public List<ArquivoLog> findAll() throws SQLException {

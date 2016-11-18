@@ -32,6 +32,7 @@ public class RepositorioChamadaMetodo {
 	public int insert(List<ChamadaMetodo> listaChamadaMetodo) throws SQLException {
 
 		final StringBuilder sql = new StringBuilder();
+		
 		sql.append("INSERT INTO tb_chamada_metodo ");
 		sql.append("(nome_metodo, data_inicio, data_fim, duracao, id_elemento, tipo_elemento, id_arquivo) ");
 		sql.append("VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -51,9 +52,7 @@ public class RepositorioChamadaMetodo {
 			pst = connection.prepareStatement(sql.toString());
 
 			for (ChamadaMetodo chamadaMetodo : listaChamadaMetodo) {
-
-				if (!verificarChamadaMetodoExiste(chamadaMetodo)) {
-
+				
 				pst.setString(1, chamadaMetodo.getNomeMetodo());
 				pst.setTimestamp(2, chamadaMetodo.getDataInicio());
 				pst.setTimestamp(3, chamadaMetodo.getDataFim());
@@ -69,7 +68,7 @@ public class RepositorioChamadaMetodo {
 						connection.commit();
 					}
 				}
-			}
+			
 			result = pst.executeBatch(); // insere os registros restantes
 			registrosPersistidos += result.length;
 			connection.commit();
@@ -118,11 +117,14 @@ public class RepositorioChamadaMetodo {
 		pst.setInt(3, chamadaMetodo.getArquivo().getServidor().getIdServidor());
 
 		ResultSet retornoSelect = pst.executeQuery();
-		pst.close();
-		connection.close();
+		
 		if (retornoSelect.next()) {
+			pst.close();
+			connection.close();
 			return true;
 		} else {
+			pst.close();
+			connection.close();
 			return false;
 		}
 	}
