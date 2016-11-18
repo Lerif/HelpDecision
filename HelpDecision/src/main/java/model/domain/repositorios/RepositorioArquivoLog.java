@@ -21,14 +21,20 @@ public class RepositorioArquivoLog {
 	}
 
 	public ArquivoLog insert(ArquivoLog arquivoLog) {
-		String sql = "INSERT INTO tb_arquivo " + "(nome_arquivo, data_upload, descricao, arquivo_excluido) "
-				+ "VALUES (?, ?, ?, ?)";
+		
+		final StringBuilder sql = new StringBuilder();
+		sql.append("INSERT INTO tb_arquivo ");
+		sql.append("(nome_arquivo, data_upload, descricao, arquivo_excluido, id_servidor, caminho_arquivo) ");
+		sql.append("VALUES (?, ?, ?, ?, ?, ?)");
+		
 		try {
-			PreparedStatement pst = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pst = conexao.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, arquivoLog.getNomeArquivo());
 			pst.setTimestamp(2, CalendarioUtil.dateParaSqlTimestamp(arquivoLog.getDataUpload()));
 			pst.setString(3, arquivoLog.getDescricao());
 			pst.setBoolean(4, false);
+			pst.setInt(5, arquivoLog.getServidor().getIdServidor());
+			pst.setString(6, arquivoLog.getCaminhoDoArquivo());
 			pst.execute();
 			final ResultSet resultSet = pst.getGeneratedKeys();
 			if (resultSet.next()) {
@@ -39,23 +45,6 @@ public class RepositorioArquivoLog {
 		} catch (Exception e) {
 			return null;
 		}
-	}
-
-	public List<ArquivoLog> findAll() throws SQLException {
-		List<ArquivoLog> arquivosLog = new ArrayList<ArquivoLog>();
-		String sql = "SELECT * FROM tb_arquivo";
-		Statement stm = (Statement) conexao.createStatement();
-		try {
-			ResultSet retornoSelect = stm.executeQuery(sql);
-			while (retornoSelect.next()) {
-				arquivosLog.add(FabricaArquivoLog.nova().novoArquivoLog(retornoSelect.getInt("id_arquivo"),
-						retornoSelect.getString("nome_arquivo"), retornoSelect.getDate("data_upload"),
-						retornoSelect.getString("descricao")));
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return arquivosLog;
 	}
 
 	public void removeByID(int i) {

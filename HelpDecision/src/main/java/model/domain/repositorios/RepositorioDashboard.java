@@ -10,21 +10,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import model.domain.entidades.LogDashboard;
+import model.domain.entidades.Dashboard;
 import model.domain.fabricas.FabricaDashboard;
 
-public class RepositorioLogDashboard {
+public class RepositorioDashboard {
 	private int totalChamadas;
 	static final String TABELA_CHAMADA_METODO = "tb_chamada_metodo";
 
 	Connection conexao;
 
-	public RepositorioLogDashboard() {
+	public RepositorioDashboard() {
 		this.conexao = new ConexaoDB().conectarDB();
 	}
 
-	public List<LogDashboard> buscarDashboardDoBanco() {
-		List<LogDashboard> repositorioLogDashboard = new ArrayList<LogDashboard>();
+	public List<Dashboard> buscarDashboardDoBanco() {
+		List<Dashboard> repositorioLogDashboard = new ArrayList<Dashboard>();
 		HashMap<String, Integer> hm = new HashMap<String, Integer>();
 
 		final String sql = "select nome_metodo, count(*) as quantidade_chamada, sum(duracao) as tempo_total, "
@@ -39,11 +39,9 @@ public class RepositorioLogDashboard {
 			Statement stm = (Statement) conexao.createStatement();
 			ResultSet retornoSelect = stm.executeQuery(sql);
 			while (retornoSelect.next()) {
-				repositorioLogDashboard.add(FabricaDashboard.novoDashboard(retornoSelect.getString("nome_metodo"),
-						retornoSelect.getInt("quantidade_chamada"), 0, retornoSelect.getLong("tempo_total"),
-						retornoSelect.getFloat("tempo_medio"), retornoSelect.getLong("tempo_menor"),
-						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor"),
-						retornoSelect.getInt("id_servidor")));
+				repositorioLogDashboard.add(FabricaDashboard.novoDashboard(retornoSelect.getInt("quantidade_chamada"),
+						0, retornoSelect.getLong("tempo_total"), retornoSelect.getFloat("tempo_medio"),
+						retornoSelect.getLong("tempo_menor"), retornoSelect.getLong("tempo_maior"), 1));
 				totalChamadas += retornoSelect.getInt("quantidade_chamada");
 				if (hm.containsKey(retornoSelect.getString("nome_servidor")))
 					hm.put(retornoSelect.getString("nome_servidor"), hm.get(retornoSelect.getString("nome_servidor"))
@@ -52,11 +50,7 @@ public class RepositorioLogDashboard {
 					hm.put(retornoSelect.getString("nome_servidor"), retornoSelect.getInt("quantidade_chamada"));
 			}
 
-			System.out.println("atualizou na leitura do db");
-
-			printHM(hm);
-
-			for (LogDashboard ld : repositorioLogDashboard) {
+			for (Dashboard ld : repositorioLogDashboard) {
 				ld.setQuantidadeChamadasTotal(hm.get(ld.getNomeServidor()));
 				System.out.println("valor antigo: " + totalChamadas);
 				ld.setPorcentagemTotal(((ld.getQuantidadeDessaChamada() * 100.0f) / ld.getQuantidadeChamadasTotal()));
@@ -68,9 +62,9 @@ public class RepositorioLogDashboard {
 		return repositorioLogDashboard;
 	}
 
-	public List<LogDashboard> filtrarPorTudo(int servidor, Timestamp dataInicio, Timestamp dataFim, long duracaoInicio,
+	public List<Dashboard> filtrarPorTudo(int servidor, Timestamp dataInicio, Timestamp dataFim, long duracaoInicio,
 			long duracaoFim) throws SQLException {
-		List<LogDashboard> resultado = new ArrayList<LogDashboard>();
+		List<Dashboard> resultado = new ArrayList<Dashboard>();
 		HashMap<String, Integer> hm = new HashMap<String, Integer>();
 
 		StringBuilder sql = new StringBuilder();
@@ -81,15 +75,12 @@ public class RepositorioLogDashboard {
 		sql.append("MIN(duracao) AS tempo_menor, ");
 		sql.append("ser.id_servidor, ");
 		sql.append("ser.nome_servidor ");
-		sql.append("FROM tb_chamada_metodo met ");
-		sql.append("JOIN tb_chamada_metodo_arquivo_servidor mas ON met.id_chamada_metodo = mas.id_chamada_metodo ");
-		sql.append("JOIN tb_servidor ser ON ser.id_servidor = mas.id_servidor ");
-		sql.append("JOIN tb_arquivo ar ON mas.id_arquivo = ar.id_arquivo ");
-		sql.append("WHERE (ar.arquivo_excluido != TRUE) ");
+		sql.append("FROM tb_chamada_metodo AS met ");
+		sql.append("JOIN tb_arquivo AS ar ON met.id_arquivo = ar.id_arquivo  ");
+		sql.append("JOIN tb_servidor AS ser ON ser.id_servidor = ar.id_servidor WHERE (ar.arquivo_excluido != TRUE) ");
 		sql.append("AND ser.id_servidor = ? ");
-		sql.append("AND (met.duracao >= ? ");
-		sql.append("AND met.duracao <= ?) ");
-		sql.append("AND (met.data_inicio, met.data_fim) OVERLAPS ( ?,?) ");
+		sql.append("AND (met.duracao >= ? AND met.duracao <= ?)");
+		sql.append("AND (met.data_inicio, met.data_fim) OVERLAPS (?,?)  ");
 		sql.append("GROUP BY 1, 7 ");
 		sql.append("ORDER BY tempo_maior DESC");
 
@@ -106,8 +97,7 @@ public class RepositorioLogDashboard {
 				resultado.add(FabricaDashboard.novoDashboard(retornoSelect.getString("nome_metodo"),
 						retornoSelect.getInt("quantidade_chamada"), 0, retornoSelect.getLong("tempo_total"),
 						retornoSelect.getFloat("tempo_medio"), retornoSelect.getLong("tempo_menor"),
-						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor"),
-						retornoSelect.getInt("id_servidor")));
+						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor")));
 				totalChamadas += retornoSelect.getInt("quantidade_chamada");
 
 				if (hm.containsKey(retornoSelect.getString("nome_servidor")))
@@ -117,14 +107,10 @@ public class RepositorioLogDashboard {
 					hm.put(retornoSelect.getString("nome_servidor"), retornoSelect.getInt("quantidade_chamada"));
 
 			}
-			System.out.println("atualizou no filtro");
-			printHM(hm);
 
-			for (LogDashboard ld : resultado) {
+			for (Dashboard ld : resultado) {
 				ld.setQuantidadeChamadasTotal(hm.get(ld.getNomeServidor()));
-				System.out.println("valor antigo: " + totalChamadas);
 				ld.setPorcentagemTotal(((ld.getQuantidadeDessaChamada() * 100.0f) / ld.getQuantidadeChamadasTotal()));
-
 			}
 
 		} catch (Exception e) {
@@ -140,14 +126,4 @@ public class RepositorioLogDashboard {
 	public void setTotalChamadas(int totalChamadas) {
 		this.totalChamadas = totalChamadas;
 	}
-
-	public void printHM(HashMap<String, Integer> hm) {
-		for (String name : hm.keySet()) {
-			String key = name.toString();
-			Integer value = hm.get(key);
-			System.out.println(key + " " + value);
-
-		}
-	}
-
 }

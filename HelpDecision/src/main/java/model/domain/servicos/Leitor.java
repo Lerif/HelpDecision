@@ -13,13 +13,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.enumeradores.Regex;
 
 public class Leitor {
-	public List<ChamadaMetodo> ler(String arquivo) throws IOException, ParseException {
+	public List<ChamadaMetodo> ler(ArquivoLog arquivo) throws IOException, ParseException {
 
-		FileInputStream fstream = new FileInputStream(arquivo);
+		FileInputStream fstream = new FileInputStream(arquivo.getCaminhoDoArquivo());
 		DataInputStream in = new DataInputStream(fstream);
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		String linha = null;
@@ -115,7 +116,7 @@ public class Leitor {
 				long date3 = date2.getTime() - date1.getTime();
 				if (date3 < 0)
 					date3 += 1000;
-				lista.add(ChamadaMetodo.nova(1, nome, date1, date2, null, null, date3));
+				lista.add(ChamadaMetodo.nova(1, nome, date1, date2, null, null, date3, arquivo));
 				achouVazio = false;
 				nome = "";
 			}
@@ -128,7 +129,7 @@ public class Leitor {
 				long date3 = date2.getTime() - date1.getTime();
 				if (date3 < 0)
 					date3 += 1000;
-				lista.add(ChamadaMetodo.nova(1, nome, date1, date2, idElemento, tipoElemento, date3));
+				lista.add(ChamadaMetodo.nova(1, nome, date1, date2, idElemento, tipoElemento, date3, arquivo));
 				achouSimples = false;
 				nome = "";
 			}
@@ -141,8 +142,8 @@ public class Leitor {
 				long date3 = date2.getTime() - date1.getTime();
 				if (date3 < 0)
 					date3 += 1000;
-				lista.add(ChamadaMetodo.nova(1, nome, date1, date2, idElemento, tipoElemento, date3));
-				lista.add(ChamadaMetodo.nova(1, nome, date1, date2, idElemento2, tipoElemento2, date3));
+				lista.add(ChamadaMetodo.nova(1, nome, date1, date2, idElemento, tipoElemento, date3, arquivo));
+				lista.add(ChamadaMetodo.nova(1, nome, date1, date2, idElemento2, tipoElemento2, date3, arquivo));
 				achouComplex = false;
 				nome = "";
 			}

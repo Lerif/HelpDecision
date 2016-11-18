@@ -1,5 +1,6 @@
 package model.domain.entidades;
 
+import java.io.File;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,27 +17,40 @@ public class ArquivoLog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_arquivo")
-	private int idArquivo;
+	private Integer idArquivo;
 	@Column(name = "nome_arquivo")
 	private String nomeArquivo;
 	@Column(name = "data_upload")
 	private Date dataUpload;
 	@Column(name = "descricao")
 	private String descricao;
+	@Column(name = "caminho_arquivo")
+	private String caminhoDoArquivo;
+
+	private Servidor servidor;
 
 	public ArquivoLog() {
 
 	}
 
-	private ArquivoLog(int idArquivo, String nomeArquivo, Date dataUpload, String descricao) {
+	private ArquivoLog(Integer idArquivo, String nomeArquivo, Date dataUpload, String descricao, Servidor servidor,
+			String caminhoDoArquivo) {
 		this.idArquivo = idArquivo;
 		this.nomeArquivo = nomeArquivo;
 		this.dataUpload = dataUpload;
 		this.descricao = descricao;
+		this.servidor = servidor;
+		this.caminhoDoArquivo = caminhoDoArquivo;
 	}
 
-	public static ArquivoLog novo(int idArquivo, String nomeArquivo, Date dataUpload, String descricao) {
-		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
+	public static ArquivoLog novo(String nomeArquivo, Date dataUpload, String descricao, Servidor servidor,
+			String caminhoArquivo) {
+		return novo(null, nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
+	}
+
+	public static ArquivoLog novo(Integer idArquivo, String nomeArquivo, Date dataUpload, String descricao,
+			Servidor servidor, String caminhoArquivo) {
+		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
 	}
 
 	public String getNomeArquivo() {
@@ -70,4 +84,25 @@ public class ArquivoLog {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+	public Servidor getServidor() {
+		return servidor;
+	}
+
+	public void setServidor(Servidor servidor) {
+		this.servidor = servidor;
+	}
+
+	public String getCaminhoDoArquivo() {
+		return caminhoDoArquivo;
+	}
+
+	public void setCaminhoDoArquivo(String caminhoDoArquivo) {
+		this.caminhoDoArquivo = caminhoDoArquivo;
+	}
+
+	public void setIdArquivo(Integer idArquivo) {
+		this.idArquivo = idArquivo;
+	}
+
 }

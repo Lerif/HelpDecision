@@ -11,10 +11,9 @@ import java.util.List;
 
 import org.apache.commons.compress.archivers.ArchiveException;
 
-import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
-import model.domain.entidades.LogDashboard;
+import model.domain.entidades.Dashboard;
 import model.domain.entidades.Servidor;
 
 public class ServicoFachada {
@@ -31,21 +30,11 @@ public class ServicoFachada {
 
 	}
 
-	public Boolean inserirNovoArquivo(List<ChamadaMetodo> listaChamadaMetodo, ArquivoLog arquivoLog, int idSservidor)
-			throws SQLException {
-		List<ChamadaMetodo> _listaChamadaMetodo = servicoChamadaMetodo
-				.inserirDadosNaTbChamadaMetodo(listaChamadaMetodo);
-		if (_listaChamadaMetodo.size() != 0) {
-			ArquivoLog _arquivoLog = servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog);
-			Servidor _servidor = servicoServidor.buscarPorId(idSservidor);
-			return servicoAgregador
-					.inserirAgregador(servicoAgregador.agregar(_listaChamadaMetodo, _arquivoLog, _servidor));
-		} else {
-			return null;
-		}
+	public boolean inserirChamadaMetodoList(List<ChamadaMetodo> listaChamadaMetodo) throws SQLException {
+		return servicoChamadaMetodo.persistirChamadaMetodoList(listaChamadaMetodo);
 	}
 
-	public List<LogDashboard> solicitarFiltroDashBoard(int servidor, Timestamp dataInicio, Timestamp dataFim,
+	public List<Dashboard> solicitarFiltroDashBoard(int servidor, Timestamp dataInicio, Timestamp dataFim,
 			long duracaoInicial, long duracaoFinal) throws SQLException {
 		return servicoDashboard.filtrarDashboard(servidor, dataInicio, dataFim, duracaoInicial, duracaoFinal);
 	}
@@ -60,11 +49,6 @@ public class ServicoFachada {
 
 	public List<ChamadaMetodo> buscarPorServidor(String nomeDoServidor) {
 		return servicoChamadaMetodo.buscarPorServido(nomeDoServidor);
-	}
-
-	public ArquivoLog solicitarCriacaoArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload,
-			String descricao) {
-		return servicoArquivoLog.criarArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
 	}
 
 	public Boolean solicitarFlagDeArquivoDeletado(ArquivoLog arquivoLog) {
@@ -100,11 +84,11 @@ public class ServicoFachada {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
 	}
 	
-	public List<ChamadaMetodoArquivoLogServidor> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
-		return servicoAgregador.solicitarListaDeArquivoLogEServidorCadastradoDB();
+	public List<ArquivoLog> solicitarListaDeArquivoLogCadastradoDB() throws SQLException {
+		return servicoArquivoLog.solicitarListaDeArquivoLogCadastradoDB();
 	}
 
-	public List<File> extrairTarGz(File arquivoTarGz, File localDestino) {
+	public List<File> extrairArquivosTarGz(File arquivoTarGz, File localDestino) {
 
 		try {
 			return servicoDescompactador.extrairTarGz(arquivoTarGz, localDestino);
@@ -114,13 +98,13 @@ public class ServicoFachada {
 		return new ArrayList<File>();
 	}
 
-	public List<LogDashboard> gerarLogDashboardInicial() {
+	public List<Dashboard> gerarLogDashboardInicial() {
 		return servicoDashboard.gerarLogDashboardInicial();
 	}
 
-	public List<ChamadaMetodo> lerArquivoLog(String arquivo) {
+	public List<ChamadaMetodo> lerArquivoLog(ArquivoLog arquivo) {
 		try {
-			return leitor.ler(arquivo);
+			return leitor.ler(arquivo);			
 		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 		}
@@ -157,6 +141,15 @@ public class ServicoFachada {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public ArquivoLog inserirArquivoLog(ArquivoLog arquivoLog) {
+		return this.servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog);		
+	}
+
+	public Servidor buscarServidorByID(Integer id) throws SQLException {
+		
+		return this.servicoServidor.buscarPorId(id);
 	}
 
 }

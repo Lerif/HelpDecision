@@ -63,7 +63,6 @@ public class RepositorioServidor {
 						retornoSelect.getString("nome_servidor")));
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
 		}
 		return servidores;
 	}

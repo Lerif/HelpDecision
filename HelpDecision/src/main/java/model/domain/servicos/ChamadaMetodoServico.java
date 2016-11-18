@@ -18,10 +18,6 @@ public class ChamadaMetodoServico {
 	public static ChamadaMetodoServico novo() {
 		return new ChamadaMetodoServico();
 	}
-
-	public List<ChamadaMetodo> inserirDadosNaTbChamadaMetodo(List<ChamadaMetodo> listaChamadaMetodo) {
-		return chamadaMetodoRepositorio.insert(listaChamadaMetodo);
-	}
 	
 	public List<ChamadaMetodo> buscarPorDuracao(long inicio, long fim){
 		return chamadaMetodoRepositorio.buscarPorDuracao(inicio, fim);
@@ -37,6 +33,10 @@ public class ChamadaMetodoServico {
 	
 	public List<ChamadaMetodo> buscarTodosMetodos() throws SQLException{
 		return chamadaMetodoRepositorio.findAll();
+	}
+
+	public boolean persistirChamadaMetodoList(List<ChamadaMetodo> listaChamadaMetodo) throws SQLException {
+		return chamadaMetodoRepositorio.insert(listaChamadaMetodo) > 1;
 	}
 	
 }

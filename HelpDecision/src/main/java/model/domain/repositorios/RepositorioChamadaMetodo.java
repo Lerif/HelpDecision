@@ -26,35 +26,81 @@ public class RepositorioChamadaMetodo {
 		this.conexao = new ConexaoDB().conectarDB();
 	}
 
-	public List<ChamadaMetodo> insert(List<ChamadaMetodo> listaChamadaMetodo) {
-		List<ChamadaMetodo> chamadaMetodoComChave = new ArrayList<ChamadaMetodo>();
+	public Connection getConexao() {
+		return new ConexaoDB().conectarDB();
+	}
+
+	public int insert(List<ChamadaMetodo> listaChamadaMetodo) throws SQLException {
+
+		final StringBuilder sql = new StringBuilder();
+		sql.append("INSERT INTO tb_chamada_metodo ");
+		sql.append("(nome_metodo, data_inicio, data_fim, duracao, id_elemento, tipo_elemento, id_arquivo) ");
+		sql.append("VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+		Connection connection = null;
+		PreparedStatement pst = null;
+
+		final int batchSize = 1000;
+		int count = 0;
+		int registrosPersistidos = 0;
+		int[] result;
+
 		try {
+
+			connection = getConexao();
+			connection.setAutoCommit(false);
+			pst = connection.prepareStatement(sql.toString());
+
 			for (ChamadaMetodo chamadaMetodo : listaChamadaMetodo) {
-				if (!verificarChamadaMetodoExiste(chamadaMetodo)) {
-					String sql = "INSERT INTO tb_chamada_metodo "
-							+ "(nome_metodo, data_inicio, data_fim, duracao, id_elemento, tipo_elemento) "
-							+ "VALUES (?, ?, ?, ?, ?, ?)";
-					PreparedStatement pst = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+//				if (!verificarChamadaMetodoExiste(chamadaMetodo)) {
+
 					pst.setString(1, chamadaMetodo.getNomeMetodo());
 					pst.setTimestamp(2, chamadaMetodo.getDataInicio());
 					pst.setTimestamp(3, chamadaMetodo.getDataFim());
 					pst.setLong(4, chamadaMetodo.getDuracao());
 					pst.setString(5, chamadaMetodo.getIdElemento());
 					pst.setString(6, chamadaMetodo.getTipoElemento());
-					pst.execute();
-					final ResultSet resultSet = pst.getGeneratedKeys();
-					if (resultSet.next()) {
-						chamadaMetodo.setIdChamadaMetodo(resultSet.getInt("id_chamada_metodo"));
-						chamadaMetodoComChave.add(chamadaMetodo);
-					}
-					pst.close();
-				}
-			}
+					pst.setInt(7, chamadaMetodo.getArquivo().getIdArquivo());
 
+					pst.addBatch();
+
+					if (++count % batchSize == 0){
+						result = pst.executeBatch();
+						registrosPersistidos += result.length;
+						connection.commit();
+					}
+						
+				}
+//			}
+			
+			result = pst.executeBatch(); // insere os registros restantes
+			registrosPersistidos += result.length;
+			connection.commit();
+			
+		} catch (SQLException se) {
+			se.printStackTrace();
+			connection.rollback();
 		} catch (Exception e) {
 			System.err.println("[RepositorioChamadaMetodo] Erro: " + e);
+			
 		}
-		return chamadaMetodoComChave;
+		
+		finally {
+			try {
+				if (pst != null)
+					pst.close();
+			} catch (SQLException se2) {
+			} // nothing we can do
+			try {
+				if (connection != null)
+					connection.close();
+			} catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+		
+		return registrosPersistidos;
 	}
 
 	public Boolean verificarChamadaMetodoExiste(ChamadaMetodo chamadaMetodo) throws SQLException {
@@ -66,8 +112,7 @@ public class RepositorioChamadaMetodo {
 					+ "WHERE tb_chamada_metodo.nome_metodo = '" + chamadaMetodo.getNomeMetodo()
 					+ "' AND tb_chamada_metodo.data_inicio = '" + chamadaMetodo.getDataInicio()
 					+ "' AND tb_chamada_metodo.data_fim = '" + chamadaMetodo.getDataFim()
-					+ "' AND tb_chamada_metodo.id_elemento is null "
-					+ " AND tb_chamada_metodo.tipo_elemento is null "
+					+ "' AND tb_chamada_metodo.id_elemento is null " + " AND tb_chamada_metodo.tipo_elemento is null "
 					+ " AND tb_arquivo.arquivo_excluido = false";
 		} else {
 			sql = "SELECT * FROM tb_chamada_metodo_arquivo_servidor "
@@ -182,7 +227,6 @@ public class RepositorioChamadaMetodo {
 		}
 		return chamadasMetodo;
 	}
-
 	public void removeByID(Integer idChamadaMetodo) {
 
 		PreparedStatement preparedStatement = null;

@@ -12,7 +12,7 @@ import javax.faces.model.SelectItem;
 import org.primefaces.context.RequestContext;
 
 import model.domain.entidades.ChamadaMetodo;
-import model.domain.entidades.LogDashboard;
+import model.domain.entidades.Dashboard;
 import model.domain.entidades.LogDashboardDetalhado;
 import model.domain.entidades.Servidor;
 import model.domain.servicos.ServicoFachada;
@@ -26,11 +26,10 @@ public class HomeBean {
 	private ServicoFachada servicoFachada;
 	private List<SelectItem> comboServidores;
 	private String servidorSelecionado;
-	private List<LogDashboard> gerarLogDashboardInicial;
-	private List<LogDashboardDetalhado> gerarLogDashboardDetalhado;
+	private List<Dashboard> gerarLogDashboardInicial;
 	private long rangeInicio;
 	private long rangeFim;
-	private LogDashboard logDashBoard;
+	private Dashboard logDashBoard;
 	private List<ChamadaMetodo> metodoDetails;
 	private Date dateInicio;
 	private Date dateFim;
@@ -68,9 +67,6 @@ public class HomeBean {
 		}
 
 		requestContext.execute("alertLetras");
-		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(Integer.parseInt(servidorSelecionado),
-				CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim),
-				rangeInicio, rangeFim);
 		gerarLogDashboardInicial = servicoFachada.solicitarFiltroDashBoard(servidorId,
 				CalendarioUtil.dateParaSqlTimestamp(this.dateInicio), CalendarioUtil.dateParaSqlTimestamp(this.dateFim),
 				rangeInicio, rangeFim);
@@ -104,7 +100,7 @@ public class HomeBean {
 		this.servidorSelecionado = servidorSelecionado;
 	}
 
-	public List<LogDashboard> getGerarLogDashboardInicial() {
+	public List<Dashboard> getGerarLogDashboardInicial() {
 		return gerarLogDashboardInicial;
 	}
 	
@@ -128,7 +124,7 @@ public class HomeBean {
 		this.rangeFim = rangeFim;
 	}
 
-	public void setGerarLogDashboardInicial(List<LogDashboard> gerarLogDashboardInicial) {
+	public void setGerarLogDashboardInicial(List<Dashboard> gerarLogDashboardInicial) {
 		this.gerarLogDashboardInicial = gerarLogDashboardInicial;
 	}
 
@@ -148,11 +144,11 @@ public class HomeBean {
 		this.dateFim = dateFim;
 	}
 
-	public void setLogDashBoard(LogDashboard logDashBoard) {
+	public void setLogDashBoard(Dashboard logDashBoard) {
 		this.logDashBoard = logDashBoard;
 	}
 	
-	public void setBuscarDashboardDetalhado(LogDashboard logDashBoard){
+	public void setBuscarDashboardDetalhado(Dashboard logDashBoard){
 		this.metodoDetails = servicoFachada.buscarDashboardDetalhado(logDashBoard.getNomeMetodo(),
 				logDashBoard.getIdServidor(), this.dateInicio, this.dateFim, this.rangeInicio, this.rangeFim);
 	}

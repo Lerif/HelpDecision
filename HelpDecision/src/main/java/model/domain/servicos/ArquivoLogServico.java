@@ -1,9 +1,11 @@
 package model.domain.servicos;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import model.domain.entidades.ArquivoLog;
+import model.domain.entidades.Servidor;
 import model.domain.fabricas.FabricaArquivoLog;
 import model.domain.repositorios.RepositorioArquivoLog;
 
@@ -23,16 +25,12 @@ public class ArquivoLogServico {
 		return repositorioArquivoLog.insert(arquivoLog);
 	}
 
-	public ArquivoLog criarArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload, String descricao) {
-		return FabricaArquivoLog.nova().novoArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao);
+	public Boolean solicitarFlagArquivoExcluido(ArquivoLog arquivoLog) {
+		return repositorioArquivoLog.flegarArquivoExcluido(arquivoLog);
 	}
 
-	public List<ArquivoLog> solicitarListaDeArquivoLogCadastradoDB() throws SQLException {
-		return repositorioArquivoLog.findAll();
-	}
-	
-	public Boolean solicitarFlagArquivoExcluido(ArquivoLog arquivoLog){
-		return repositorioArquivoLog.flegarArquivoExcluido(arquivoLog);
+	public List<ArquivoLog> solicitarListaDeArquivoLogCadastradoDB() {
+		return new ArrayList<ArquivoLog>();
 	}
 
 }
