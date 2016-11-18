@@ -57,15 +57,10 @@ public class ArquivoLog {
 		return new ArquivoLog(nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
 	}
 
-<<<<<<< HEAD
-	public static ArquivoLog novo(Integer idArquivo, String nomeArquivo, Date dataUpload,
-			String descricao, Servidor servidor, String caminhoDoArquivo) {
-		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao, servidor, caminhoDoArquivo);
-=======
+
 	public static ArquivoLog novo(int idArquivo, String nomeArquivo, Date dataUpload, String descricao,
 			Servidor servidor, String caminhoArquivo) {
 		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
->>>>>>> refs/heads/gustavo
 	}
 
 	public String getNomeArquivo() {
