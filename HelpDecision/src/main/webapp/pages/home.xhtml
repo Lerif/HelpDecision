@@ -9,25 +9,19 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<!-- JS -->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<h:outputScript
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" />
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<h:outputScript src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" />
 	<script src="../dist/js/nprogress.js"></script>
 	<script src="../dist/js/alertify/alertify.js"></script>
 
 	<!--CSS -->
 	<link rel="stylesheet" href="../css/themes/default.min.css" />
 	<link rel="stylesheet" href="../css/nprogress.css" type="text/css" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css"
-		type="text/css" media="all" />
-	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css"
-		type="text/css" media="all" />
-	<link rel="script" href="../css/bootstrap/bootstrap-theme.css"
-		type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../css/bootstrap/bootstrap.css" type="text/css" media="all" />
+	<link rel="script" href="../css/bootstrap/bootstrap-theme.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="../css/alertify/alertify.css" />
 	<link rel="stylesheet" href="../css/custom.css" type="text/css" />
-	<link rel="stylesheet" href="../css/teste.css" type="text/css" />
 
 	<title>Home | Help Decision</title>
 </h:head>
@@ -55,8 +49,8 @@
 					<li data-toggle="modal" data-target="#modal_sobre"><a href="#">Sobre</a></li>
 					<li>
 						<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
-							<a href="upload.xhtml"> <h:commandButton
-									class="btn btn-warning pull-left btn-md m-t-md" value="Upload" /></a>
+							<a href="upload.xhtml"> 
+								<h:commandButton class="btn btn-warning pull-left btn-md m-t-md" value="Upload" /></a>
 						</div>
 					</li>
 				</ul>
@@ -128,25 +122,20 @@
 					<h:form id="form2">
 						<p:dataTable class="table table-bordred table-striped"
 							value="#{homeBean.gerarLogDashboardInicial}" var="log">
-
 							<p:column sortBy="#{log.nomeMetodo}" headerText="Nome">
 								<p:commandLink update=":form1:form2:rowDetail"
 									oncomplete="PF('rowDetailDialog').show();">
 									<f:setPropertyActionListener value="#{log}"
 										target="#{homeBean.buscarDashboardDetalhado}" />
 									<h:outputText value="#{log.nomeMetodo}" />
-
 								</p:commandLink>
-
 							</p:column>
-
 							<p:column sortBy="#{log.quantidadeDessaChamada}"
 								headerText="Quantidade de Chamadas">
 								<div align="center">
 									<h:outputText value="#{log.quantidadeDessaChamada}" />
 								</div>
 							</p:column>
-
 							<p:column sortBy="#{log.porcentagemTotal}"
 								headerText="% De Quantidade de Chamadas">
 								<div align="center">
@@ -155,13 +144,11 @@
 									</h:outputText>
 								</div>
 							</p:column>
-
 							<p:column sortBy="#{log.tempoTotal}" headerText="Tempo Total">
 								<div align="center">
 									<h:outputText value="#{log.tempoTotal}" />
 								</div>
 							</p:column>
-
 							<p:column sortBy="#{log.tempoMedio}" headerText="Tempo Medio">
 								<div align="center">
 									<h:outputText value="#{log.tempoMedio}">
@@ -169,19 +156,16 @@
 									</h:outputText>
 								</div>
 							</p:column>
-
 							<p:column sortBy="#{log.tempoMaior}" headerText="Maior Tempo">
 								<div align="center">
 									<h:outputText value="#{log.tempoMaior}" />
 								</div>
 							</p:column>
-
 							<p:column sortBy="#{log.tempoMenor}" headerText="Menor Tempo">
 								<div align="center">
 									<h:outputText value="#{log.tempoMenor}" />
 								</div>
 							</p:column>
-
 							<p:column sortBy="#{log.nomeServidor}" headerText="Servidor">
 								<div align="center">
 									<h:outputText value="#{log.nomeServidor}" />
@@ -195,25 +179,21 @@
 								<p:dataTable class="table table-bordred table-striped"
 									id="chamadaMetodoDetail" value="#{homeBean.metodoDetails}"
 									var="metodo">
-
 									<p:column headerText="Nome">
 										<div align="center">
 											<h:outputText value="#{metodo.nomeMetodo}" />
 										</div>
 									</p:column>
-
 									<p:column headerText="ID Elemento">
 										<div align="center">
 											<h:outputText value="#{metodo.idElemento}" />
 										</div>
 									</p:column>
-
 									<p:column headerText="Tipo Elemento">
 										<div align="center">
 											<h:outputText value="#{metodo.tipoElemento}" />
 										</div>
 									</p:column>
-
 									<p:column headerText="Duração">
 										<div align="center">
 											<h:outputText value="#{metodo.duracao}" />
@@ -226,8 +206,8 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</h:form>
+		</div>
+	</h:form>
 </h:body>
 
 <p:dialog id="myDialog" widgetVar="refaccionDialog"
@@ -264,14 +244,12 @@
 	function getData() {
 		alert(document.getElementById("datas").value);
 	}
-
 	function alertServidorNaoSelecionado() {
 		alertify.notify('Por favor selecionar um servidor', 'error', 3,
 				function() {
 					console.log('dismissed');
 				});
 	}
-
 	function alertDataFormatoInvalido() {
 		alertify
 				.notify(
@@ -280,7 +258,6 @@
 							console.log('dismissed');
 						});
 	}
-
 	function alertRageInvalido() {
 		alertify.notify(
 				'Por favor inserir range incial menor do que range final',
@@ -288,14 +265,12 @@
 					console.log('dismissed');
 				});
 	}
-
 	function alertDataInvalido() {
 		alertify.notify('Por favor inserir data inicial anterior à data final',
 				'error', 5, function() {
 					console.log('dismissed');
 				});
 	}
-
 	function alertLetras() {
 		var str = document.getElementById("min").value;
 		var res = /[^0-9]/.test(str);
@@ -305,7 +280,6 @@
 					5, function() {
 						console.log('dismissed');
 					});
-
 		} else {
 			alertify.notify('Ok', 'success', 5, function() {
 				console.log('dismissed');
