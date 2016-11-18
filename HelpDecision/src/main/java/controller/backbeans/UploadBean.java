@@ -15,7 +15,6 @@ import javax.servlet.http.Part;
 
 import org.primefaces.context.RequestContext;
 
-import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
@@ -212,11 +211,4 @@ public class UploadBean implements Serializable {
 		return arquivoLog;
 	}
 
-	public ChamadaMetodoArquivoLogServidor getAgregador() {
-		return agregador;
-	}
-
-	public void setAgregador(ChamadaMetodoArquivoLogServidor agregador) {
-		this.agregador = agregador;
-	}
 }

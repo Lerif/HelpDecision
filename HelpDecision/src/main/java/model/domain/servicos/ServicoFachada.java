@@ -11,7 +11,6 @@ import java.util.List;
 
 import org.apache.commons.compress.archivers.ArchiveException;
 
-import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Dashboard;
@@ -96,10 +95,11 @@ public class ServicoFachada {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
 	}
 	
+	/*
 	public List<ArquivoLog> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
 		return servicoAgregador.solicitarListaDeArquivoLogEServidorCadastradoDB();
 	}
-
+	 */
 	public List<File> extrairTarGz(File arquivoTarGz, File localDestino) {
 
 		try {
