@@ -32,7 +32,7 @@ public class RepositorioChamadaMetodo {
 	public int insert(List<ChamadaMetodo> listaChamadaMetodo) throws SQLException {
 
 		final StringBuilder sql = new StringBuilder();
-		
+
 		sql.append("INSERT INTO tb_chamada_metodo ");
 		sql.append("(nome_metodo, data_inicio, data_fim, duracao, id_elemento, tipo_elemento, id_arquivo) ");
 		sql.append("VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -52,7 +52,7 @@ public class RepositorioChamadaMetodo {
 			pst = connection.prepareStatement(sql.toString());
 
 			for (ChamadaMetodo chamadaMetodo : listaChamadaMetodo) {
-				
+
 				pst.setString(1, chamadaMetodo.getNomeMetodo());
 				pst.setTimestamp(2, chamadaMetodo.getDataInicio());
 				pst.setTimestamp(3, chamadaMetodo.getDataFim());
@@ -62,13 +62,13 @@ public class RepositorioChamadaMetodo {
 				pst.setInt(7, chamadaMetodo.getArquivo().getIdArquivo());
 
 				pst.addBatch();
-					if (++count % batchSize == 0) {
-						result = pst.executeBatch();
-						registrosPersistidos += result.length;
-						connection.commit();
-					}
+				if (++count % batchSize == 0) {
+					result = pst.executeBatch();
+					registrosPersistidos += result.length;
+					connection.commit();
 				}
-			
+			}
+
 			result = pst.executeBatch(); // insere os registros restantes
 			registrosPersistidos += result.length;
 			connection.commit();
@@ -117,7 +117,7 @@ public class RepositorioChamadaMetodo {
 		pst.setInt(3, chamadaMetodo.getArquivo().getServidor().getIdServidor());
 
 		ResultSet retornoSelect = pst.executeQuery();
-		
+
 		if (retornoSelect.next()) {
 			pst.close();
 			connection.close();
@@ -254,28 +254,7 @@ public class RepositorioChamadaMetodo {
 		List<ChamadaMetodo> chamadasMetodos = new ArrayList<ChamadaMetodo>();
 
 		StringBuilder sql = new StringBuilder();
-		/*
-		 * sql.append("SELECT chamada_metodo.nome_metodo, ");
-		 * sql.append("chamada_metodo.duracao, ");
-		 * sql.append("chamada_metodo.data_inicio, ");
-		 * sql.append("chamada_metodo.data_fim, ");
-		 * sql.append("chamada_metodo.id_elemento, ");
-		 * sql.append("chamada_metodo.tipo_elemento, ");
-		 * sql.append("chamada_metodo.id_chamada_metodo, ");
-		 * sql.append("chamada_metodo.tipo_elemento ");
-		 * sql.append("FROM tb_chamada_metodo_arquivo_servidor agregador ");
-		 * sql.append(
-		 * "JOIN tb_chamada_metodo chamada_metodo ON agregador.id_chamada_metodo = chamada_metodo.id_chamada_metodo "
-		 * ); sql.
-		 * append("JOIN tb_arquivo arquivo ON agregador.id_arquivo = arquivo.id_arquivo "
-		 * ); sql.
-		 * append("JOIN tb_servidor servidor ON agregador.id_servidor = servidor.id_servidor "
-		 * ); sql.append("WHERE ");
-		 * sql.append("chamada_metodo.nome_metodo = ? ");
-		 * sql.append("AND servidor.id_servidor = ? ");
-		 * sql.append("AND arquivo.arquivo_excluido = false ");
-		 */
-
+	
 		sql.append("SELECT chamada_metodo.nome_metodo, ");
 		sql.append("chamada_metodo.duracao, ");
 		sql.append("chamada_metodo.data_inicio, ");
@@ -285,31 +264,14 @@ public class RepositorioChamadaMetodo {
 		sql.append("chamada_metodo.id_chamada_metodo, ");
 		sql.append("chamada_metodo.tipo_elemento ");
 		sql.append("FROM tb_chamada_metodo AS chamada_metodo ");
-		sql.append("JOIN tb_arquivo arquivo ON chamada_metodo.id_arquivo = arquivo.id_arquivo");
+		sql.append("JOIN tb_arquivo arquivo ON chamada_metodo.id_arquivo = arquivo.id_arquivo ");
 		sql.append("JOIN tb_servidor servidor ON arquivo.id_servidor = servidor.id_servidor ");
 		sql.append("WHERE chamada_metodo.nome_metodo = ?  ");
 		sql.append("AND servidor.id_servidor = ? ");
 		sql.append("AND arquivo.arquivo_excluido = false ");
-
-		/*
-		 * SELECT chamada_metodo.nome_metodo, chamada_metodo.duracao,
-		 * chamada_metodo.data_inicio, chamada_metodo.data_fim,
-		 * chamada_metodo.id_elemento, chamada_metodo.tipo_elemento,
-		 * chamada_metodo.id_chamada_metodo, chamada_metodo.tipo_elemento FROM
-		 * tb_chamada_metodo AS chamada_metodo JOIN tb_arquivo arquivo ON
-		 * chamada_metodo.id_arquivo = arquivo.id_arquivo JOIN tb_servidor
-		 * servidor ON arquivo.id_servidor = servidor.id_servidor WHERE
-		 * chamada_metodo.nome_metodo = 'aguas abajo' AND servidor.id_servidor =
-		 * '1' AND arquivo.arquivo_excluido = false
-		 */
-
-		if (dataInicio != null && dataFim != null) {
-			sql.append("AND (chamada_metodo.data_inicio, ");
-			sql.append("chamada_metodo.data_fim) OVERLAPS (?,?) ");
-		}
-		if (rangeInicio != null && rangeFim != null) {
-			sql.append("AND chamada_metodo.duracao BETWEEN ? and ? ");
-		}
+		sql.append("AND (chamada_metodo.data_inicio, ");
+		sql.append("chamada_metodo.data_fim) OVERLAPS (?,?) ");
+		sql.append("AND chamada_metodo.duracao BETWEEN ? AND ? ");
 		sql.append("GROUP BY 5, 6, 7 ");
 		sql.append("ORDER BY chamada_metodo.duracao DESC LIMIT 10 ");
 

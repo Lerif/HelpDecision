@@ -38,8 +38,7 @@ public class HomeBean {
 	}
 
 	public void filtrar() throws SQLException {
-
-		int servidorId;
+		
 		RequestContext requestContext = RequestContext.getCurrentInstance();
 
 		if ((dateInicio == null) || (dateFim == null)) {
@@ -55,7 +54,7 @@ public class HomeBean {
 		}
 
 		try {
-			servidorId = Integer.parseInt(servidorSelecionado);
+			Integer.parseInt(servidorSelecionado);
 		} catch (NumberFormatException e) {
 			requestContext.execute("alertServidorNaoSelecionado()");
 		}
@@ -132,7 +131,7 @@ public class HomeBean {
 
 	public void setBuscarDashboardDetalhado(Dashboard logDashBoard) {
 		this.metodoDetails = servicoFachada.buscarDashboardDetalhado(logDashBoard.getNomeMetodo(),
-				logDashBoard.getIdServidor(), this.dateInicio, this.dateFim, this.rangeInicio, this.rangeFim);
+				Integer.parseInt(servidorSelecionado), this.dateInicio, this.dateFim, this.rangeInicio, this.rangeFim);
 	}
 
 	public List<ChamadaMetodo> getMetodoDetails() {
