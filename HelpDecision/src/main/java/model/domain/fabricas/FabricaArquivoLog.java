@@ -16,11 +16,11 @@ public class FabricaArquivoLog {
 
 	public ArquivoLog novoArquivoLog(String nomeArquivo, Date dataUpload, String descricao, Servidor servidor,
 			String caminhoArquivo) {
-		return ArquivoLog.novo(null, nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
+		return ArquivoLog.novo(nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
 	}
 
-	public ArquivoLog novoArquivoLog(Integer idArquivo, String nomeArquivo, Date dataUpload, String descricao,
+	public ArquivoLog novoArquivoLog(int idArquivo, String nomeArquivo, Date dataUpload, String descricao,
 			Servidor servidor, String caminhoArquivo) {
-		return ArquivoLog.novo(nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
+		return ArquivoLog.novo(idArquivo, nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
 	}
 }

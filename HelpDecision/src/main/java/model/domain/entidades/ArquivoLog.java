@@ -16,7 +16,7 @@ public class ArquivoLog {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_arquivo")
-	private Integer idArquivo;
+	private int idArquivo;
 	@Column(name = "nome_arquivo")
 	private String nomeArquivo;
 	@Column(name = "data_upload")
@@ -32,9 +32,19 @@ public class ArquivoLog {
 
 	}
 
-	private ArquivoLog(Integer idArquivo, String nomeArquivo, Date dataUpload, String descricao,
-			Servidor servidor, String caminhoDoArquivo) {
+
+	private ArquivoLog(int idArquivo, String nomeArquivo, Date dataUpload, String descricao, Servidor servidor,
+			String caminhoDoArquivo) {
 		this.idArquivo = idArquivo;
+		this.nomeArquivo = nomeArquivo;
+		this.dataUpload = dataUpload;
+		this.descricao = descricao;
+		this.servidor = servidor;
+		this.caminhoDoArquivo = caminhoDoArquivo;
+	}
+	
+	private ArquivoLog(String nomeArquivo, Date dataUpload, String descricao, Servidor servidor,
+			String caminhoDoArquivo) {
 		this.nomeArquivo = nomeArquivo;
 		this.dataUpload = dataUpload;
 		this.descricao = descricao;
@@ -44,12 +54,13 @@ public class ArquivoLog {
 
 	public static ArquivoLog novo(String nomeArquivo, Date dataUpload, String descricao, Servidor servidor,
 			String caminhoArquivo) {
-		return novo(null, nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
+		return new ArquivoLog(nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
 	}
 
-	public static ArquivoLog novo(Integer idArquivo, String nomeArquivo, Date dataUpload,
-			String descricao, Servidor servidor, String caminhoDoArquivo) {
-		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao, servidor, caminhoDoArquivo);
+
+	public static ArquivoLog novo(int idArquivo, String nomeArquivo, Date dataUpload, String descricao,
+			Servidor servidor, String caminhoArquivo) {
+		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
 	}
 
 	public String getNomeArquivo() {
@@ -70,10 +81,6 @@ public class ArquivoLog {
 
 	public int getIdArquivo() {
 		return idArquivo;
-	}
-
-	public void setIdArquivo(int idArquivo) {
-		this.idArquivo = idArquivo;
 	}
 
 	public String getDescricao() {
@@ -100,7 +107,7 @@ public class ArquivoLog {
 		this.caminhoDoArquivo = caminhoDoArquivo;
 	}
 
-	public void setIdArquivo(Integer idArquivo) {
+	public void setIdArquivo(int idArquivo) {
 		this.idArquivo = idArquivo;
 	}
 

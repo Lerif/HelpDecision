@@ -17,7 +17,6 @@
 		href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 	<link rel="stylesheet" href="../css/alertify/alertify.css" />
 	<link rel="stylesheet" href="../css/nprogress.css" />
-	<link rel="stylesheet" href="../css/nprogress.css" />
 	<link rel="stylesheet" href="../css/custom.css" />
 
 	<!--JS-->
@@ -118,79 +117,76 @@
 					<h:form>
 						<h:dataTable id="historico"
 							class="table table-bordred table-striped"
-							value="#{uploadBean.listaArquivoLogComServidor}"
-							var="arquivoLog">
+							value="#{uploadBean.listaArquivoLogComServidor}" var="arquivoLog">
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Nome" />
 								</f:facet>
-								<h:outputText
-									value="#{arquivoLog.nomeArquivo}" />
+								<h:outputText value="#{arquivoLog.nomeArquivo}" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Data Upload" />
 								</f:facet>
-								<h:outputText
-									value="#{arquivoLog.dataUpload}" />
+								<h:outputText value="#{arquivoLog.dataUpload}" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Descrição" />
 								</f:facet>
-								<h:outputText
-									value="#{arquivoLog.descricao}" />
+								<h:outputText value="#{arquivoLog.descricao}" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Servidor" />
 								</f:facet>
-								<h:outputText
-									value="#{arquivoLog.servidor.nomeServidor}" />
+								<h:outputText value="#{arquivoLog.servidor.nomeServidor}" />
 							</h:column>
 							<h:column>
 								<f:facet name="header">Delete</f:facet>
 								<h:commandLink value="✗" styleClass="btn btn-danger"
 									action="#{uploadBean.deleteActionArquivoLogServidor(arquivoLog)}" />
+
+								<!-- h:commandLink type="button" data-toggle="modal" data-target="#delete"
+									value="✗" styleClass="btn btn-danger" />
+									 -->
 							</h:column>
 						</h:dataTable>
+						<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+							aria-labelledby="edit" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">
+											<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+										</button>
+										<h4 class="modal-title custom_align" id="Heading">Excluir</h4>
+									</div>
+									<div class="modal-body">
+										<div class="alert alert-danger">
+											<span class="glyphicon glyphicon-warning-sign"></span> Você
+											tem certeza que deseja excluir este Registro?
+										</div>
+									</div>
+									<div class="modal-footer ">
+										<h:commandButton value="Sim" styleClass="btn btn-success"
+											action="#{uploadBean.deleteActionArquivoLogServidor(arquivoLog)}" />
+
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Não</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</h:form>
 				</div>
 			</div>
 		</div>
 	</div>
-
+	<!--  Modal excluir arquivo anterior  -->
 </h:body>
 
-<!--  Modal excluir arquivo anterior  -->
-<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-	aria-labelledby="edit" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">
-					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-				</button>
-				<h4 class="modal-title custom_align" id="Heading">Excluir</h4>
-			</div>
-			<div class="modal-body">
-				<div class="alert alert-danger">
-					<span class="glyphicon glyphicon-warning-sign"></span> Você tem
-					certeza que deseja excluir este Registro?
-				</div>
-			</div>
-			<div class="modal-footer ">
-				<button type="button" class="btn btn-success">
-					<span class="glyphicon glyphicon-ok-sign"></span> Sim
-				</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">
-					<span class="glyphicon glyphicon-remove"></span> Não
-				</button>
-			</div>
-		</div>
-	</div>
-</div>
 
 <!-- Modal Cadastrar novo servidor -->
 <div id="cadastra_servidor" class="modal fade" role="dialog">
@@ -213,7 +209,7 @@
 					<div class="form-group">
 						<div class="modal-footer">
 
-							<h:commandButton id="botaoConfirmar" type="subit"
+							<h:commandButton id="botaoConfirmar" type="submit"
 								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
 								value="Confirmar" action="#{uploadBean.cadastrarServidor()}">
 
@@ -223,6 +219,7 @@
 					</div>
 				</div>
 			</div>
+
 		</h:form>
 	</div>
 </div>
@@ -265,6 +262,13 @@
 			console.log('dismissed');
 		});
 	}
+
+/*	function alertUploadRealizadoComSucesso(qtd, total) {
+		alertify.notify('Upload realizado com sucesso. ' + qtd + ' registros de ' + total + ' foram inseridos', 'success', 8,
+				function() {
+					console.log('dismissed');
+				});
+	}*/
 
 	function alertUploadRealizadoComSucesso() {
 		alertify.notify('Upload realizado com sucesso!', 'success', 5,
