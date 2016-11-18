@@ -99,7 +99,7 @@ public class RepositorioDashboard {
 		try {
 			ResultSet retornoSelect = preparedStatement.executeQuery();
 			while (retornoSelect.next()) {
-				resultado.add(FabricaDashboard.novoDashboard(retornoSelect.getString("nome_metodo"), //Nome?
+				resultado.add(FabricaDashboard.novoDashboard(retornoSelect.getString("nome_metodo"),
 						retornoSelect.getInt("quantidade_chamada"), 0, retornoSelect.getLong("tempo_total"),
 						retornoSelect.getFloat("tempo_medio"), retornoSelect.getLong("tempo_menor"),
 						retornoSelect.getLong("tempo_maior"), 1, retornoSelect.getString("nome_servidor")));
