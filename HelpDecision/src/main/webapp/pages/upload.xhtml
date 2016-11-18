@@ -2,36 +2,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<!--CSS -->
-	<link rel="stylesheet" type="text/css"
-		href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
-	<link rel="stylesheet" type="text/css"
-		href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 	<link rel="stylesheet" href="../css/alertify/alertify.css" />
 	<link rel="stylesheet" href="../css/nprogress.css" />
 	<link rel="stylesheet" href="../css/custom.css" />
 
 	<!--JS-->
-	<h:outputScript
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" />
-	<script type="text/javascript"
-		src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-	<script type="text/javascript"
-		src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type="text/javascript"
-		src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+	<h:outputScript src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" />
+	<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 	<script src="../dist/js/alertify/alertify.js"></script>
-	<script src="../dist/js/nprogress.js"></script>
 	<script src="../dist/js/nprogress.js"></script>
 
 	<title>Upload | Help Decision</title>
@@ -40,32 +32,32 @@
 
 <h:body>
 	<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<!-- Brand e toggle agrupados para melhor visualização em mobiles -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-				aria-expanded="false">
-				<span class="sr-only">Barra de Navegação</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-		</div>
+		<div class="container-fluid">
+			<!-- Brand e toggle agrupados para melhor visualização em mobiles -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+						aria-expanded="false">
+					<span class="sr-only">Barra de Navegação</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+			</div>
 
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<p class="navbar-text">Help Decision</p>
-			<ul class="nav navbar-nav navbar-right">
+			<div class="collapse navbar-collapse"
+				 id="bs-example-navbar-collapse-1">
+				<p class="navbar-text">Help Decision</p>
+				<ul class="nav navbar-nav navbar-right">
 
-				<li data-toggle="modal" data-target="#modal_sobre"><a href="#">Sobre</a></li>
-				<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
-					<a href="home.xhtml"> <h:commandButton
-							class="btn btn-warning pull-left btn-md m-t-md" value="Dashboard" />
-					</a>
-				</div>
-			</ul>
+					<li data-toggle="modal" data-target="#modal_sobre"><a href="#">Sobre</a></li>
+					<div class="col-lg-6 col-sm-6 col-3 btn btn-md">
+						<a href="home.xhtml">
+							<h:commandButton class="btn btn-warning pull-left btn-md m-t-md" value="Dashboard" />
+						</a>
+					</div>
+				</ul>
+			</div>
 		</div>
-	</div>
 	</nav>
 
 	<h3 class="text-primary text-center">Upload</h3>
@@ -74,15 +66,14 @@
 		<div class="login-box well">
 			<h:form id="formLogin" enctype="multipart/form-data">
 				<div class="dropdown">
-					<h:selectOneMenu id="comboServidores"
-						value="#{uploadBean.itemSelecionado}" class="btn btn-default">
+					<h:selectOneMenu id="comboServidores" value="#{uploadBean.itemSelecionado}" class="btn btn-default">
 						<f:selectItem itemLabel="Selecione um Servidor" />
 						<f:selectItems value="#{uploadBean.comboServidores}" />
 					</h:selectOneMenu>
 					ou
 					<button type="button" class="btn btn-md btn-primary"
-						id="botaoCadastre" data-toggle="modal"
-						data-target="#cadastra_servidor">Cadastre um Novo</button>
+							id="botaoCadastre" data-toggle="modal"
+							data-target="#cadastra_servidor">Cadastre um Novo</button>
 				</div>
 				<div class="form-group">
 					<label class="control-label"><br></br> <br></br> Arquivo de
@@ -90,10 +81,9 @@
 					<h:inputFile value="#{uploadBean.arquivo}" />
 				</div>
 				<div class="form-group">
-					<label for="portas"><h:outputText class="cadastroProduto"
-							value="Comentários:" /></label>
+					<label><h:outputText class="comentarios" value="Comentários:"/></label>
 					<h:inputText id="comentario" placeholder="text" type="text"
-						class="form-control" value="#{uploadBean.comentarioArquivo}" />
+								 class="form-control" value="#{uploadBean.comentarioArquivo}" />
 				</div>
 				<p id="mostrarMensagemServidor"></p>
 				<br></br>
@@ -101,9 +91,9 @@
 				<br></br>
 				<div class="form-group">
 					<h:commandButton type="submit"
-						class="btn btn-success btn-login-submit btn-md m-t-md"
-						onclick="NProgress.start()" oncomplete="NProgress.done()"
-						value="Upload" action="#{uploadBean.upload}" />
+									 class="btn btn-success btn-login-submit btn-md m-t-md"
+									 onclick="NProgress.start()" oncomplete="NProgress.done()"
+									 value="Upload" action="#{uploadBean.upload}" />
 				</div>
 			</h:form>
 		</div>
@@ -116,8 +106,8 @@
 				<div class="table-responsive">
 					<h:form>
 						<h:dataTable id="historico"
-							class="table table-bordred table-striped"
-							value="#{uploadBean.listaArquivoLogComServidor}" var="arquivoLog">
+									 class="table table-bordred table-striped"
+									 value="#{uploadBean.listaArquivoLogComServidor}" var="arquivoLog">
 							<h:column>
 								<f:facet name="header">
 									<h:outputText value="Nome" />
@@ -145,48 +135,50 @@
 							<h:column>
 								<f:facet name="header">Delete</f:facet>
 								<h:commandLink value="✗" styleClass="btn btn-danger"
-									action="#{uploadBean.deleteActionArquivoLogServidor(arquivoLog)}" />
+											   action="#{uploadBean.deleteActionArquivoLogServidor(arquivoLog)}" />
 
-								<!-- h:commandLink type="button" data-toggle="modal" data-target="#delete"
+								<!-- botão que chama modal confirmação excluir arquivo 
+								h:commandLink type="button" data-toggle="modal" data-target="#delete"
 									value="✗" styleClass="btn btn-danger" />
 									 -->
 							</h:column>
 						</h:dataTable>
-						<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-							aria-labelledby="edit" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal"
-											aria-hidden="true">
-											<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-										</button>
-										<h4 class="modal-title custom_align" id="Heading">Excluir</h4>
-									</div>
-									<div class="modal-body">
-										<div class="alert alert-danger">
-											<span class="glyphicon glyphicon-warning-sign"></span> Você
-											tem certeza que deseja excluir este Registro?
-										</div>
-									</div>
-									<div class="modal-footer ">
-										<h:commandButton value="Sim" styleClass="btn btn-success"
-											action="#{uploadBean.deleteActionArquivoLogServidor(arquivoLog)}" />
+                            <!--  Modal confirmação excluir arquivo  -->
+                            <div class="modal fade" id="delete" tabindex="-1" role="dialog"
+                                 aria-labelledby="edit" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-hidden="true">
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            </button>
+                                            <h4 class="modal-title custom_align" id="Heading">Excluir</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="alert alert-danger">
+                                                <span class="glyphicon glyphicon-warning-sign"></span> Você
+                                                tem certeza que deseja excluir este Arquivo?
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer ">
+                                            <h:commandButton value="Sim" styleClass="btn btn-success"
+                                                             action="#{uploadBean.deleteActionArquivoLogServidor(arquivoLog)}" />
 
-										<button type="button" class="btn btn-default"
-											data-dismiss="modal">Não</button>
-									</div>
-								</div>
-							</div>
-						</div>
+                                            <button type="button" class="btn btn-default"
+                                                    data-dismiss="modal">Não</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 					</h:form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!--  Modal excluir arquivo anterior  -->
-</h:body>
 
+</h:body>
 
 <!-- Modal Cadastrar novo servidor -->
 <div id="cadastra_servidor" class="modal fade" role="dialog">
@@ -201,8 +193,8 @@
 					<label for="variavelDeServidor"> <h:outputText
 							id="servidorLabel" value="Nome do Servidor:" /></label>
 					<h:inputText id="nomeServidor" value="#{uploadBean.nomeServidor}"
-						type="text" class="form-control" required="true"
-						requiredMessage="Por gentiliza, preencha um nome para o novo Servidor" />
+								 type="text" class="form-control" required="true"
+								 requiredMessage="Por gentiliza, preencha um nome para o novo Servidor" />
 					<div class="form-group">
 						<h:messages id="msgErro" style="color: red" layout="table" />
 					</div>
@@ -210,8 +202,8 @@
 						<div class="modal-footer">
 
 							<h:commandButton id="botaoConfirmar" type="submit"
-								class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
-								value="Confirmar" action="#{uploadBean.cadastrarServidor()}">
+											 class="btn btn-success btn-login-submit btn-md pull-right m-t-md"
+											 value="Confirmar" action="#{uploadBean.cadastrarServidor()}">
 
 							</h:commandButton>
 
@@ -226,12 +218,12 @@
 
 <!-- Modal Sobre-->
 <div class="modal fade" id="modal_sobre" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel" aria-hidden="true">
+	 aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
+						aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<h4 class="modal-title" id="modalSobre">Help Decision</h4>
@@ -263,12 +255,12 @@
 		});
 	}
 
-/*	function alertUploadRealizadoComSucesso(qtd, total) {
-		alertify.notify('Upload realizado com sucesso. ' + qtd + ' registros de ' + total + ' foram inseridos', 'success', 8,
-				function() {
-					console.log('dismissed');
-				});
-	}*/
+	/*	function alertUploadRealizadoComSucesso(qtd, total) {
+	 alertify.notify('Upload realizado com sucesso. ' + qtd + ' registros de ' + total + ' foram inseridos', 'success', 8,
+	 function() {
+	 console.log('dismissed');
+	 });
+	 }*/
 
 	function alertUploadRealizadoComSucesso() {
 		alertify.notify('Upload realizado com sucesso!', 'success', 5,
@@ -278,7 +270,7 @@
 	}
 
 	function alertUploadNaoRealizadoArquivoJaExiste() {
-		alertify.notify('Este arquivo já existe no banco de dados', 'error', 6,
+		alertify.notify('Este arquivo já existe no banco de dados', 'error', 5,
 				function() {
 					console.log('dismissed');
 				});
@@ -286,24 +278,23 @@
 
 	function alertUploadNaoRealizadoErro() {
 		alertify.notify('Erro ao realizar upload, por favor tente novamente.',
-				'error', 6, function() {
+				'error', 5, function() {
 					console.log('dismissed');
 				});
 
 	}
 
 	function alertDeleteComSucesso() {
-		alertify.notify('Arquivo excluido', 'success', 6, function() {
+		alertify.notify('Arquivo excluido', 'success', 5, function() {
 			console.log('dismissed');
 		});
 	}
 
 	function alertErroAoDeletar() {
 		alertify.notify('Erro ao deletar o arquivo, por favor tente novamente',
-				'error', 6, function() {
+				'error', 5, function() {
 					console.log('dismissed');
 				});
-
 	}
 </script>
 </html>
