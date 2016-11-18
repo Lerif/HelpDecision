@@ -19,4 +19,9 @@ public class FabricaChamadaMetodo {
 			String tipoElemento, long duracao, ArquivoLog arquivoLog) {
 		return ChamadaMetodo.nova(idChamadaMetodo, nomeMetodo, dataInicio, dataFim, idElemento, tipoElemento, duracao, arquivoLog);
 	}
+	
+	public ChamadaMetodo NovaChamadaMetodo (int idChamadaMetodo, String nomeMetodo, Date dataInicio, Date dataFim, String idElemento,
+			String tipoElemento, long duracao) {
+		return ChamadaMetodo.nova(idChamadaMetodo, nomeMetodo, dataInicio, dataFim, idElemento, tipoElemento, duracao);
+	}
 }

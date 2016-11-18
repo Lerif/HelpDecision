@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.domain.agregadores.ChamadaMetodoArquivoLogServidor;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Dashboard;
@@ -28,6 +27,7 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 		this.conexao = new ConexaoDB().conectarDB();
 	}
 
+	/*
 	public Boolean insert(ChamadaMetodoArquivoLogServidor agregador) {
 		try {
 			for (ChamadaMetodo chamadaMetodo : agregador.getChamadasMetodos()) {
@@ -45,6 +45,7 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 			return false;
 		}
 	}
+	*/
 
 	public void removeAgregadorThreeByIdArquivoLog(int i) throws SQLException {
 
@@ -124,11 +125,11 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 	public List<ChamadaMetodo> findDetailsFromArquivoLogAndServidor(String nomeMetodo, int idServidor,
 			Timestamp dataInicio, Timestamp dataFim, Long rangeInicio, Long rangeFim) throws SQLException {
 
-		ChamadaMetodoArquivoLogServidor resultado = null;
+		//ChamadaMetodoArquivoLogServidor resultado = null;
 		List<ChamadaMetodo> chamadasMetodos = new ArrayList<ChamadaMetodo>();
 
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT chamada_metodo.nome_metodo, ");
+		/*sql.append("SELECT chamada_metodo.nome_metodo, ");
 		sql.append("chamada_metodo.duracao, ");
 		sql.append("chamada_metodo.data_inicio, ");
 		sql.append("chamada_metodo.data_fim, ");
@@ -144,7 +145,34 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 		sql.append("WHERE ");
 		sql.append("chamada_metodo.nome_metodo = ? ");
 		sql.append("AND servidor.id_servidor = ? ");
+		sql.append("AND arquivo.arquivo_excluido = false ");*/
+
+		sql.append("SELECT chamada_metodo.nome_metodo, ");
+		sql.append("chamada_metodo.duracao, ");
+		sql.append("chamada_metodo.data_inicio, ");
+		sql.append("chamada_metodo.data_fim, ");
+		sql.append("chamada_metodo.id_elemento, ");
+		sql.append("chamada_metodo.tipo_elemento, ");
+		sql.append("chamada_metodo.id_chamada_metodo, ");
+		sql.append("chamada_metodo.tipo_elemento ");
+		sql.append("FROM tb_chamada_metodo AS chamada_metodo ");
+		sql.append("JOIN tb_arquivo arquivo ON chamada_metodo.id_arquivo = arquivo.id_arquivo");
+		sql.append("JOIN tb_servidor servidor ON arquivo.id_servidor = servidor.id_servidor ");
+		sql.append("WHERE chamada_metodo.nome_metodo = ?  ");
+		sql.append("AND servidor.id_servidor = ? ");
 		sql.append("AND arquivo.arquivo_excluido = false ");
+		
+		
+		/*
+		SELECT chamada_metodo.nome_metodo, chamada_metodo.duracao, chamada_metodo.data_inicio, chamada_metodo.data_fim, 
+		chamada_metodo.id_elemento, chamada_metodo.tipo_elemento, chamada_metodo.id_chamada_metodo, chamada_metodo.tipo_elemento 
+		FROM tb_chamada_metodo AS chamada_metodo
+		JOIN tb_arquivo arquivo ON chamada_metodo.id_arquivo = arquivo.id_arquivo
+		JOIN tb_servidor servidor ON arquivo.id_servidor = servidor.id_servidor
+		WHERE chamada_metodo.nome_metodo = 'aguas abajo' 
+		AND servidor.id_servidor = '1' 
+		AND arquivo.arquivo_excluido = false 
+		 */
 
 		if (dataInicio != null && dataFim != null) {
 			sql.append("AND (chamada_metodo.data_inicio, ");
@@ -186,5 +214,4 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 		}
 		return chamadasMetodos;
 	}
-
 }

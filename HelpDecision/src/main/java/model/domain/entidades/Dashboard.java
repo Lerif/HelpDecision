@@ -11,6 +11,7 @@ public class Dashboard {
 	private long tempoMaior;
 	private int quantidadeChamadasTotal;
 	private String nomeServidor;
+	private int idServidor;
 
 	private Dashboard(int quantidadeChamadas, float porcentagemTotal, long tempoTotal, float tempoMedio,
 			long tempoMenor, long tempoMaior, int quantidadeChamadasTotal) {
@@ -35,6 +36,21 @@ public class Dashboard {
 		this.quantidadeChamadasTotal = quantidadeChamadasTotal;
 		this.nomeServidor = nomeServidor;
 	}
+	
+	private Dashboard(String nomeMetodo, int quantidadeChamadas, float porcentagemTotal, long tempoTotal,
+			float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal, String nomeServidor,
+			int idServidor) {
+		this.nomeMetodo = nomeMetodo;
+		this.quantidadeDessaChamada = quantidadeChamadas;
+		this.porcentagemTotal = porcentagemTotal;
+		this.tempoTotal = tempoTotal;
+		this.tempoMedio = tempoMedio;
+		this.tempoMenor = tempoMenor;
+		this.tempoMaior = tempoMaior;
+		this.quantidadeChamadasTotal = quantidadeChamadasTotal;
+		this.nomeServidor = nomeServidor;
+		this.idServidor = idServidor;
+	}
 
 	public static Dashboard novo(int quantidadeChamadas, float porcentagemTotal, long tempoTotal, float tempoMedio,
 			long tempoMenor, long tempoMaior, int quantidadeChamadasTotal) {
@@ -46,6 +62,13 @@ public class Dashboard {
 			float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal, String nomeServidor) {
 		return new Dashboard(nomeMetodo, quantidadeChamadas, porcentagemTotal, tempoTotal, tempoMedio, tempoMenor,
 				tempoMaior, quantidadeChamadasTotal, nomeServidor);
+	}
+	
+	public static Dashboard novo(String nomeMetodo, int quantidadeChamadas, float porcentagemTotal, long tempoTotal,
+			float tempoMedio, long tempoMenor, long tempoMaior, int quantidadeChamadasTotal, String nomeServidor, 
+			int idServidor) {
+		return new Dashboard(nomeMetodo, quantidadeChamadas, porcentagemTotal, tempoTotal, tempoMedio, tempoMenor,
+				tempoMaior, quantidadeChamadasTotal, nomeServidor, idServidor);
 	}
 
 	public float getPorcentagemTotal() {
@@ -120,4 +143,11 @@ public class Dashboard {
 		this.nomeServidor = nomeServidor;
 	}
 
+	public int getIdServidor() {
+		return idServidor;
+	}
+
+	public void setIdServidor(int idServidor) {
+		this.idServidor = idServidor;
+	}
 }
