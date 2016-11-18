@@ -26,14 +26,15 @@ public class ArquivoLog {
 	private String descricao;
 	@Column(name = "caminho_arquivo")
 	private String caminhoDoArquivo;
-	
+
 	private Servidor servidor;
-	
+
 	public ArquivoLog() {
 
 	}
 
-	private ArquivoLog(Integer idArquivo, String nomeArquivo, Date dataUpload, String descricao, Servidor servidor, String caminhoDoArquivo) {
+	private ArquivoLog(Integer idArquivo, String nomeArquivo, Date dataUpload, String descricao, Servidor servidor,
+			String caminhoDoArquivo) {
 		this.idArquivo = idArquivo;
 		this.nomeArquivo = nomeArquivo;
 		this.dataUpload = dataUpload;
@@ -41,13 +42,15 @@ public class ArquivoLog {
 		this.servidor = servidor;
 		this.caminhoDoArquivo = caminhoDoArquivo;
 	}
-	
-	public static ArquivoLog novo(File file, Date dataUpload, String descricao, Servidor servidor) {
-		return novo(null, file, dataUpload, descricao, servidor);
+
+	public static ArquivoLog novo(String nomeArquivo, Date dataUpload, String descricao, Servidor servidor,
+			String caminhoArquivo) {
+		return novo(null, nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
 	}
-	
-	public static ArquivoLog novo(Integer idArquivo, File file, Date dataUpload, String descricao, Servidor servidor) {
-		return new ArquivoLog(idArquivo, file.getName(), dataUpload, descricao, servidor, file.getAbsolutePath());
+
+	public static ArquivoLog novo(Integer idArquivo, String nomeArquivo, Date dataUpload, String descricao,
+			Servidor servidor, String caminhoArquivo) {
+		return new ArquivoLog(idArquivo, nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
 	}
 
 	public String getNomeArquivo() {
@@ -89,5 +92,17 @@ public class ArquivoLog {
 	public void setServidor(Servidor servidor) {
 		this.servidor = servidor;
 	}
-	
+
+	public String getCaminhoDoArquivo() {
+		return caminhoDoArquivo;
+	}
+
+	public void setCaminhoDoArquivo(String caminhoDoArquivo) {
+		this.caminhoDoArquivo = caminhoDoArquivo;
+	}
+
+	public void setIdArquivo(Integer idArquivo) {
+		this.idArquivo = idArquivo;
+	}
+
 }

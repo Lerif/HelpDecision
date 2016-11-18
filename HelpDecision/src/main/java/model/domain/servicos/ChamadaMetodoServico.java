@@ -35,7 +35,7 @@ public class ChamadaMetodoServico {
 		return chamadaMetodoRepositorio.findAll();
 	}
 
-	public boolean persistirChamadaMetodoList(List<ChamadaMetodo> listaChamadaMetodo) {
+	public boolean persistirChamadaMetodoList(List<ChamadaMetodo> listaChamadaMetodo) throws SQLException {
 		return chamadaMetodoRepositorio.insert(listaChamadaMetodo) > 1;
 	}
 	

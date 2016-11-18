@@ -30,12 +30,12 @@ public class RepositorioChamadaMetodo {
 		return new ConexaoDB().conectarDB();
 	}
 
-	public int insert(List<ChamadaMetodo> listaChamadaMetodo) {
+	public int insert(List<ChamadaMetodo> listaChamadaMetodo) throws SQLException {
 
 		final StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO tb_chamada_metodo ");
-		sql.append("(nome_metodo, data_inicio, data_fim, duracao, id_elemento, tipo_elemento) ");
-		sql.append("VALUES (?, ?, ?, ?, ?, ?)");
+		sql.append("(nome_metodo, data_inicio, data_fim, duracao, id_elemento, tipo_elemento, id_arquivo) ");
+		sql.append("VALUES (?, ?, ?, ?, ?, ?, ?)");
 
 		Connection connection = null;
 		PreparedStatement pst = null;
@@ -53,7 +53,7 @@ public class RepositorioChamadaMetodo {
 
 			for (ChamadaMetodo chamadaMetodo : listaChamadaMetodo) {
 
-				if (!verificarChamadaMetodoExiste(chamadaMetodo)) {
+//				if (!verificarChamadaMetodoExiste(chamadaMetodo)) {
 
 					pst.setString(1, chamadaMetodo.getNomeMetodo());
 					pst.setTimestamp(2, chamadaMetodo.getDataInicio());
@@ -61,6 +61,7 @@ public class RepositorioChamadaMetodo {
 					pst.setLong(4, chamadaMetodo.getDuracao());
 					pst.setString(5, chamadaMetodo.getIdElemento());
 					pst.setString(6, chamadaMetodo.getTipoElemento());
+					pst.setInt(7, chamadaMetodo.getArquivo().getIdArquivo());
 
 					pst.addBatch();
 
@@ -71,7 +72,7 @@ public class RepositorioChamadaMetodo {
 					}
 						
 				}
-			}
+//			}
 			
 			result = pst.executeBatch(); // insere os registros restantes
 			registrosPersistidos += result.length;
@@ -80,7 +81,12 @@ public class RepositorioChamadaMetodo {
 		} catch (SQLException se) {
 			se.printStackTrace();
 			connection.rollback();
-		} finally {
+		} catch (Exception e) {
+			System.err.println("[RepositorioChamadaMetodo] Erro: " + e);
+			
+		}
+		
+		finally {
 			try {
 				if (pst != null)
 					pst.close();
@@ -220,18 +226,6 @@ public class RepositorioChamadaMetodo {
 			// TODO: handle exception
 		}
 		return chamadasMetodo;
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	catch (Exception e) {
-		System.err.println("[RepositorioChamadaMetodo] Erro: " + e);
-		
 	}
 	public void removeByID(Integer idChamadaMetodo) {
 

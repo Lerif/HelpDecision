@@ -30,7 +30,7 @@ public class ServicoFachada {
 
 	}
 
-	public boolean inserirChamadaMetodoList(List<ChamadaMetodo> listaChamadaMetodo) {
+	public boolean inserirChamadaMetodoList(List<ChamadaMetodo> listaChamadaMetodo) throws SQLException {
 		return servicoChamadaMetodo.persistirChamadaMetodoList(listaChamadaMetodo);
 	}
 
@@ -84,11 +84,9 @@ public class ServicoFachada {
 		return servicoServidor.solicitarListaDeServidoresCadastradosDB();
 	}
 	
-	/*
-	public List<ArquivoLog> solicitarTodosArquivoLogEServidoresDB() throws SQLException {
-		return servicoAgregador.solicitarListaDeArquivoLogEServidorCadastradoDB();
+	public List<ArquivoLog> solicitarListaDeArquivoLogCadastradoDB() throws SQLException {
+		return servicoArquivoLog.solicitarListaDeArquivoLogCadastradoDB();
 	}
-	 */
 
 	public List<File> extrairArquivosTarGz(File arquivoTarGz, File localDestino) {
 
@@ -147,6 +145,11 @@ public class ServicoFachada {
 
 	public ArquivoLog inserirArquivoLog(ArquivoLog arquivoLog) {
 		return this.servicoArquivoLog.inserirDadosNaTbArquivo(arquivoLog);		
+	}
+
+	public Servidor buscarServidorByID(Integer id) throws SQLException {
+		
+		return this.servicoServidor.buscarPorId(id);
 	}
 
 }

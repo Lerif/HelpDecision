@@ -1,5 +1,8 @@
 package model.domain.fabricas;
 
+import java.io.File;
+import java.util.Date;
+
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.Servidor;
 
@@ -12,7 +15,11 @@ public class FabricaArquivoLog {
 		return new FabricaArquivoLog();
 	}
 
-	public ArquivoLog novoArquivoLog(int idArquivo, String nomeArquivo, java.sql.Date dataUpload, String descricao, Servidor servidor) {
-		return ArquivoLog.novo(idArquivo, nomeArquivo, dataUpload, descricao, servidor);
+	public ArquivoLog novoArquivoLog(String nomeArquivo, Date dataUpload, String descricao, Servidor servidor, String caminhoArquivo) {
+		return ArquivoLog.novo(null, nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
+	}
+	
+	public ArquivoLog novoArquivoLog(Integer idArquivo, String nomeArquivo, Date dataUpload, String descricao, Servidor servidor, String caminhoArquivo) {
+		return ArquivoLog.novo(nomeArquivo, dataUpload, descricao, servidor, caminhoArquivo);
 	}
 }

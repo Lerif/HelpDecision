@@ -28,24 +28,16 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 	}
 
 	/*
-	public Boolean insert(ChamadaMetodoArquivoLogServidor agregador) {
-		try {
-			for (ChamadaMetodo chamadaMetodo : agregador.getChamadasMetodos()) {
-				String sql = "INSERT INTO tb_chamada_metodo_arquivo_servidor "
-						+ "(id_chamada_metodo, id_arquivo, id_servidor) " + "VALUES (?, ?, ?)";
-				PreparedStatement pst = conexao.prepareStatement(sql);
-				pst.setInt(1, chamadaMetodo.getIdChamadaMetodo());
-				pst.setInt(2, agregador.getArquivoLog().getIdArquivo());
-				pst.setInt(3, agregador.getServidor().getIdServidor());
-				pst.execute();
-				pst.close();
-			}
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
-	}
-	*/
+	 * public Boolean insert(ChamadaMetodoArquivoLogServidor agregador) { try {
+	 * for (ChamadaMetodo chamadaMetodo : agregador.getChamadasMetodos()) {
+	 * String sql = "INSERT INTO tb_chamada_metodo_arquivo_servidor " +
+	 * "(id_chamada_metodo, id_arquivo, id_servidor) " + "VALUES (?, ?, ?)";
+	 * PreparedStatement pst = conexao.prepareStatement(sql); pst.setInt(1,
+	 * chamadaMetodo.getIdChamadaMetodo()); pst.setInt(2,
+	 * agregador.getArquivoLog().getIdArquivo()); pst.setInt(3,
+	 * agregador.getServidor().getIdServidor()); pst.execute(); pst.close(); }
+	 * return true; } catch (Exception e) { return false; } }
+	 */
 
 	public void removeAgregadorThreeByIdArquivoLog(int i) throws SQLException {
 
@@ -101,20 +93,34 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 	}
 
 	public List<ArquivoLog> findArquivoLogAndServidor() throws SQLException {
-		
+
 		List<ArquivoLog> arquivoLog = new ArrayList<ArquivoLog>();
 
-		String sql = "SELECT DISTINCT FROM tb_arquivo INNER JOIN tb_servidor "
+		String sqlL = "SELECT * DISTINCT FROM tb_arquivo INNER JOIN tb_servidor "
 				+ "ON tb_arquivo.id_servidor = tb_servidor.id_servidor " + "WHERE tb_arquivo.arquivo_excluido = FALSE";
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT DISTINCT arq.id_arquivo, ");
+		sql.append("arq.nome_arquivo, ");
+		sql.append("arq.data_upload, ");
+		sql.append("arq.descricao, ");
+		sql.append("ser.id_servidor, ");
+		sql.append("ser.nome_servidor, ");
+		sql.append("arq.caminho_arquivo ");
+		sql.append("FROM tb_arquivo arq ");
+		sql.append("INNER JOIN tb_servidor ser ON arq.id_servidor = ser.id_servidor ");
+		sql.append("WHERE arq.arquivo_excluido = FALSE ");
 
 		Statement stm = (Statement) conexao.createStatement();
 		try {
-			ResultSet retornoSelect = stm.executeQuery(sql);
+			ResultSet retornoSelect = stm.executeQuery(sql.toString());
 			while (retornoSelect.next()) {
-				arquivoLog.add(FabricaArquivoLog.nova().novoArquivoLog(retornoSelect.getInt("id_arquivo"),
-						retornoSelect.getString("nome_arquivo"), retornoSelect.getDate("data_upload"),
-						retornoSelect.getString("descricao"), FabricaServidor.novo().novoServidor(
-								retornoSelect.getInt("id_servidor"), retornoSelect.getString("nome_servidor"))));
+				arquivoLog.add(FabricaArquivoLog.nova()
+						.novoArquivoLog(retornoSelect.getInt("id_arquivo"), retornoSelect.getString("nome_arquivo"),
+								retornoSelect.getDate("data_upload"), retornoSelect.getString("descricao"),
+								FabricaServidor.novo().novoServidor(retornoSelect.getInt("id_servidor"),
+										retornoSelect.getString("nome_servidor")),
+								retornoSelect.getString("caminho_arquivo")));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -125,27 +131,31 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 	public List<ChamadaMetodo> findDetailsFromArquivoLogAndServidor(String nomeMetodo, int idServidor,
 			Timestamp dataInicio, Timestamp dataFim, Long rangeInicio, Long rangeFim) throws SQLException {
 
-		//ChamadaMetodoArquivoLogServidor resultado = null;
+		// ChamadaMetodoArquivoLogServidor resultado = null;
 		List<ChamadaMetodo> chamadasMetodos = new ArrayList<ChamadaMetodo>();
 
 		StringBuilder sql = new StringBuilder();
-		/*sql.append("SELECT chamada_metodo.nome_metodo, ");
-		sql.append("chamada_metodo.duracao, ");
-		sql.append("chamada_metodo.data_inicio, ");
-		sql.append("chamada_metodo.data_fim, ");
-		sql.append("chamada_metodo.id_elemento, ");
-		sql.append("chamada_metodo.tipo_elemento, ");
-		sql.append("chamada_metodo.id_chamada_metodo, ");
-		sql.append("chamada_metodo.tipo_elemento ");
-		sql.append("FROM tb_chamada_metodo_arquivo_servidor agregador ");
-		sql.append(
-				"JOIN tb_chamada_metodo chamada_metodo ON agregador.id_chamada_metodo = chamada_metodo.id_chamada_metodo ");
-		sql.append("JOIN tb_arquivo arquivo ON agregador.id_arquivo = arquivo.id_arquivo ");
-		sql.append("JOIN tb_servidor servidor ON agregador.id_servidor = servidor.id_servidor ");
-		sql.append("WHERE ");
-		sql.append("chamada_metodo.nome_metodo = ? ");
-		sql.append("AND servidor.id_servidor = ? ");
-		sql.append("AND arquivo.arquivo_excluido = false ");*/
+		/*
+		 * sql.append("SELECT chamada_metodo.nome_metodo, ");
+		 * sql.append("chamada_metodo.duracao, ");
+		 * sql.append("chamada_metodo.data_inicio, ");
+		 * sql.append("chamada_metodo.data_fim, ");
+		 * sql.append("chamada_metodo.id_elemento, ");
+		 * sql.append("chamada_metodo.tipo_elemento, ");
+		 * sql.append("chamada_metodo.id_chamada_metodo, ");
+		 * sql.append("chamada_metodo.tipo_elemento ");
+		 * sql.append("FROM tb_chamada_metodo_arquivo_servidor agregador ");
+		 * sql.append(
+		 * "JOIN tb_chamada_metodo chamada_metodo ON agregador.id_chamada_metodo = chamada_metodo.id_chamada_metodo "
+		 * ); sql.
+		 * append("JOIN tb_arquivo arquivo ON agregador.id_arquivo = arquivo.id_arquivo "
+		 * ); sql.
+		 * append("JOIN tb_servidor servidor ON agregador.id_servidor = servidor.id_servidor "
+		 * ); sql.append("WHERE ");
+		 * sql.append("chamada_metodo.nome_metodo = ? ");
+		 * sql.append("AND servidor.id_servidor = ? ");
+		 * sql.append("AND arquivo.arquivo_excluido = false ");
+		 */
 
 		sql.append("SELECT chamada_metodo.nome_metodo, ");
 		sql.append("chamada_metodo.duracao, ");
@@ -161,17 +171,17 @@ public class RepositorioChamadaMetodoArquivoLogServidor {
 		sql.append("WHERE chamada_metodo.nome_metodo = ?  ");
 		sql.append("AND servidor.id_servidor = ? ");
 		sql.append("AND arquivo.arquivo_excluido = false ");
-		
-		
+
 		/*
-		SELECT chamada_metodo.nome_metodo, chamada_metodo.duracao, chamada_metodo.data_inicio, chamada_metodo.data_fim, 
-		chamada_metodo.id_elemento, chamada_metodo.tipo_elemento, chamada_metodo.id_chamada_metodo, chamada_metodo.tipo_elemento 
-		FROM tb_chamada_metodo AS chamada_metodo
-		JOIN tb_arquivo arquivo ON chamada_metodo.id_arquivo = arquivo.id_arquivo
-		JOIN tb_servidor servidor ON arquivo.id_servidor = servidor.id_servidor
-		WHERE chamada_metodo.nome_metodo = 'aguas abajo' 
-		AND servidor.id_servidor = '1' 
-		AND arquivo.arquivo_excluido = false 
+		 * SELECT chamada_metodo.nome_metodo, chamada_metodo.duracao,
+		 * chamada_metodo.data_inicio, chamada_metodo.data_fim,
+		 * chamada_metodo.id_elemento, chamada_metodo.tipo_elemento,
+		 * chamada_metodo.id_chamada_metodo, chamada_metodo.tipo_elemento FROM
+		 * tb_chamada_metodo AS chamada_metodo JOIN tb_arquivo arquivo ON
+		 * chamada_metodo.id_arquivo = arquivo.id_arquivo JOIN tb_servidor
+		 * servidor ON arquivo.id_servidor = servidor.id_servidor WHERE
+		 * chamada_metodo.nome_metodo = 'aguas abajo' AND servidor.id_servidor =
+		 * '1' AND arquivo.arquivo_excluido = false
 		 */
 
 		if (dataInicio != null && dataFim != null) {

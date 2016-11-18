@@ -20,7 +20,7 @@ import model.domain.enumeradores.Regex;
 public class Leitor {
 	public List<ChamadaMetodo> ler(ArquivoLog arquivo) throws IOException, ParseException {
 
-		FileInputStream fstream = new FileInputStream(arquivo.getNomeArquivo());
+		FileInputStream fstream = new FileInputStream(arquivo.getCaminhoDoArquivo());
 		DataInputStream in = new DataInputStream(fstream);
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		String linha = null;

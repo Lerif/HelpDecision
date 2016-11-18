@@ -18,6 +18,7 @@ import org.primefaces.context.RequestContext;
 import model.domain.entidades.ArquivoLog;
 import model.domain.entidades.ChamadaMetodo;
 import model.domain.entidades.Servidor;
+import model.domain.fabricas.FabricaArquivoLog;
 import model.domain.servicos.ServicoFachada;
 
 @ManagedBean(eager = true)
@@ -50,10 +51,11 @@ public class UploadBean implements Serializable {
 		servicoFachada = new ServicoFachada();
 	}
 
-	public void upload() throws IOException {
+	public void upload() throws IOException, SQLException {
 
 		final RequestContext requestContext = RequestContext.getCurrentInstance();
 		final Date dataTimeUpload = new Date(System.currentTimeMillis());
+		final Servidor servidorSelecionado = servicoFachada.buscarServidorByID(new Integer(itemSelecionado));
 
 		File dirUpload = new File(CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ);
 		File fileTarGz;
@@ -70,8 +72,10 @@ public class UploadBean implements Serializable {
 				CAMINHO_ABSOLUTO_DO_DIRETORIO_DO_ARQUIVO_TAR_GZ + File.separator + buscarNomeDoArquivo(arquivo));
 
 		for (File file : servicoFachada.extrairArquivosTarGz(fileTarGz, dirUpload)) {
-			
-			final ArquivoLog arquivoLog = servicoFachada.inserirArquivoLog(ArquivoLog.novo(file, dataTimeUpload, this.descricaoArquivo, this.servidorSelecionado));
+
+			final ArquivoLog arquivoLog = servicoFachada
+					.inserirArquivoLog(FabricaArquivoLog.nova().novoArquivoLog(file.getName(), dataTimeUpload,
+							this.descricaoArquivo, servidorSelecionado, file.getAbsolutePath()));
 
 			try {
 				if (servicoFachada.inserirChamadaMetodoList(servicoFachada.lerArquivoLog(arquivoLog))) {
@@ -80,9 +84,6 @@ public class UploadBean implements Serializable {
 					requestContext.execute("alertUploadNaoRealizadoArquivoJaExiste()");
 				}
 			} catch (NumberFormatException e) {
-				requestContext.execute("alertUploadNaoRealizadoErro()");
-				System.out.println("[UploadBean] Erro: " + e);
-			} catch (SQLException e) {
 				requestContext.execute("alertUploadNaoRealizadoErro()");
 				System.out.println("[UploadBean] Erro: " + e);
 			}
@@ -99,22 +100,27 @@ public class UploadBean implements Serializable {
 		}
 	}
 
-//	public String deleteActionArquivoLogServidor(ChamadaMetodoArquivoLogServidor arquivoLogServidor)
-//			throws SQLException {
-//		RequestContext requestContext = RequestContext.getCurrentInstance();
-//		if (servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLogServidor.getArquivoLog())) {
-//			requestContext.execute("alertDeleteComSucesso()");
-//		} else {
-//			requestContext.execute("alertErroAoDeletar()");
-//		}
-//		// servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLogServidor.getArquivoLog());
-//		return null;
-//	}
+	// public String
+	// deleteActionArquivoLogServidor(ChamadaMetodoArquivoLogServidor
+	// arquivoLogServidor)
+	// throws SQLException {
+	// RequestContext requestContext = RequestContext.getCurrentInstance();
+	// if
+	// (servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLogServidor.getArquivoLog()))
+	// {
+	// requestContext.execute("alertDeleteComSucesso()");
+	// } else {
+	// requestContext.execute("alertErroAoDeletar()");
+	// }
+	// //
+	// servicoFachada.solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(arquivoLogServidor.getArquivoLog());
+	// return null;
+	// }
 
 	public List<ArquivoLog> getListaArquivoLogComServidor() {
 
 		try {
-			return servicoFachada.solicitarTodosArquivoLogEServidoresDB();
+			return servicoFachada.solicitarListaDeArquivoLogCadastradoDB();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
