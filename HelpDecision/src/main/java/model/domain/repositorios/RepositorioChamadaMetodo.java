@@ -54,7 +54,7 @@ public class RepositorioChamadaMetodo {
 
 			for (ChamadaMetodo chamadaMetodo : listaChamadaMetodo) {
 
-//				if (!verificarChamadaMetodoExiste(chamadaMetodo)) {
+				if (!verificarChamadaMetodoExiste(chamadaMetodo)) {
 
 					pst.setString(1, chamadaMetodo.getNomeMetodo());
 					pst.setTimestamp(2, chamadaMetodo.getDataInicio());
@@ -71,8 +71,8 @@ public class RepositorioChamadaMetodo {
 						registrosPersistidos += result.length;
 						connection.commit();
 					}
-
 				}
+			}
 			result = pst.executeBatch(); // insere os registros restantes
 			registrosPersistidos += result.length;
 			connection.commit();
@@ -82,8 +82,8 @@ public class RepositorioChamadaMetodo {
 			connection.rollback();
 		} catch (Exception e) {
 			System.err.println("[RepositorioChamadaMetodo] Erro: " + e);
-			
-		}finally {
+
+		} finally {
 			try {
 				if (pst != null)
 					pst.close();
@@ -99,40 +99,34 @@ public class RepositorioChamadaMetodo {
 		return registrosPersistidos;
 	}
 
-
 	public Boolean verificarChamadaMetodoExiste(ChamadaMetodo chamadaMetodo) throws SQLException {
-		String sql;
-		if (chamadaMetodo.getIdElemento() == null || chamadaMetodo.getTipoElemento() == null) {
-			sql = "SELECT * FROM tb_chamada_metodo_arquivo_servidor "
-					+ "INNER JOIN tb_chamada_metodo on tb_chamada_metodo_arquivo_servidor.id_chamada_metodo = tb_chamada_metodo.id_chamada_metodo "
-					+ "INNER JOIN tb_arquivo on tb_chamada_metodo_arquivo_servidor.id_arquivo = tb_arquivo.id_arquivo "
-					+ "WHERE tb_chamada_metodo.nome_metodo = '" + chamadaMetodo.getNomeMetodo()
-					+ "' AND tb_chamada_metodo.data_inicio = '" + chamadaMetodo.getDataInicio()
-					+ "' AND tb_chamada_metodo.data_fim = '" + chamadaMetodo.getDataFim()
-					+ "' AND tb_chamada_metodo.id_elemento is null " + " AND tb_chamada_metodo.tipo_elemento is null "
-					+ " AND tb_arquivo.arquivo_excluido = false";
-		} else {
-			sql = "SELECT * FROM tb_chamada_metodo_arquivo_servidor "
-					+ "INNER JOIN tb_chamada_metodo on tb_chamada_metodo_arquivo_servidor.id_chamada_metodo = tb_chamada_metodo.id_chamada_metodo "
-					+ "INNER JOIN tb_arquivo on tb_chamada_metodo_arquivo_servidor.id_arquivo = tb_arquivo.id_arquivo "
-					+ "WHERE tb_chamada_metodo.nome_metodo = '" + chamadaMetodo.getNomeMetodo()
-					+ "' AND tb_chamada_metodo.data_inicio = '" + chamadaMetodo.getDataInicio()
-					+ "' AND tb_chamada_metodo.data_fim = '" + chamadaMetodo.getDataFim()
-					+ "' AND tb_chamada_metodo.id_elemento = '" + chamadaMetodo.getIdElemento()
-					+ "' AND tb_chamada_metodo.tipo_elemento = '" + chamadaMetodo.getTipoElemento()
-					+ "' AND tb_arquivo.arquivo_excluido = false";
-		}
 
-		Statement stm = (Statement) conexao.createStatement();
-		try {
-			ResultSet retornoSelect = stm.executeQuery(sql);
-			if (retornoSelect.next()) {
-				return true;
-			} else {
-				return false;
-			}
-		} catch (Exception e) {
-			return null;
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT 1 FROM tb_chamada_metodo met ");
+		sql.append("JOIN tb_arquivo arq ON arq.id_arquivo=met.id_arquivo ");
+		sql.append("JOIN tb_servidor ser ON ser.id_servidor=arq.id_servidor ");
+		sql.append("WHERE met.nome_metodo = ? ");
+		sql.append("AND met.data_inicio = ? ");
+		sql.append("AND ser.id_servidor = ? ");
+		sql.append("AND arq.arquivo_excluido = false");
+
+		Connection connection = null;
+		PreparedStatement pst = null;
+
+		connection = getConexao();
+		pst = connection.prepareStatement(sql.toString());
+
+		pst.setString(1, chamadaMetodo.getNomeMetodo());
+		pst.setTimestamp(2, chamadaMetodo.getDataInicio());
+		pst.setInt(3, chamadaMetodo.getArquivo().getServidor().getIdServidor());
+
+		ResultSet retornoSelect = pst.executeQuery();
+		pst.close();
+		connection.close();
+		if (retornoSelect.next()) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -254,8 +248,8 @@ public class RepositorioChamadaMetodo {
 
 	}
 
-	public List<ChamadaMetodo> buscarDetalhes(String nomeMetodo, int idServidor,
-			Timestamp dataInicio, Timestamp dataFim, Long rangeInicio, Long rangeFim) throws SQLException {
+	public List<ChamadaMetodo> buscarDetalhes(String nomeMetodo, int idServidor, Timestamp dataInicio,
+			Timestamp dataFim, Long rangeInicio, Long rangeFim) throws SQLException {
 
 		// ChamadaMetodoArquivoLogServidor resultado = null;
 		List<ChamadaMetodo> chamadasMetodos = new ArrayList<ChamadaMetodo>();

@@ -22,12 +22,12 @@ public class RepositorioArquivoLog {
 	}
 
 	public ArquivoLog insert(ArquivoLog arquivoLog) {
-		
+
 		final StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO tb_arquivo ");
 		sql.append("(nome_arquivo, data_upload, descricao, arquivo_excluido, id_servidor, caminho_arquivo) ");
 		sql.append("VALUES (?, ?, ?, ?, ?, ?)");
-		
+
 		try {
 			PreparedStatement pst = conexao.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			pst.setString(1, arquivoLog.getNomeArquivo());
@@ -58,10 +58,12 @@ public class RepositorioArquivoLog {
 		try {
 			ResultSet retornoSelect = stm.executeQuery(sql);
 			while (retornoSelect.next()) {
-				arquivoLog.add(FabricaArquivoLog.nova().novoArquivoLog(retornoSelect.getInt("id_arquivo"),
-						retornoSelect.getString("nome_arquivo"), retornoSelect.getDate("data_upload"),
-						retornoSelect.getString("descricao"), FabricaServidor.novo().novoServidor(
-								retornoSelect.getInt("id_servidor"), retornoSelect.getString("nome_servidor"))));
+				arquivoLog.add(FabricaArquivoLog.nova()
+						.novoArquivoLog(retornoSelect.getInt("id_arquivo"), retornoSelect.getString("nome_arquivo"),
+								retornoSelect.getDate("data_upload"), retornoSelect.getString("descricao"),
+								FabricaServidor.novo().novoServidor(retornoSelect.getInt("id_servidor"),
+										retornoSelect.getString("nome_servidor")),
+								retornoSelect.getString("caminho_arquivo")));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
