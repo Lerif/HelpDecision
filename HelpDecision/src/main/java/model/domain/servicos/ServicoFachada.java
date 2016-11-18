@@ -31,7 +31,7 @@ public class ServicoFachada {
 
 	}
 
-	public boolean inserirChamadaMetodoList(List<ChamadaMetodo> listaChamadaMetodo) throws SQLException {
+	public int inserirChamadaMetodoList(List<ChamadaMetodo> listaChamadaMetodo) throws SQLException {
 		return servicoChamadaMetodo.persistirChamadaMetodoList(listaChamadaMetodo);
 	}
 
