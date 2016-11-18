@@ -27,7 +27,7 @@ public class ServicoDescompactador {
 	public List<File> extrairTarGz(File arquivoTarGz, File localDestino) throws IOException, ArchiveException {
 
 		List<File> arquivosExtraidos;
-		
+
 		File arquivoTar = unGzip(arquivoTarGz, localDestino);
 		arquivosExtraidos = unTar(arquivoTar, localDestino);
 

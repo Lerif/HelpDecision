@@ -10,7 +10,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 
-import model.domain.entidades.Servidor;
 import model.domain.servicos.ServidorServico;
 
 @ManagedBean

@@ -73,11 +73,6 @@ public class ServicoFachada {
 		}
 	}
 
-	// public void solicitarRemocaoEmCascataDoAgragadorPorArquivoLog(ArquivoLog
-	// arquivoLog) throws SQLException {
-	// this.servicoAgregador.removerAgregadorEmCascataByArquivoLogId(arquivoLog.getIdArquivo());
-	// }
-
 	public Servidor solicitarNovoServidor(int idServidor, String nomeServidor) {
 		return servicoServidor.criarServidor(idServidor, nomeServidor);
 	}
@@ -125,11 +120,6 @@ public class ServicoFachada {
 		this.servicoServidor = servicoServidor;
 	}
 
-	// public void setServicoAgregador(ChamadaMetodoArquivoLogServidorServico
-	// servicoAgregador) {
-	// this.servicoAgregador = servicoAgregador;
-	// }
-
 	public List<ChamadaMetodo> buscarDashboardDetalhado(String nomeMetodo, int idServidor, Date dateInicio,
 			Date dateFim, long rangeInicio, long rangeFim) {
 		try {
@@ -148,8 +138,11 @@ public class ServicoFachada {
 	}
 
 	public Servidor buscarServidorByID(Integer id) throws SQLException {
-		
 		return this.servicoServidor.buscarPorId(id);
+	}
+
+	public List<ArquivoLog> solicitarListaDeArquivoLogCadastradoDB() throws SQLException {
+		return servicoArquivoLog.solicitarListaDeArquivoLogEServidorCadastradoDB();
 	}
 
 }

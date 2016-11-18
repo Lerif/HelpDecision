@@ -43,7 +43,6 @@ public class Leitor {
 		Pattern UmArg = Pattern.compile(Regex.UMARG.valor());
 		Pattern DoisArg = Pattern.compile(Regex.DOISARGS.valor());
 		Pattern NumVirNum = Pattern.compile(Regex.NUMVIRNUM.valor());
-		
 
 		while ((linha = br.readLine()) != null) {
 

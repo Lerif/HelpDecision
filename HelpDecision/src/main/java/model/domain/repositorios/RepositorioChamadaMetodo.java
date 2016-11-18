@@ -11,9 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import model.domain.entidades.ChamadaMetodo;
-import model.domain.entidades.Servidor;
 import model.domain.fabricas.FabricaChamadaMetodo;
-import model.domain.util.CalendarioUtil;
 
 public class RepositorioChamadaMetodo {
 
@@ -56,16 +54,15 @@ public class RepositorioChamadaMetodo {
 
 				if (!verificarChamadaMetodoExiste(chamadaMetodo)) {
 
-					pst.setString(1, chamadaMetodo.getNomeMetodo());
-					pst.setTimestamp(2, chamadaMetodo.getDataInicio());
-					pst.setTimestamp(3, chamadaMetodo.getDataFim());
-					pst.setLong(4, chamadaMetodo.getDuracao());
-					pst.setString(5, chamadaMetodo.getIdElemento());
-					pst.setString(6, chamadaMetodo.getTipoElemento());
-					pst.setInt(7, chamadaMetodo.getArquivo().getIdArquivo());
+				pst.setString(1, chamadaMetodo.getNomeMetodo());
+				pst.setTimestamp(2, chamadaMetodo.getDataInicio());
+				pst.setTimestamp(3, chamadaMetodo.getDataFim());
+				pst.setLong(4, chamadaMetodo.getDuracao());
+				pst.setString(5, chamadaMetodo.getIdElemento());
+				pst.setString(6, chamadaMetodo.getTipoElemento());
+				pst.setInt(7, chamadaMetodo.getArquivo().getIdArquivo());
 
-					pst.addBatch();
-
+				pst.addBatch();
 					if (++count % batchSize == 0) {
 						result = pst.executeBatch();
 						registrosPersistidos += result.length;
