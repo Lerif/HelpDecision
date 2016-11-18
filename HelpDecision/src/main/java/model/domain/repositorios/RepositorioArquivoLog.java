@@ -49,7 +49,7 @@ public class RepositorioArquivoLog {
 	public List<ArquivoLog> findAll() throws SQLException {
 		List<ArquivoLog> arquivoLog = new ArrayList<ArquivoLog>();
 
-		String sql = "SELECT DISTINCT FROM tb_arquivo INNER JOIN tb_servidor "
+		String sql = "SELECT * FROM tb_arquivo INNER JOIN tb_servidor "
 				+ "ON tb_arquivo.id_servidor = tb_servidor.id_servidor " + "WHERE tb_arquivo.arquivo_excluido = FALSE";
 
 		Statement stm = (Statement) conexao.createStatement();

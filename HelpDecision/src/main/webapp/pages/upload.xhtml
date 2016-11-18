@@ -152,6 +152,10 @@
 								<f:facet name="header">Delete</f:facet>
 								<h:commandLink value="✗" styleClass="btn btn-danger"
 									action="#{uploadBean.deleteActionArquivoLogServidor(arquivoLog)}" />
+								
+								<h:commandLink value="Teste" type="button" styleClass="btn btn-danger"
+									data-toggle="modal" data-target="#delete" action="#{uploadBean.setArquivoLog}"/>
+									
 							</h:column>
 						</h:dataTable>
 					</h:form>
@@ -181,9 +185,10 @@
 				</div>
 			</div>
 			<div class="modal-footer ">
-				<button type="button" class="btn btn-success">
-					<span class="glyphicon glyphicon-ok-sign"></span> Sim
-				</button>
+				<h:commandButton type="button" class="btn btn-success" 
+				action="#{uploadBean.deleteActionArquivoLogServidor()}"/>
+					
+				
 				<button type="button" class="btn btn-default" data-dismiss="modal">
 					<span class="glyphicon glyphicon-remove"></span> Não
 				</button>

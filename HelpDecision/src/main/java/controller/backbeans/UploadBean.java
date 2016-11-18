@@ -96,10 +96,10 @@ public class UploadBean implements Serializable {
 	} 
 
 
-	public void deleteActionArquivoLogServidor(ArquivoLog arquivoLog)
+	public void deleteActionArquivoLogServidor()
 			throws SQLException {
 		RequestContext requestContext = RequestContext.getCurrentInstance();
-		if(servicoFachada.solicitarFlagDeArquivoDeletado(arquivoLog)){
+		if(servicoFachada.solicitarFlagDeArquivoDeletado(this.arquivoLog)){
 			requestContext.execute("alertDeleteComSucesso()");
 		}
 		else{
@@ -206,6 +206,10 @@ public class UploadBean implements Serializable {
 
 	public ArquivoLog getArquivoLog() {
 		return arquivoLog;
+	}
+
+	public void setArquivoLog(ArquivoLog arquivoLog) {
+		this.arquivoLog = arquivoLog;
 	}
 
 }
