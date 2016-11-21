@@ -43,20 +43,24 @@ public class HomeBean {
 
 		if ((dateInicio == null) || (dateFim == null)) {
 			requestContext.execute("alertDataFormatoInvalido()");
+			return;
 		}
 
 		if (rangeInicio > rangeFim) {
 			requestContext.execute("alertRageInvalido()");
+			return;
 		}
-
+		
 		if (dateInicio.after(dateFim)) {
 			requestContext.execute("alertDataInvalido()");
+			return;
 		}
 
 		try {
 			Integer.parseInt(servidorSelecionado);
 		} catch (NumberFormatException e) {
 			requestContext.execute("alertServidorNaoSelecionado()");
+			return;
 		}
 
 		requestContext.execute("alertLetras");
